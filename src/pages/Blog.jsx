@@ -2,13 +2,13 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { FaArrowRight, FaCalendarAlt, FaTag } from 'react-icons/fa'
 import { GiSoccerBall } from 'react-icons/gi'
-import { query, orderBy, where } from 'firebase/firestore'
+import { query, orderBy } from 'firebase/firestore'
 import { blogCol } from '../firebase/collections'
 import { useCollection } from '../hooks/useFirestore'
 import SEOHead from '../components/SEOHead'
 import LoadingSkeleton from '../components/LoadingSkeleton'
 
-const publishedQ = query(blogCol, where('status', '==', 'published'), orderBy('publishedAt', 'desc'))
+const publishedQ = query(blogCol, orderBy('publishedAt', 'desc'))
 
 const CATEGORY_COLORS = {
   News: 'bg-blue-100 text-blue-700',
@@ -25,7 +25,8 @@ function formatDate(ts) {
 }
 
 export default function Blog() {
-  const { docs: posts, loading } = useCollection(publishedQ)
+  const { docs, loading } = useCollection(publishedQ)
+  const posts = docs.filter(p => p.status === 'published')
 
   return (
     <>

@@ -131,6 +131,10 @@ export default function SportPage() {
     return <Navigate to="/404" replace />
   }
 
+  if (!loading && firestoreData && firestoreData.active === false) {
+    return <Navigate to="/404" replace />
+  }
+
   const defaults = DEFAULT_SPORTS[slug] || DEFAULT_SPORTS['football-futsal']
 
   // Merge Firestore data (if it exists) with defaults
