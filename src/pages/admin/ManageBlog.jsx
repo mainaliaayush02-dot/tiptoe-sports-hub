@@ -1,0 +1,248 @@
+﻿import { useState, useMemo } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import toast from 'react-hot-toast'
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css'
+import { MdAdd, MdEdit, MdDelete, MdClose, MdArticle, MdArrowBack } from 'react-icons/md'
+import { query, orderBy, serverTimestamp } from 'firebase/firestore'
+import { blogCol } from '../../firebase/collections'
+import { useCollection, addDocument, updateDocument, deleteDocument } from '../../hooks/useFirestore'
+
+const CATEGORIES = ['News', 'Training', 'Events', 'International', 'Coaching']
+const EMPTY = { title: '', slug: '', category: 'News', content: '', excerpt: '', imageURL: '', status: 'draft', author: '' }
+
+const QUILL_MODULES = {
+  toolbar: [
+    [{ header: [2, 3, false] }],
+    ['bold', 'italic', 'underline', 'blockquote'],
+    [{ list: 'ordered' }, { list: 'bullet' }],
+    ['link', 'image'],
+    ['clean'],
+  ],
+}
+
+function slugify(str) {
+  return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+}
+
+function BlogEditor({ item, onClose, onSave }) {
+  const [form, setForm] = useState(item || EMPTY)
+  const [saving, setSaving] = useState(false)
+  const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
+
+  const handleSave = async (status) => {
+    if (!form.title) { toast.error('Title is required.'); return }
+    setSaving(true)
+    try {
+      const slug = form.slug || slugify(form.title)
+      await onSave({ ...form, slug, status, publishedAt: status === 'published' ? serverTimestamp() : form.publishedAt })
+      onClose()
+    } catch { toast.error('Failed to save.') }
+    finally { setSaving(false) }
+  }
+
+  return (
+    <div className="fixed inset-0 bg-gray-50 z-50 overflow-y-auto">
+      <div className="sticky top-0 bg-white border-b border-gray-200 px-4 md:px-6 py-3 flex items-center justify-between z-10">
+        <div className="flex items-center gap-3">
+          <button onClick={onClose} className="p-2 text-gray-400 hover:text-navy rounded-lg transition-colors"><MdArrowBack size={20} /></button>
+          <h2 className="font-bold text-navy">{item?.id ? 'Edit Post' : 'New Post'}</h2>
+        </div>
+        <div className="flex gap-2">
+          <button onClick={() => handleSave('draft')} disabled={saving} className="px-4 py-2 border border-gray-300 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-60">
+            Save Draft
+          </button>
+          <button onClick={() => handleSave('published')} disabled={saving} className="btn-primary text-sm py-2 disabled:opacity-60">
+            {saving ? 'Saving...' : 'Publish'}
+          </button>
+        </div>
+      </div>
+
+      <div className="max-w-4xl mx-auto p-4 md:p-6 space-y-5">
+        {/* Featured Image URL */}
+        <div className="bg-white rounded-2xl p-5">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Featured Image</label>
+          {form.imageURL && (
+            <img src={form.imageURL} alt="" className="w-full h-48 object-cover rounded-xl mb-3" onError={e => e.target.style.display='none'} />
+          )}
+          <input
+            value={form.imageURL}
+            onChange={e => set('imageURL', e.target.value)}
+            className="input-field text-sm"
+            placeholder="Paste image URL (e.g. https://i.imgur.com/example.jpg)"
+          />
+          <p className="text-xs text-gray-400 mt-1">Upload to <strong>imgur.com</strong> free â†’ right-click image â†’ Copy image address â†’ paste above.</p>
+        </div>
+
+        {/* Meta */}
+        <div className="bg-white rounded-2xl p-5 space-y-4">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Title *</label>
+            <input
+              value={form.title}
+              onChange={e => { set('title', e.target.value); if (!form.id) set('slug', slugify(e.target.value)) }}
+              className="input-field text-lg font-semibold"
+              placeholder="Post title..."
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1">Slug</label>
+              <input value={form.slug} onChange={e => set('slug', e.target.value)} className="input-field font-mono text-sm" placeholder="url-friendly-slug" />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1">Category</label>
+              <select value={form.category} onChange={e => set('category', e.target.value)} className="input-field">
+                {CATEGORIES.map(c => <option key={c}>{c}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1">Author</label>
+              <input value={form.author} onChange={e => set('author', e.target.value)} className="input-field" placeholder="Author name" />
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Excerpt</label>
+            <textarea value={form.excerpt} onChange={e => set('excerpt', e.target.value)} rows={2} className="input-field resize-none" placeholder="Short description..." />
+          </div>
+        </div>
+
+        {/* Content Editor */}
+        <div className="bg-white rounded-2xl p-5">
+          <label className="block text-sm font-semibold text-gray-700 mb-3">Content</label>
+          <ReactQuill
+            theme="snow"
+            value={form.content}
+            onChange={v => set('content', v)}
+            modules={QUILL_MODULES}
+            className="min-h-[300px]"
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default function ManageBlog() {
+  const [editor, setEditor] = useState(null)
+  const [deleteId, setDeleteId] = useState(null)
+  const q = useMemo(() => query(blogCol, orderBy('createdAt', 'desc')), [])
+  const { docs: posts, loading } = useCollection(q)
+
+  const handleSave = async (form) => {
+    if (form.id) {
+      const { id, ...data } = form
+      await updateDocument('blog', id, data)
+      toast.success('Post saved!')
+    } else {
+      await addDocument(blogCol, form)
+      toast.success('Post created!')
+    }
+  }
+
+  const handleDelete = async () => {
+    await deleteDocument('blog', deleteId)
+    toast.success('Post deleted.')
+    setDeleteId(null)
+  }
+
+  const toggleStatus = async (post) => {
+    const status = post.status === 'published' ? 'draft' : 'published'
+    await updateDocument('blog', post.id, { status })
+    toast.success(`Post ${status}.`)
+  }
+
+  function formatDate(ts) {
+    if (!ts) return 'â€”'
+    const d = ts?.toDate ? ts.toDate() : new Date(ts)
+    return d.toLocaleDateString('en-NP', { month: 'short', day: 'numeric', year: 'numeric' })
+  }
+
+  return (
+    <>
+      <div className="p-4 md:p-6">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="font-black text-2xl text-navy">Blog</h1>
+            <p className="text-gray-500 text-sm">{posts.length} posts</p>
+          </div>
+          <button onClick={() => setEditor({})} className="btn-primary text-sm py-2.5"><MdAdd size={18} /> New Post</button>
+        </div>
+
+        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+          {loading ? (
+            <div className="p-6 space-y-3">{Array.from({ length: 5 }).map((_, i) => <div key={i} className="h-12 bg-gray-100 rounded animate-pulse" />)}</div>
+          ) : posts.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead className="bg-gray-50 text-gray-500 text-xs uppercase">
+                  <tr>
+                    <th className="px-4 py-3 text-left font-semibold">Post</th>
+                    <th className="px-4 py-3 text-left font-semibold">Category</th>
+                    <th className="px-4 py-3 text-left font-semibold">Status</th>
+                    <th className="px-4 py-3 text-left font-semibold">Date</th>
+                    <th className="px-4 py-3 text-right font-semibold">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-50">
+                  {posts.map(post => (
+                    <tr key={post.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-3">
+                          {post.imageURL && <img src={post.imageURL} alt="" className="w-10 h-10 rounded-lg object-cover" />}
+                          <div>
+                            <div className="font-semibold text-navy line-clamp-1">{post.title}</div>
+                            {post.author && <div className="text-xs text-gray-400">By {post.author}</div>}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-gray-600">{post.category}</td>
+                      <td className="px-4 py-3">
+                        <button onClick={() => toggleStatus(post)} className={`text-xs font-bold px-2.5 py-1 rounded-full transition-colors ${post.status === 'published' ? 'bg-green/10 text-green hover:bg-green/20' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}>
+                          {post.status === 'published' ? 'Published' : 'Draft'}
+                        </button>
+                      </td>
+                      <td className="px-4 py-3 text-gray-400">{formatDate(post.publishedAt || post.createdAt)}</td>
+                      <td className="px-4 py-3">
+                        <div className="flex justify-end gap-2">
+                          <button onClick={() => setEditor(post)} className="p-1.5 text-gray-400 hover:text-navy hover:bg-navy/5 rounded-lg transition-colors"><MdEdit size={16} /></button>
+                          <button onClick={() => setDeleteId(post.id)} className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"><MdDelete size={16} /></button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div className="py-16 text-center text-gray-400">
+              <MdArticle size={48} className="mx-auto mb-3 opacity-30" />
+              <p className="font-semibold">No posts yet. Write your first post.</p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {editor !== null && (
+          <BlogEditor item={editor.id ? editor : null} onClose={() => setEditor(null)} onSave={handleSave} />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {deleteId && (
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="bg-white rounded-2xl p-6 max-w-sm w-full">
+              <h3 className="font-bold text-lg text-navy mb-2">Delete Post?</h3>
+              <p className="text-gray-500 text-sm mb-5">This cannot be undone.</p>
+              <div className="flex gap-3">
+                <button onClick={() => setDeleteId(null)} className="flex-1 btn-outline border-gray-300 text-gray-600 justify-center">Cancel</button>
+                <button onClick={handleDelete} className="flex-1 bg-red-500 text-white font-bold py-3 rounded-xl hover:bg-red-600">Delete</button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </>
+  )
+}

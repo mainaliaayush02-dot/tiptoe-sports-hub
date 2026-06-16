@@ -1,0 +1,168 @@
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FaTimes, FaChevronLeft, FaChevronRight, FaImages } from 'react-icons/fa'
+import { query, orderBy } from 'firebase/firestore'
+import { galleryCol } from '../firebase/collections'
+import { useCollection } from '../hooks/useFirestore'
+import SEOHead from '../components/SEOHead'
+import LoadingSkeleton from '../components/LoadingSkeleton'
+
+const CATEGORIES = ['All', 'Training', 'Events', 'Tournaments', 'International']
+const allQ = query(galleryCol, orderBy('order'))
+
+export default function Gallery() {
+  const [cat, setCat] = useState('All')
+  const [lightbox, setLightbox] = useState(null)
+  const { docs: images, loading } = useCollection(allQ)
+
+  const filtered = cat === 'All' ? images : images.filter(img => img.category === cat)
+
+  const openLightbox = idx => setLightbox(idx)
+  const closeLightbox = () => setLightbox(null)
+  const prev = () => setLightbox(i => (i - 1 + filtered.length) % filtered.length)
+  const next = () => setLightbox(i => (i + 1) % filtered.length)
+
+  const handleKeyDown = e => {
+    if (e.key === 'ArrowLeft') prev()
+    if (e.key === 'ArrowRight') next()
+    if (e.key === 'Escape') closeLightbox()
+  }
+
+  return (
+    <>
+      <SEOHead
+        title="Gallery"
+        description="Explore the Tiptoe Sports Hub gallery — training sessions, tournaments, international camps, and memorable moments from Nepal's #1 football academy."
+        path="/gallery"
+      />
+
+      {/* Hero */}
+      <section className="pt-32 pb-20 px-4 bg-dark relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_#06145F_0%,_#030A2E_60%)]" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-green/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3" />
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+            <span className="badge-gold mb-5">Gallery</span>
+            <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Photo Gallery</h1>
+            <p className="text-white/60 max-w-xl mx-auto text-lg">Moments from training, tournaments, and international adventures.</p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Filters */}
+      <section className="py-6 px-4 bg-white border-b border-gray-100 sticky top-16 z-30">
+        <div className="max-w-7xl mx-auto flex gap-2 flex-wrap">
+          {CATEGORIES.map(c => (
+            <button
+              key={c}
+              onClick={() => setCat(c)}
+              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
+                cat === c ? 'bg-navy text-white shadow-md' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* Grid */}
+      <section className="py-12 px-4 bg-light min-h-screen">
+        <div className="max-w-7xl mx-auto">
+          {loading ? (
+            <LoadingSkeleton count={9} />
+          ) : filtered.length > 0 ? (
+            <div className="columns-2 md:columns-3 lg:columns-4 gap-3 space-y-3">
+              {filtered.map((img, i) => (
+                <motion.div
+                  key={img.id}
+                  className="break-inside-avoid cursor-pointer overflow-hidden rounded-xl"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: (i % 4) * 0.06 }}
+                  onClick={() => openLightbox(i)}
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <div className="relative group">
+                    <img
+                      src={img.url}
+                      alt={img.caption || img.category}
+                      className="w-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-navy/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                      {img.caption && <p className="text-white text-xs font-semibold">{img.caption}</p>}
+                    </div>
+                    {img.category && (
+                      <span className="absolute top-2 left-2 text-xs bg-gold text-navy font-bold px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                        {img.category}
+                      </span>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-24">
+              <FaImages className="text-6xl text-gray-200 mx-auto mb-4" />
+              <p className="text-gray-400 text-lg">No photos in this category yet.</p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {lightbox !== null && (
+          <motion.div
+            className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeLightbox}
+            onKeyDown={handleKeyDown}
+            tabIndex={0}
+          >
+            <button
+              onClick={e => { e.stopPropagation(); closeLightbox() }}
+              className="absolute top-4 right-4 text-white/60 hover:text-white p-2 rounded-full bg-white/10 transition-colors"
+            >
+              <FaTimes size={20} />
+            </button>
+            <button
+              onClick={e => { e.stopPropagation(); prev() }}
+              className="absolute left-4 text-white/60 hover:text-white p-3 rounded-full bg-white/10 transition-colors"
+            >
+              <FaChevronLeft size={20} />
+            </button>
+            <motion.div
+              key={lightbox}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              className="max-w-5xl max-h-[90vh] mx-16"
+              onClick={e => e.stopPropagation()}
+            >
+              <img
+                src={filtered[lightbox]?.url}
+                alt={filtered[lightbox]?.caption || ''}
+                className="max-w-full max-h-[85vh] object-contain rounded-xl"
+              />
+              {filtered[lightbox]?.caption && (
+                <p className="text-white/70 text-center mt-3 text-sm">{filtered[lightbox].caption}</p>
+              )}
+              <p className="text-white/40 text-center text-xs mt-1">{lightbox + 1} / {filtered.length}</p>
+            </motion.div>
+            <button
+              onClick={e => { e.stopPropagation(); next() }}
+              className="absolute right-4 text-white/60 hover:text-white p-3 rounded-full bg-white/10 transition-colors"
+            >
+              <FaChevronRight size={20} />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  )
+}
