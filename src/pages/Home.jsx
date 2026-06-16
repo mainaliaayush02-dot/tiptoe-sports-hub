@@ -4,16 +4,16 @@ import { motion, useInView } from 'framer-motion'
 import { FaArrowRight, FaUsers, FaCalendarAlt, FaTrophy, FaStar, FaChevronDown, FaQuoteLeft, FaGlobe } from 'react-icons/fa'
 import { GiSoccerBall } from 'react-icons/gi'
 import { MdSportsScore } from 'react-icons/md'
-import { query, orderBy, where, limit } from 'firebase/firestore'
+import { query, orderBy, limit } from 'firebase/firestore'
 import { eventsCol, galleryCol, testimonialsCol, programsCol } from '../firebase/collections'
 import { useCollection } from '../hooks/useFirestore'
 import { useSite } from '../contexts/SiteContext'
 import SEOHead from '../components/SEOHead'
 
-const upcomingEventsQ  = query(eventsCol, where('isUpcoming', '==', true), orderBy('date'), limit(3))
+const eventsPreviewQ   = query(eventsCol, orderBy('date'))
 const galleryPreviewQ  = query(galleryCol, orderBy('createdAt', 'desc'), limit(6))
-const testimonialsQ    = query(testimonialsCol, where('visible', '==', true))
-const programsQ        = query(programsCol, where('active', '==', true), orderBy('order'), limit(6))
+const testimonialsQ    = query(testimonialsCol, orderBy('createdAt', 'desc'))
+const programsPreviewQ = query(programsCol, orderBy('order'))
 
 const STATS = [
   { end: 370, suffix: '+', label: 'Students Daily',  Icon: FaUsers },
@@ -82,14 +82,17 @@ export default function Home() {
   const statsRef = useRef(null)
   const statsInView = useInView(statsRef, { once: true, margin: '-80px' })
 
-  const { docs: events }         = useCollection(upcomingEventsQ)
+  const { docs: allEvents }      = useCollection(eventsPreviewQ)
   const { docs: gallery }        = useCollection(galleryPreviewQ)
   const { docs: tDocs }          = useCollection(testimonialsQ)
-  const { docs: firestoreProgs } = useCollection(programsQ)
+  const { docs: firestoreProgs } = useCollection(programsPreviewQ)
 
-  const testimonials = tDocs.length > 0 ? tDocs : FALLBACK_TESTIMONIALS
+  const events = allEvents.filter(e => e.isUpcoming === true).slice(0, 3)
+  const activeTestimonials = tDocs.filter(t => t.visible !== false)
+  const testimonials = tDocs.length > 0 ? activeTestimonials : FALLBACK_TESTIMONIALS
+  const activeProgs = firestoreProgs.filter(p => p.active !== false).slice(0, 6)
   const programs = firestoreProgs.length > 0
-    ? firestoreProgs.map(p => ({ ...p, emoji: p.emoji || '⚽' }))
+    ? activeProgs.map(p => ({ ...p, emoji: p.emoji || '⚽' }))
     : FALLBACK_PROGRAMS
 
   useEffect(() => {

@@ -1,7 +1,8 @@
+import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { FaArrowRight, FaStar, FaTrophy, FaFutbol } from 'react-icons/fa'
-import { query, orderBy, where } from 'firebase/firestore'
+import { query, orderBy } from 'firebase/firestore'
 import { coachesCol } from '../firebase/collections'
 import { useCollection } from '../hooks/useFirestore'
 import SEOHead from '../components/SEOHead'
@@ -22,10 +23,11 @@ const FALLBACK_COACHES = [
 ]
 
 export default function Coaches() {
-  const coachesQ = query(coachesCol, where('active', '==', true), orderBy('order'))
+  const coachesQ = useMemo(() => query(coachesCol, orderBy('order')), [])
   const { docs, loading } = useCollection(coachesQ)
 
-  const coaches = docs.length > 0 ? docs : FALLBACK_COACHES
+  const activeCoaches = docs.filter(c => c.active !== false)
+  const coaches = docs.length > 0 ? activeCoaches : FALLBACK_COACHES
   const featured = coaches.slice(0, 2)
   const rest = coaches.slice(2)
 

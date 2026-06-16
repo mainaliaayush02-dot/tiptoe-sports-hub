@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FaArrowRight, FaFilter } from 'react-icons/fa'
 import { GiSoccerBall } from 'react-icons/gi'
-import { query, orderBy, where } from 'firebase/firestore'
+import { query, orderBy } from 'firebase/firestore'
 import { programsCol } from '../firebase/collections'
 import { useCollection } from '../hooks/useFirestore'
 import SEOHead from '../components/SEOHead'
@@ -29,10 +29,11 @@ const SPORT_GRADIENT = {
 
 export default function Programs() {
   const [activeFilter, setActiveFilter] = useState('All')
-  const activeQ = useMemo(() => query(programsCol, where('active', '==', true), orderBy('order')), [])
-  const { docs, loading } = useCollection(activeQ)
+  const programsQ = useMemo(() => query(programsCol, orderBy('order')), [])
+  const { docs, loading } = useCollection(programsQ)
 
-  const programs = docs.length > 0 ? docs : FALLBACK_PROGRAMS
+  const activePrograms = docs.filter(p => p.active !== false)
+  const programs = docs.length > 0 ? activePrograms : FALLBACK_PROGRAMS
 
   const filtered = activeFilter === 'All'
     ? programs

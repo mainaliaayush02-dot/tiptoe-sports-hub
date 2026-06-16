@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { FaStar, FaQuoteLeft, FaArrowRight } from 'react-icons/fa'
-import { query, where, orderBy } from 'firebase/firestore'
+import { query, orderBy } from 'firebase/firestore'
 import { testimonialsCol } from '../firebase/collections'
 import { useCollection } from '../hooks/useFirestore'
 import SEOHead from '../components/SEOHead'
 
-const visibleQ = query(testimonialsCol, where('visible', '==', true), orderBy('createdAt', 'desc'))
+const visibleQ = query(testimonialsCol, orderBy('createdAt', 'desc'))
 
 const FALLBACK = [
   { id: '1', name: 'Rajan Shrestha', role: 'Parent', text: 'My son has improved tremendously since joining Tiptoe Sports Hub. The coaches are professional and truly dedicated to each student. I can see the discipline and confidence building every week.', rating: 5 },
@@ -19,7 +19,8 @@ const FALLBACK = [
 
 export default function Testimonials() {
   const { docs, loading } = useCollection(visibleQ)
-  const testimonials = docs.length > 0 ? docs : FALLBACK
+  const activeTestimonials = docs.filter(t => t.visible !== false)
+  const testimonials = docs.length > 0 ? activeTestimonials : FALLBACK
 
   return (
     <>
