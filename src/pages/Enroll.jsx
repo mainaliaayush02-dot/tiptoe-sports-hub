@@ -8,7 +8,7 @@ import { addDocument } from '../hooks/useFirestore'
 import { inquiriesCol } from '../firebase/collections'
 import SEOHead from '../components/SEOHead'
 
-const SPORTS = ['Football', 'Futsal', 'Both']
+const SPORTS = ['Football', 'Futsal', 'Cricket', 'Basketball', 'Pickleball', 'Snooker', 'Sports Bar', 'Not Sure Yet']
 const AGE_GROUPS = ['Age 4–10', 'Age 11–15', 'Age 16–18', 'All Ages']
 const SCHEDULES = ['Morning (5:00–7:00 AM)', 'Afternoon (3:00–5:00 PM)', 'Evening (5:00–7:00 PM)', 'Weekend Only']
 

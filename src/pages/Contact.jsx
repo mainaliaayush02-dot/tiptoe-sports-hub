@@ -8,7 +8,7 @@ import { inquiriesCol } from '../firebase/collections'
 import { useSite } from '../contexts/SiteContext'
 import SEOHead from '../components/SEOHead'
 
-const SPORT_OPTIONS = ['Football', 'Futsal', 'Both', 'Not Sure Yet']
+const SPORT_OPTIONS = ['Football', 'Futsal', 'Cricket', 'Basketball', 'Pickleball', 'Snooker', 'Sports Bar', 'Not Sure Yet']
 
 export default function Contact() {
   const { phone, email, address, mapsLink, mapsEmbedURL, socialLinks } = useSite()

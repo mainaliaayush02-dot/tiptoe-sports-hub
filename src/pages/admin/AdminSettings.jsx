@@ -16,6 +16,9 @@ const DEFAULTS = {
   academyLogoURL: '',
   mapsLink: 'https://maps.app.goo.gl/qSVDwXY53wtm5F576',
   mapsEmbedURL: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.58!2d85.3047!3d27.7368!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb199a534fb789%3A0x9b5cd5299ace8bc!2sTarkeshwar%2C+Kathmandu!5e0!3m2!1sen!2snp!4v1',
+  hoursWeekdays: '6 AM – 9 PM',
+  hoursSaturday: '6 AM – 8 PM',
+  hoursSunday: '7 AM – 12 PM',
   socialLinks: {
     instagram: 'https://www.instagram.com/tiptoesportshub',
     facebook: 'https://www.facebook.com/tiptoeacademy',
@@ -149,6 +152,26 @@ export default function AdminSettings() {
             <label className="block text-sm font-semibold text-gray-700 mb-1.5">Maps Embed URL</label>
             <input value={form.mapsEmbedURL || ''} onChange={e => set('mapsEmbedURL', e.target.value)} className="input-field" placeholder="https://www.google.com/maps/embed?pb=..." />
             <p className="text-xs text-gray-400 mt-1">Paste the embed URL from Google Maps &gt; Share &gt; Embed a map &gt; copy the src value.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Opening Hours */}
+      <div className="bg-white rounded-2xl shadow-sm p-6">
+        <h2 className="font-bold text-navy mb-1">Opening Hours</h2>
+        <p className="text-xs text-gray-400 mb-4">Shown in the website footer. Update if your hours change.</p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Mon – Fri</label>
+            <input value={form.hoursWeekdays || ''} onChange={e => set('hoursWeekdays', e.target.value)} className="input-field" placeholder="6 AM – 9 PM" />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Saturday</label>
+            <input value={form.hoursSaturday || ''} onChange={e => set('hoursSaturday', e.target.value)} className="input-field" placeholder="6 AM – 8 PM" />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5">Sunday</label>
+            <input value={form.hoursSunday || ''} onChange={e => set('hoursSunday', e.target.value)} className="input-field" placeholder="7 AM – 12 PM" />
           </div>
         </div>
       </div>

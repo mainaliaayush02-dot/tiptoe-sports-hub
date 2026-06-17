@@ -31,7 +31,7 @@ const QUICK_LINKS = [
 ]
 
 export default function Footer() {
-  const { academyName, phone, email, address, mapsLink, logoURL, academyLogoURL, socialLinks } = useSite()
+  const { academyName, phone, email, address, mapsLink, logoURL, academyLogoURL, socialLinks, hoursWeekdays, hoursSaturday, hoursSunday } = useSite()
 
   return (
     <footer className="bg-dark text-white">
@@ -212,15 +212,15 @@ export default function Footer() {
               <div className="space-y-1.5 text-xs text-white/40">
                 <div className="flex justify-between gap-4">
                   <span>Mon – Fri</span>
-                  <span className="text-white/60">6 AM – 9 PM</span>
+                  <span className="text-white/60">{hoursWeekdays}</span>
                 </div>
                 <div className="flex justify-between gap-4">
                   <span>Saturday</span>
-                  <span className="text-white/60">6 AM – 8 PM</span>
+                  <span className="text-white/60">{hoursSaturday}</span>
                 </div>
                 <div className="flex justify-between gap-4">
                   <span>Sunday</span>
-                  <span className="text-white/60">7 AM – 12 PM</span>
+                  <span className="text-white/60">{hoursSunday}</span>
                 </div>
               </div>
             </div>

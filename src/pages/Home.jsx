@@ -5,7 +5,7 @@ import { FaArrowRight, FaUsers, FaCalendarAlt, FaTrophy, FaStar, FaChevronDown, 
 import { GiSoccerBall } from 'react-icons/gi'
 import { MdSportsScore } from 'react-icons/md'
 import { query, orderBy, limit } from 'firebase/firestore'
-import { eventsCol, galleryCol, testimonialsCol, programsCol } from '../firebase/collections'
+import { eventsCol, galleryCol, testimonialsCol, programsCol, coachesCol } from '../firebase/collections'
 import { useCollection } from '../hooks/useFirestore'
 import { useSite } from '../contexts/SiteContext'
 import SEOHead from '../components/SEOHead'
@@ -14,6 +14,7 @@ const eventsPreviewQ   = query(eventsCol, orderBy('date'))
 const galleryPreviewQ  = query(galleryCol, orderBy('createdAt', 'desc'), limit(6))
 const testimonialsQ    = query(testimonialsCol, orderBy('createdAt', 'desc'))
 const programsPreviewQ = query(programsCol, orderBy('order'))
+const coachesPreviewQ  = query(coachesCol, orderBy('order'), limit(2))
 
 const STATS = [
   { end: 370, suffix: '+', label: 'Students Daily',  Icon: FaUsers },
@@ -40,14 +41,14 @@ const FALLBACK_PROGRAMS = [
   { name: 'International Camps', ageGroup: 'Selected',  description: 'Thailand training camps, trials and international exposure for top performing students.', emoji: '🌏' },
 ]
 
-const COACHES = [
+const FALLBACK_COACHES = [
   {
-    initials: 'GB', name: 'Gaurav Basnet', role: 'President & Head Coach',
-    points: ['Nepal National Futsal Head Coach – 3 terms', 'Former Manang Marshyangdi Club Coach', 'Led Nepal in Iran, Kyrgyzstan & Mongolia'],
+    name: 'Gaurav Basnet', role: 'President & Head Coach',
+    achievements: ['Nepal National Futsal Head Coach – 3 terms', 'Former Manang Marshyangdi Club Coach', 'Led Nepal in Iran, Kyrgyzstan & Mongolia'],
   },
   {
-    initials: 'HK', name: 'Hari Khadka', role: 'Brand Ambassador & Technical Advisor',
-    points: ["Nepal's All-Time Highest International Goal Scorer", 'Former Captain, Nepal National Football Team', 'Former Acting Technical Director, ANFA'],
+    name: 'Hari Khadka', role: 'Brand Ambassador & Technical Advisor',
+    achievements: ["Nepal's All-Time Highest International Goal Scorer", 'Former Captain, Nepal National Football Team', 'Former Acting Technical Director, ANFA'],
   },
 ]
 
@@ -87,6 +88,10 @@ export default function Home() {
   const { docs: gallery }        = useCollection(galleryPreviewQ)
   const { docs: tDocs }          = useCollection(testimonialsQ)
   const { docs: firestoreProgs } = useCollection(programsPreviewQ)
+  const { docs: firestoreCoaches } = useCollection(coachesPreviewQ)
+
+  const activeCoaches = firestoreCoaches.filter(c => c.active !== false)
+  const coaches = activeCoaches.length > 0 ? activeCoaches : FALLBACK_COACHES
 
   const events = allEvents.filter(e => e.isUpcoming === true).slice(0, 3)
   const activeTestimonials = tDocs.filter(t => t.visible !== false)
@@ -301,18 +306,25 @@ export default function Home() {
               </motion.div>
             </motion.div>
 
-            {/* Featured Coaches */}
+            {/* Featured Coaches — live from Firestore, falls back to defaults */}
             <div className="space-y-5">
-              {COACHES.map(({ initials, name, role, points }, i) => (
-                <motion.div key={name}
+              {coaches.map((coach, i) => {
+                const parts = (coach.name || '').split(' ')
+                const initials = (parts[0]?.[0] || '') + (parts[1]?.[0] || '')
+                const points = Array.isArray(coach.achievements) ? coach.achievements.slice(0, 3) : []
+                return (
+                <motion.div key={coach.id || coach.name}
                   className="bg-white/5 border border-white/10 hover:border-gold/25 rounded-xl p-6 transition-all duration-300"
                   initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }} transition={{ delay: i * 0.15 }}>
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-gold flex items-center justify-center font-heading font-extrabold text-navy text-lg shrink-0">{initials}</div>
+                    {coach.photoURL
+                      ? <img src={coach.photoURL} alt={coach.name} className="w-12 h-12 rounded-lg object-cover shrink-0" onError={e => { e.target.style.display='none' }} />
+                      : <div className="w-12 h-12 rounded-lg bg-gold flex items-center justify-center font-heading font-extrabold text-navy text-lg shrink-0">{initials.toUpperCase() || 'C'}</div>
+                    }
                     <div>
-                      <div className="text-white font-heading font-semibold text-base">{name}</div>
-                      <div className="text-gold text-xs font-medium uppercase tracking-wider mt-0.5 mb-3">{role}</div>
+                      <div className="text-white font-heading font-semibold text-base">{coach.name}</div>
+                      <div className="text-gold text-xs font-medium uppercase tracking-wider mt-0.5 mb-3">{coach.role}</div>
                       <ul className="space-y-1.5">
                         {points.map(p => (
                           <li key={p} className="flex items-start gap-2 text-white/45 text-xs leading-relaxed">
@@ -323,7 +335,8 @@ export default function Home() {
                     </div>
                   </div>
                 </motion.div>
-              ))}
+                )
+              })}
               <div className="text-center pt-2">
                 <Link to="/coaches" className="text-gold hover:text-yellow-300 text-sm font-semibold transition-colors inline-flex items-center gap-1.5">
                   Meet all coaches <FaArrowRight size={11} />

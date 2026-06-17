@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { MdPeople, MdSportsScore, MdEventNote, MdPhotoLibrary, MdInbox, MdArrowForward, MdRocketLaunch, MdCheckCircle } from 'react-icons/md'
-import { query, orderBy, where, limit, addDoc, getDocs } from 'firebase/firestore'
+import { query, orderBy, limit, addDoc, getDocs } from 'firebase/firestore'
 import { programsCol, eventsCol, galleryCol, inquiriesCol, coachesCol, scheduleCol, sportsCol } from '../../firebase/collections'
 import { useCollection } from '../../hooks/useFirestore'
 import toast from 'react-hot-toast'
@@ -92,8 +92,8 @@ export default function Dashboard() {
   const [seeding, setSeeding] = useState(false)
   const [seeded, setSeeded] = useState(false)
 
-  const programsQ      = useMemo(() => query(programsCol, where('active', '==', true)), [])
-  const eventsQ        = useMemo(() => query(eventsCol, where('isUpcoming', '==', true)), [])
+  const programsQ      = useMemo(() => query(programsCol), [])
+  const eventsQ        = useMemo(() => query(eventsCol), [])
   const galleryQ       = useMemo(() => query(galleryCol), [])
   const recentQ        = useMemo(() => query(inquiriesCol, orderBy('createdAt', 'desc'), limit(10)), [])
   const allInquiriesQ  = useMemo(() => query(inquiriesCol), [])
@@ -232,10 +232,10 @@ export default function Dashboard() {
 
       {/* Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        <StatCard label="Total Inquiries"  value={allInquiries.length} Icon={MdInbox}        color="bg-navy"         to="/admin/inquiries" loading={iLoad} />
-        <StatCard label="Active Programs"  value={programs.length}     Icon={MdSportsScore}  color="bg-green"        to="/admin/programs"  loading={pLoad} />
-        <StatCard label="Upcoming Events"  value={events.length}       Icon={MdEventNote}    color="bg-gold"         to="/admin/events"    loading={eLoad} />
-        <StatCard label="Gallery Items"    value={gallery.length}      Icon={MdPhotoLibrary} color="bg-purple-500"   to="/admin/gallery"   loading={gLoad} />
+        <StatCard label="Total Inquiries"  value={allInquiries.length}                              Icon={MdInbox}        color="bg-navy"         to="/admin/inquiries" loading={iLoad} />
+        <StatCard label="Active Programs"  value={programs.filter(p => p.active !== false).length} Icon={MdSportsScore}  color="bg-green"        to="/admin/programs"  loading={pLoad} />
+        <StatCard label="Upcoming Events"  value={events.filter(e => e.isUpcoming === true).length} Icon={MdEventNote}   color="bg-gold"         to="/admin/events"    loading={eLoad} />
+        <StatCard label="Gallery Items"    value={gallery.length}                                   Icon={MdPhotoLibrary} color="bg-purple-500"   to="/admin/gallery"   loading={gLoad} />
       </div>
 
       {/* New Inquiries Alert */}

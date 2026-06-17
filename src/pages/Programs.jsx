@@ -9,7 +9,7 @@ import { useCollection } from '../hooks/useFirestore'
 import SEOHead from '../components/SEOHead'
 import LoadingSkeleton from '../components/LoadingSkeleton'
 
-const FILTERS = ['All', 'Football', 'Futsal', 'Special']
+const FILTERS = ['All', 'Football', 'Futsal', 'Basketball', 'Pickleball', 'Snooker', 'Special']
 
 const FALLBACK_PROGRAMS = [
   { id: 'f1', name: 'Football Academy', sport: 'Football', ageGroup: 'Age 4–10', description: 'Foundation skills, coordination, and a love for the beautiful game. Perfect starting point for young players.', schedule: 'Mon, Wed, Fri — 5:00 PM–6:30 PM', fee: 'NPR 2,500/month', active: true },

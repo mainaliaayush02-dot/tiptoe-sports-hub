@@ -179,6 +179,7 @@ export default function Navbar() {
             </div>
 
             {[
+              { to: '/pricing', label: 'Pricing' },
               { to: '/gallery', label: 'Gallery' },
               { to: '/blog',    label: 'Blog' },
               { to: '/contact', label: 'Contact' },
@@ -251,9 +252,13 @@ export default function Navbar() {
                   items={HUB_NAV}
                 />
 
-                <MobileNavLink to="/gallery"  label="Gallery" />
-                <MobileNavLink to="/blog"     label="Blog" />
-                <MobileNavLink to="/contact"  label="Contact" />
+                <MobileNavLink to="/pricing"      label="Pricing" />
+                <MobileNavLink to="/gallery"      label="Gallery" />
+                <MobileNavLink to="/events"       label="Events" />
+                <MobileNavLink to="/blog"         label="Blog" />
+                <MobileNavLink to="/faq"          label="FAQ" />
+                <MobileNavLink to="/testimonials" label="Testimonials" />
+                <MobileNavLink to="/contact"      label="Contact" />
               </nav>
 
               <div className="px-5 py-5 border-t border-white/10 shrink-0">
