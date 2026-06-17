@@ -11,8 +11,8 @@ const DEFAULT_SPORTS = {
   'football-futsal': {
     name: 'Football & Futsal',
     emoji: '⚽',
-    tagline: "Nepal's Premier Football & Futsal Academy",
-    description: "Tiptoe Sports Hub is Nepal's #1 private football and futsal academy, delivering world-class coaching to 370+ students daily in Tarkeshwar, Kathmandu. Our structured programs run from ages 4 to 18, combining technical skill development, tactical training, and international exposure through Thailand training camps and cross-border tournaments.",
+    tagline: "Nepal's #1 Football & Futsal Academy — Tiptoe Sports Academy",
+    description: "Tiptoe Sports Academy, operating under Tiptoe Sports Hub, is Nepal's #1 private football and futsal academy — delivering world-class coaching to 370+ students daily in Tarkeshwar, Kathmandu. Our structured programs run from ages 4 to 18, combining technical skill development, tactical training, and international exposure through annual Thailand training camps and cross-border tournaments with Thai Division clubs. Whether your child is picking up a ball for the first time or aiming for national selection, Tiptoe Sports Academy provides the environment, the coaches, and the pathway to achieve it.",
     features: ['Professional national-level coaching staff', 'Age-structured programs (4–18)', 'Annual Thailand training camps', 'International tournament exposure', 'Girls-dedicated football program', 'Indoor futsal & outdoor football'],
     facilities: ['Full-size outdoor football field', 'Indoor futsal court', 'Changing rooms & showers', 'Equipment room & kit storage', 'Coaching video analysis setup'],
     pricing: [

@@ -6,10 +6,9 @@ import { FaArrowRight, FaChevronDown } from 'react-icons/fa'
 import { useSite } from '../../contexts/SiteContext'
 
 const ACADEMY_NAV = [
-  { to: '/sports/football-futsal', emoji: '⚽', label: 'Football Academy',   desc: 'Structured programs for ages 4–18' },
-  { to: '/sports/football-futsal', emoji: '🥅', label: 'Futsal Academy',     desc: 'Indoor futsal coaching & development' },
-  { to: '/coaches',                emoji: '🧑‍🏫', label: 'Our Coaches',       desc: 'National-level coaching staff' },
-  { to: '/programs',               emoji: '📋', label: 'Training Programs',  desc: 'All programs & enrollment info' },
+  { to: '/sports/football-futsal', emoji: '⚽', label: 'Football & Futsal Academy', desc: 'Programs for ages 4–18 · Thailand exposure' },
+  { to: '/coaches',                emoji: '🧑‍🏫', label: 'Our Coaches',              desc: 'National-level coaching staff' },
+  { to: '/programs',               emoji: '📋', label: 'Training Programs',         desc: 'All programs & enrollment info' },
 ]
 
 const HUB_NAV = [
@@ -158,7 +157,7 @@ export default function Navbar() {
                 className={`flex items-center gap-1.5 px-3.5 py-2 rounded-md text-[13px] font-heading font-medium transition-all duration-200 ${isHubActive && !isAcademyActive ? 'text-gold bg-white/10' : 'text-white/70 hover:text-white hover:bg-white/8'}`}
                 onClick={() => setHubOpen(v => !v)}
               >
-                Sports Hub
+                Sports Hub &amp; Facilities
                 <motion.span animate={{ rotate: hubOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
                   <FaChevronDown size={10} />
                 </motion.span>
@@ -244,8 +243,8 @@ export default function Navbar() {
 
                 {/* Sports Hub expandable */}
                 <MobileDropSection
-                  label="Sports Hub"
-                  badge="All Facilities"
+                  label="Sports Hub & Facilities"
+                  badge="All Sports & Venues"
                   isOpen={mobileHubOpen}
                   onToggle={() => setMobileHubOpen(v => !v)}
                   isActive={isHubActive && !isAcademyActive}

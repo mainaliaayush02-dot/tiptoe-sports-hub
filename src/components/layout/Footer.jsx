@@ -8,6 +8,7 @@ import { useSite } from '../../contexts/SiteContext'
 
 const SPORTS_LINKS = [
   { to: '/sports/football-futsal', emoji: '⚽', label: 'Football & Futsal' },
+  { to: '/sports/cricket',         emoji: '🏏', label: 'Cricket' },
   { to: '/sports/basketball',      emoji: '🏀', label: 'Basketball' },
   { to: '/sports/pickleball',      emoji: '🎾', label: 'Pickleball' },
   { to: '/sports/snooker',         emoji: '🎱', label: 'Snooker' },
@@ -28,7 +29,7 @@ const QUICK_LINKS = [
 ]
 
 export default function Footer() {
-  const { academyName, phone, email, address, mapsLink, logoURL, socialLinks } = useSite()
+  const { academyName, phone, email, address, mapsLink, logoURL, academyLogoURL, socialLinks } = useSite()
 
   return (
     <footer className="bg-dark text-white">
@@ -54,18 +55,32 @@ export default function Footer() {
 
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 bg-white rounded-lg overflow-hidden p-1 shrink-0">
-                <img
-                  src={logoURL}
-                  alt={academyName}
-                  className="w-full h-full object-contain"
-                  onError={e => e.target.style.display = 'none'}
-                />
+            <div className="flex items-center gap-4 mb-5">
+              {/* Hub logo */}
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 bg-white rounded-lg overflow-hidden p-1 shrink-0">
+                  <img src={logoURL} alt="Tiptoe Sports Hub"
+                    className="w-full h-full object-contain"
+                    onError={e => e.target.style.display = 'none'} />
+                </div>
+                <div>
+                  <div className="font-heading font-extrabold text-white text-[14px] tracking-tight leading-none">TIPTOE</div>
+                  <div className="text-gold font-heading font-semibold text-[8px] tracking-[0.2em] uppercase mt-0.5">Sports Hub</div>
+                </div>
               </div>
-              <div>
-                <div className="font-heading font-extrabold text-white text-[15px] tracking-tight leading-none">TIPTOE</div>
-                <div className="text-gold font-heading font-semibold text-[9px] tracking-[0.2em] uppercase mt-0.5">Sports Hub</div>
+              {/* Divider */}
+              <div className="w-px h-8 bg-white/15 shrink-0" />
+              {/* Academy logo */}
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 bg-white rounded-lg overflow-hidden p-0.5 shrink-0">
+                  <img src={academyLogoURL} alt="Tiptoe Sports Academy"
+                    className="w-full h-full object-contain"
+                    onError={e => e.target.style.display = 'none'} />
+                </div>
+                <div>
+                  <div className="font-heading font-extrabold text-white text-[14px] tracking-tight leading-none">TIPTOE</div>
+                  <div className="text-gold font-heading font-semibold text-[8px] tracking-[0.2em] uppercase mt-0.5">Academy</div>
+                </div>
               </div>
             </div>
 
