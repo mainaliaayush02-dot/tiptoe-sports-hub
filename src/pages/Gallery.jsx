@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { FaTimes, FaChevronLeft, FaChevronRight, FaImages } from 'react-icons/fa'
 import { query, orderBy } from 'firebase/firestore'
 import { galleryCol } from '../firebase/collections'
@@ -11,7 +12,7 @@ const CATEGORIES = ['All', 'Training', 'Events', 'Tournaments', 'International']
 const allQ = query(galleryCol, orderBy('createdAt', 'desc'))
 
 const FALLBACK_IMAGES = [
-  { id: 'f1', url: '/1.png',  category: 'Training',      caption: 'Tiptoe Academy vs SWSC FA — Tarkeshwar, Kathmandu', alt: 'Tiptoe Sports Academy football team group photo with coaches at training ground in Tarkeshwar Kathmandu Nepal' },
+  { id: 'f1', url: '/1.png',  category: 'Training',      caption: 'Tiptoe Academy vs SWSC FA at Tarkeshwar, Kathmandu', alt: 'Tiptoe Sports Academy football team group photo with coaches at training ground in Tarkeshwar Kathmandu Nepal' },
   { id: 'f2', url: '/2.jpg',  category: 'Training',      caption: 'Tiptoe Academy player in match training session',    alt: 'Young footballer in Tiptoe Academy yellow jersey training at Kathmandu football academy Nepal' },
 ]
 
@@ -37,9 +38,10 @@ export default function Gallery() {
   return (
     <>
       <SEOHead
-        title="Gallery"
-        description="Explore the Tiptoe Sports Hub gallery — training sessions, tournaments, international camps, and memorable moments from Nepal's #1 football academy."
+        title="Photo Gallery at Tiptoe Sports Hub, Kathmandu"
+        description="Photos from Tiptoe Sports Hub. Football training sessions, tournaments, Thailand international camps, and memorable moments from Nepal's #1 football academy in Kathmandu."
         path="/gallery"
+        breadcrumb
       />
 
       {/* Hero */}
@@ -49,8 +51,8 @@ export default function Gallery() {
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <span className="badge-gold mb-5">Gallery</span>
-            <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Photo Gallery</h1>
-            <p className="text-white/60 max-w-xl mx-auto text-lg">Moments from training, tournaments, and international adventures.</p>
+            <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Tiptoe Sports Hub Gallery</h1>
+            <p className="text-white/60 max-w-xl mx-auto text-lg">Training sessions, tournaments, Thailand camps and more. Moments from Nepal's #1 football academy in Kathmandu.</p>
           </motion.div>
         </div>
       </section>
@@ -115,6 +117,27 @@ export default function Gallery() {
               <p className="text-gray-400 text-lg">No photos in this category yet.</p>
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Internal Links */}
+      <section className="py-12 px-4 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="font-heading font-bold text-navy text-center text-lg mb-6">Explore Tiptoe Sports Hub</h2>
+          <div className="flex flex-wrap justify-center gap-3">
+            {[
+              { to: '/programs',  label: 'Training Programs',      emoji: '📋' },
+              { to: '/coaches',   label: 'Meet Our Coaches',       emoji: '🧑‍🏫' },
+              { to: '/events',    label: 'Events & Tournaments',   emoji: '🏆' },
+              { to: '/testimonials', label: 'Student Reviews',     emoji: '⭐' },
+              { to: '/enroll',    label: 'Enroll Now',             emoji: '🎯' },
+            ].map(({ to, label, emoji }) => (
+              <Link key={to} to={to}
+                className="flex items-center gap-2 bg-light hover:bg-navy hover:text-white border border-gray-200 hover:border-navy text-gray-700 rounded-xl px-5 py-3 text-sm font-medium transition-all duration-200 shadow-sm">
+                <span>{emoji}</span> {label}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 

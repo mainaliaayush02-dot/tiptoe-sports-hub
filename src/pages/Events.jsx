@@ -23,9 +23,10 @@ export default function Events() {
   return (
     <>
       <SEOHead
-        title="Events"
-        description="Stay updated with Tiptoe Sports Hub events — tournaments, training camps, international programs, and more."
+        title="Football Academy Events and Tournaments in Kathmandu"
+        description="Upcoming and past events at Tiptoe Sports Hub. Football tournaments, international training camps in Thailand, youth competitions, and special programs in Kathmandu."
         path="/events"
+        breadcrumb
       />
 
       {/* Hero */}
@@ -35,8 +36,8 @@ export default function Events() {
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <span className="badge-gold mb-5">Events</span>
-            <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Academy Events</h1>
-            <p className="text-white/60 max-w-xl mx-auto text-lg">Tournaments, international exposure camps, and special programs.</p>
+            <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Events and Tournaments</h1>
+            <p className="text-white/60 max-w-xl mx-auto text-lg">Football tournaments, Thailand training camps, and special programs from Tiptoe Sports Academy in Kathmandu.</p>
           </motion.div>
         </div>
       </section>

@@ -25,9 +25,22 @@ export default function Testimonials() {
   return (
     <>
       <SEOHead
-        title="Testimonials"
-        description="Read what parents and students say about Tiptoe Sports Hub — Nepal's #1 football and futsal academy in Kathmandu."
+        title="Parent and Student Reviews at Tiptoe Sports Hub"
+        description="What parents and students say about Tiptoe Sports Hub, Nepal's #1 football and futsal academy in Tarkeshwar, Kathmandu. 370+ happy students, 5-star reviews."
         path="/testimonials"
+        breadcrumb
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'LocalBusiness',
+          name: 'Tiptoe Sports Hub',
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: '5',
+            reviewCount: '370',
+            bestRating: '5',
+            worstRating: '1',
+          },
+        }}
       />
 
       {/* Hero */}
@@ -37,8 +50,8 @@ export default function Testimonials() {
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <span className="badge-gold mb-5">Testimonials</span>
-            <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">What Our Community Says</h1>
-            <p className="text-white/60 max-w-xl mx-auto text-lg">Real stories from the parents and students who make Tiptoe Sports Hub what it is.</p>
+            <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Reviews & Testimonials</h1>
+            <p className="text-white/60 max-w-xl mx-auto text-lg">Real stories from parents and students at Tiptoe Sports Hub, Nepal's #1 football academy in Kathmandu.</p>
           </motion.div>
         </div>
       </section>
@@ -101,6 +114,27 @@ export default function Testimonials() {
           <h2 className="font-black text-3xl mb-4">Join Our Growing Family</h2>
           <p className="text-white/65 mb-8">Be the next success story. Enroll your child at Tiptoe Sports Hub today.</p>
           <Link to="/enroll" className="btn-primary">Enroll Now <FaArrowRight /></Link>
+        </div>
+      </section>
+
+      {/* Internal Links */}
+      <section className="py-12 px-4 bg-light">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="font-heading font-bold text-navy text-center text-lg mb-6">Explore Tiptoe Sports Hub</h2>
+          <div className="flex flex-wrap justify-center gap-3">
+            {[
+              { to: '/programs',  label: 'Training Programs',      emoji: '📋' },
+              { to: '/coaches',   label: 'Meet Our Coaches',       emoji: '🧑‍🏫' },
+              { to: '/gallery',   label: 'Photo Gallery',          emoji: '📸' },
+              { to: '/faq',       label: 'FAQ',                    emoji: '❓' },
+              { to: '/enroll',    label: 'Enroll Now',             emoji: '🎯' },
+            ].map(({ to, label, emoji }) => (
+              <Link key={to} to={to}
+                className="flex items-center gap-2 bg-white hover:bg-navy hover:text-white border border-gray-200 hover:border-navy text-gray-700 rounded-xl px-5 py-3 text-sm font-medium transition-all duration-200 shadow-sm">
+                <span>{emoji}</span> {label}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
     </>

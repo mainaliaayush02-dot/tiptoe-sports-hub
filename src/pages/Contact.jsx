@@ -31,8 +31,8 @@ export default function Contact() {
   return (
     <>
       <SEOHead
-        title="Contact Us"
-        description="Get in touch with Tiptoe Sports Hub in Tarkeshwar, Kathmandu. Ask about programs, enrollment, and partnerships."
+        title="Contact Tiptoe Sports Hub in Tarkeshwar, Kathmandu"
+        description="Contact Tiptoe Sports Hub in Tarkeshwar, Kathmandu. Ask about football academy enrollment, sports facility bookings, or partnership opportunities. Call or WhatsApp us today."
         path="/contact"
         breadcrumb
       />
@@ -44,8 +44,8 @@ export default function Contact() {
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <span className="badge-gold mb-5">Contact</span>
-            <h1 className="font-heading font-extrabold text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Get in Touch</h1>
-            <p className="text-white/60 max-w-xl mx-auto text-lg">Have a question about our programs? We would love to hear from you.</p>
+            <h1 className="font-heading font-extrabold text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Contact Us in Kathmandu</h1>
+            <p className="text-white/60 max-w-xl mx-auto text-lg">Questions about our football academy or sports facilities? We would love to hear from you.</p>
           </motion.div>
         </div>
       </section>
@@ -98,7 +98,7 @@ export default function Contact() {
             {/* Map */}
             <div className="rounded-2xl overflow-hidden shadow-card border border-gray-100">
               <iframe
-                title="Tiptoe Sports Hub Location — Tarkeshwar, Kathmandu"
+                title="Tiptoe Sports Hub Location in Tarkeshwar, Kathmandu"
                 src={mapsEmbedURL}
                 width="100%"
                 height="300"

@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { FaArrowRight, FaStar, FaTrophy, FaUsers, FaGlobe } from 'react-icons/fa'
+import { FaArrowRight, FaStar, FaTrophy, FaUsers, FaGlobe, FaCheckCircle } from 'react-icons/fa'
 import { GiSoccerBall } from 'react-icons/gi'
 import SEOHead from '../components/SEOHead'
 
 const MILESTONES = [
   { year: '2021', title: 'Founded', desc: "Tiptoe Sports Hub was established in Tarkeshwar, Kathmandu with a vision to nurture Nepal's football talent from the grassroots up." },
   { year: '2023', title: 'National Recognition', desc: 'Rapid enrollment growth to 370+ daily students, establishing Tiptoe as the country\'s most trusted and recognized football academy.' },
-  { year: '2025', title: 'Thailand Partnership', desc: 'Forged an official partnership with Silie Sports Club, Thailand — opening international doors and real pathways for our top students.' },
+  { year: '2025', title: 'Thailand Partnership', desc: 'We forged an official partnership with Silie Sports Club, Thailand, opening real international doors and pathways for our top students.' },
 ]
 
 const STATS = [
@@ -23,9 +23,29 @@ export default function About() {
   return (
     <>
       <SEOHead
-        title="About Us"
-        description="Learn about Tiptoe Sports Hub — Kathmandu's premier multi-sport destination and home of Tiptoe Sports Academy, Nepal's #1 football and futsal academy."
+        title="About Tiptoe Sports Hub in Kathmandu"
+        description="Learn about Tiptoe Sports Hub, Kathmandu's multi-sport destination and home of Tiptoe Sports Academy, Nepal's #1 football and futsal academy in Tarkeshwar."
         path="/about"
+        breadcrumb
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'Organization',
+          name: 'Tiptoe Sports Hub',
+          url: 'https://tiptoesportshub.com',
+          logo: 'https://tiptoesportshub.com/logo.jpeg',
+          foundingDate: '2021',
+          description: "Nepal's premier multi-sport destination in Tarkeshwar, Kathmandu. Football, Cricket, Basketball, Pickleball, Snooker and Sports Bar. Home of Tiptoe Sports Academy.",
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Tarkeshwar',
+            addressLocality: 'Kathmandu',
+            addressCountry: 'NP',
+          },
+          sameAs: [
+            'https://www.instagram.com/tiptoesportshub',
+            'https://www.facebook.com/tiptoesportshub',
+          ],
+        }}
       />
 
       {/* Hero */}
@@ -39,7 +59,7 @@ export default function About() {
               About Tiptoe<br /><span className="text-gold">Sports Hub</span>
             </motion.h1>
             <motion.p variants={fadeUp} className="text-white/60 text-lg max-w-2xl mx-auto">
-              Kathmandu's premier multi-sport destination — Football, Cricket, Basketball, Pickleball, Snooker & Sports Bar. Home of Tiptoe Sports Academy.
+              Kathmandu's premier multi-sport destination. Football, Cricket, Basketball, Pickleball, Snooker and Sports Bar. Home of Tiptoe Sports Academy.
             </motion.p>
           </motion.div>
         </div>
@@ -66,15 +86,15 @@ export default function About() {
             <h2 className="section-title mb-2">Welcome to Tiptoe Sports Hub</h2>
             <div className="gold-divider mb-7" />
             <div className="space-y-4 text-gray-500 text-sm leading-relaxed">
-              <p><strong className="text-navy">Tiptoe Sports Hub</strong> is Kathmandu's premier multi-sport destination, located in Tarkeshwar. We are a complete sports community — offering Football, Cricket, Basketball, Pickleball, Snooker, and a Sports Bar all under one roof.</p>
-              <p>Within the Hub operates <strong className="text-navy">Tiptoe Sports Academy</strong> — Nepal's #1 private Football &amp; Futsal Academy with 370+ students training daily. The Academy focuses exclusively on youth football and futsal development, with structured programs from ages 4 to 18 and international exposure through Thailand training camps.</p>
-              <p>Whether you are a young athlete joining the Academy, a weekend cricketer booking a ground, or a sports fan watching the big game at our Sports Bar — Tiptoe Sports Hub is your home for sports in Kathmandu.</p>
+              <p><strong className="text-navy">Tiptoe Sports Hub</strong> is Kathmandu's premier multi-sport destination, located in Tarkeshwar. We are a complete sports community offering Football, Cricket, Basketball, Pickleball, Snooker, and a Sports Bar all under one roof.</p>
+              <p>Within the Hub operates <strong className="text-navy">Tiptoe Sports Academy</strong>, Nepal's #1 private Football &amp; Futsal Academy with 370+ students training daily. The Academy focuses exclusively on youth football and futsal development, with structured programs from ages 4 to 18 and international exposure through Thailand training camps.</p>
+              <p>Whether you are a young athlete joining the Academy, a weekend cricketer booking a ground, or a sports fan catching the big game at our Sports Bar, Tiptoe Sports Hub is your home for sports in Kathmandu.</p>
             </div>
             <div className="flex flex-wrap gap-3 mt-8">
               <Link to="/enroll" className="btn-primary text-sm">
                 Join the Academy <FaArrowRight size={12} />
               </Link>
-              <Link to="/sports/cricket" className="btn-outline text-sm">
+              <Link to="/sports/football-futsal" className="btn-outline text-sm">
                 Explore All Sports <FaArrowRight size={12} />
               </Link>
             </div>
@@ -170,7 +190,7 @@ export default function About() {
             </span>
             <h2 className="font-black text-3xl md:text-4xl text-white mt-2">Nepal × Thailand</h2>
             <p className="text-white/70 text-base mt-4 max-w-2xl mx-auto leading-relaxed">
-              Official partnership with <strong className="text-white">Silie Sports Club, Thailand</strong>, presided by <strong className="text-white">Daisuke Tada</strong> — former Japanese Olympian goalkeeper. Real international doors for our students.
+              Official partnership with <strong className="text-white">Silie Sports Club, Thailand</strong>, presided by <strong className="text-white">Daisuke Tada</strong>, a former Japanese Olympian goalkeeper. Real international doors for our students.
             </p>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
@@ -189,6 +209,28 @@ export default function About() {
             <Link to="/programs" className="btn-primary text-sm">
               Explore International Programs <FaArrowRight size={12} />
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Internal Links */}
+      <section className="py-12 px-4 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="font-heading font-bold text-navy text-center text-lg mb-6">Explore Tiptoe Sports Hub</h2>
+          <div className="flex flex-wrap justify-center gap-3">
+            {[
+              { to: '/academy',   label: 'About the Academy',       emoji: '🏟️' },
+              { to: '/coaches',   label: 'Meet Our Coaches',        emoji: '🧑‍🏫' },
+              { to: '/programs',  label: 'Training Programs',       emoji: '📋' },
+              { to: '/pricing',   label: 'Membership & Pricing',    emoji: '💰' },
+              { to: '/contact',   label: 'Contact Us',              emoji: '📞' },
+              { to: '/enroll',    label: 'Enroll Now',              emoji: '🎯' },
+            ].map(({ to, label, emoji }) => (
+              <Link key={to} to={to}
+                className="flex items-center gap-2 bg-light hover:bg-navy hover:text-white border border-gray-200 hover:border-navy text-gray-700 rounded-xl px-5 py-3 text-sm font-medium transition-all duration-200 shadow-sm">
+                <span>{emoji}</span> {label}
+              </Link>
+            ))}
           </div>
         </div>
       </section>

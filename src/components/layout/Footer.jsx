@@ -83,7 +83,7 @@ export default function Footer() {
             </div>
 
             <p className="text-white/45 text-sm leading-relaxed mb-5">
-              Nepal's premier multi-sport hub in Tarkeshwar, Kathmandu. Football, Basketball, Pickleball, Snooker &amp; Sports Bar — all under one roof since 2021.
+              Nepal's premier multi-sport hub in Tarkeshwar, Kathmandu. Football, Basketball, Pickleball, Snooker and Sports Bar, all under one roof since 2021.
             </p>
 
             {/* Social icons */}

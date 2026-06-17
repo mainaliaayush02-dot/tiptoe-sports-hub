@@ -25,17 +25,17 @@ const SPORT_COLOR = {
 }
 
 const FALLBACK_PROGRAMS = [
-  { id: 'f1', name: 'Football Foundation', sport: 'Football', ageGroup: 'Age 4–10',   description: 'Foundation skills, coordination and a love for the beautiful game.', schedule: 'Mon, Wed, Fri — 3:00 PM–5:00 PM', fee: 'NPR 2,500/month', emoji: '⚽', active: true, order: 1 },
-  { id: 'f2', name: 'Youth Development',   sport: 'Football', ageGroup: 'Age 11–15',  description: 'Intermediate tactical training focusing on positioning, team play and skill development.', schedule: 'Mon, Wed, Fri — 4:00 PM–6:00 PM', fee: 'NPR 3,000/month', emoji: '⚽', active: true, order: 2 },
-  { id: 'f3', name: 'Elite Performance',   sport: 'Football', ageGroup: 'Age 16–18',  description: 'Elite performance program with professional-level training methodologies and match analysis.', schedule: 'Tue, Thu, Sat — 6:00 AM–8:00 AM', fee: 'NPR 3,500/month', emoji: '🏆', active: true, order: 3 },
-  { id: 'fu1', name: 'Futsal Academy',     sport: 'Futsal',   ageGroup: 'All Ages',   description: 'Indoor futsal techniques, fast-paced play skills and futsal-specific tactics for all ages.', schedule: 'Tue, Thu, Sat — 4:00 PM–6:00 PM', fee: 'NPR 2,800/month', emoji: '🥅', active: true, order: 4 },
-  { id: 'sp1', name: 'Girls Football',     sport: 'Special',  ageGroup: 'Age 8–18',   description: 'A dedicated program empowering girls through football. Supportive environment with female-focused coaching.', schedule: 'Mon, Wed, Fri — 3:00 PM–5:00 PM', fee: 'NPR 2,500/month', emoji: '⭐', active: true, order: 5 },
+  { id: 'f1', name: 'Football Foundation', sport: 'Football', ageGroup: 'Age 4–10',   description: 'Foundation skills, coordination and a love for the beautiful game.', schedule: 'Mon, Wed, Fri:3:00 PM–5:00 PM', fee: 'NPR 2,500/month', emoji: '⚽', active: true, order: 1 },
+  { id: 'f2', name: 'Youth Development',   sport: 'Football', ageGroup: 'Age 11–15',  description: 'Intermediate tactical training focusing on positioning, team play and skill development.', schedule: 'Mon, Wed, Fri:4:00 PM–6:00 PM', fee: 'NPR 3,000/month', emoji: '⚽', active: true, order: 2 },
+  { id: 'f3', name: 'Elite Performance',   sport: 'Football', ageGroup: 'Age 16–18',  description: 'Elite performance program with professional-level training methodologies and match analysis.', schedule: 'Tue, Thu, Sat:6:00 AM–8:00 AM', fee: 'NPR 3,500/month', emoji: '🏆', active: true, order: 3 },
+  { id: 'fu1', name: 'Futsal Academy',     sport: 'Futsal',   ageGroup: 'All Ages',   description: 'Indoor futsal techniques, fast-paced play skills and futsal-specific tactics for all ages.', schedule: 'Tue, Thu, Sat:4:00 PM–6:00 PM', fee: 'NPR 2,800/month', emoji: '🥅', active: true, order: 4 },
+  { id: 'sp1', name: 'Girls Football',     sport: 'Special',  ageGroup: 'Age 8–18',   description: 'A dedicated program empowering girls through football. Supportive environment with female-focused coaching.', schedule: 'Mon, Wed, Fri:3:00 PM–5:00 PM', fee: 'NPR 2,500/month', emoji: '⭐', active: true, order: 5 },
 ]
 
 const FALLBACK_COACHES = [
   {
     id: 'gc', name: 'Gaurav Basnet', role: 'President & Head Coach', experience: '27+ Years', featured: true,
-    achievements: ['Nepal National Futsal Team Head Coach — 3 consecutive terms', 'Former Head Coach, Manang Marshyangdi Club (A Division)', 'Led Nepal internationally: Iran, Kyrgyzstan, Mongolia', 'Co-founded Tiptoe Sports Hub in 2021'],
+    achievements: ['Nepal National Futsal Team Head Coach, 3 consecutive terms', 'Former Head Coach, Manang Marshyangdi Club (A Division)', 'Led Nepal internationally: Iran, Kyrgyzstan, Mongolia', 'Co-founded Tiptoe Sports Hub in 2021'],
   },
   {
     id: 'hk', name: 'Hari Khadka', role: 'Brand Ambassador & Technical Advisor', experience: '20+ Years', featured: true,
@@ -77,9 +77,10 @@ export default function Academy() {
   return (
     <>
       <SEOHead
-        title="About Tiptoe Sports Academy"
-        description="Tiptoe Sports Academy — Nepal's #1 private football & futsal academy in Tarkeshwar, Kathmandu. Structured programs for ages 4–18, national-level coaches, and international exposure to Thailand."
+        title="Tiptoe Sports Academy: Football & Futsal in Kathmandu"
+        description="Nepal's #1 football & futsal academy in Tarkeshwar, Kathmandu. Programs for ages 4–18, national-level coaches, and annual Thailand training camps."
         path="/academy"
+        breadcrumb
       />
 
       {/* Hero */}
@@ -147,7 +148,7 @@ export default function Academy() {
                 Beyond coaching, we create real international pathways. Through our official partnership with <strong className="text-navy">Silie Sports Club, Thailand</strong>, selected students participate in annual training camps, Asian championships, and trials with Thai Division clubs.
               </p>
               <p>
-                We believe every child deserves access to quality football coaching. Whether your child is picking up a ball for the first time or preparing for a professional career — Tiptoe Sports Academy has the right program for them.
+                We believe every child deserves access to quality football coaching. Whether your child is just starting out or preparing for a professional career, Tiptoe Sports Academy has the right program for them.
               </p>
             </div>
             <div className="flex flex-wrap gap-3 mt-8">
@@ -302,7 +303,7 @@ export default function Academy() {
             </span>
             <h2 className="font-black text-3xl md:text-4xl text-white mt-2">Nepal × Thailand</h2>
             <p className="text-white/70 text-base mt-4 max-w-2xl mx-auto leading-relaxed">
-              Official partnership with <strong className="text-white">Silie Sports Club, Thailand</strong>, presided by <strong className="text-white">Daisuke Tada</strong> — former Japanese Olympian goalkeeper. Real international doors for our students.
+              Official partnership with <strong className="text-white">Silie Sports Club, Thailand</strong>, presided by <strong className="text-white">Daisuke Tada</strong>, a former Japanese Olympian goalkeeper. Real international doors for our students.
             </p>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">

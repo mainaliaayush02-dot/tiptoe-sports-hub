@@ -40,9 +40,37 @@ export default function Coaches() {
   return (
     <>
       <SEOHead
-        title="Coaches | Tiptoe Sports Academy"
-        description="Meet our world-class coaches at Tiptoe Sports Academy — including Gaurav Basnet, Nepal National Futsal Head Coach, and Hari Khadka, Nepal's all-time top scorer."
+        title="Football Coaches in Kathmandu"
+        description="Meet Tiptoe Sports Academy's coaches. Gaurav Basnet served as Nepal National Futsal Head Coach for 3 terms, and Hari Khadka is Nepal's all-time top international goal scorer."
         path="/coaches"
+        breadcrumb
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'ItemList',
+          name: 'Tiptoe Sports Academy Coaches',
+          itemListElement: [
+            {
+              '@type': 'ListItem', position: 1,
+              item: {
+                '@type': 'Person',
+                name: 'Gaurav Basnet',
+                jobTitle: 'President & Head Coach',
+                description: 'Nepal National Futsal Team Head Coach for 3 consecutive terms. Co-founder of Tiptoe Sports Hub. 27+ years in football.',
+                worksFor: { '@type': 'Organization', name: 'Tiptoe Sports Academy' },
+              },
+            },
+            {
+              '@type': 'ListItem', position: 2,
+              item: {
+                '@type': 'Person',
+                name: 'Hari Khadka',
+                jobTitle: 'Brand Ambassador & Technical Advisor',
+                description: "Nepal's all-time highest international goal scorer and former captain of the Nepal National Football Team.",
+                worksFor: { '@type': 'Organization', name: 'Tiptoe Sports Academy' },
+              },
+            },
+          ],
+        }}
       />
 
       {/* Hero */}
@@ -56,9 +84,9 @@ export default function Coaches() {
                 onError={e => e.target.style.display = 'none'} />
             )}
             <span className="badge-gold mb-5">Tiptoe Sports Academy</span>
-            <h1 className="font-heading font-extrabold text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Meet Our Coaches</h1>
+            <h1 className="font-heading font-extrabold text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Football Coaches in Kathmandu</h1>
             <p className="text-white/60 max-w-xl mx-auto text-lg">
-              Learn from Nepal's finest — coaches who have represented Nepal on the international stage and now dedicate their expertise to developing the next generation.
+              Learn from Nepal's finest coaches, people who have represented the country on the international stage and now give everything to develop the next generation at Tiptoe Sports Academy.
             </p>
           </motion.div>
         </div>

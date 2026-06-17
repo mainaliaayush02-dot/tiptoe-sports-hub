@@ -58,9 +58,10 @@ export default function Schedule() {
   return (
     <>
       <SEOHead
-        title="Schedule"
-        description="View Tiptoe Sports Hub's weekly training schedule. Filter by sport and age group to find the right session for your child."
+        title="Football & Futsal Training Schedule in Kathmandu"
+        description="Weekly football and futsal training schedule at Tiptoe Sports Academy, Tarkeshwar Kathmandu. Morning and evening sessions for ages 4–18, Monday through Saturday."
         path="/schedule"
+        breadcrumb
       />
 
       {/* Hero */}
@@ -70,8 +71,8 @@ export default function Schedule() {
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <span className="badge-gold mb-5">Training Schedule</span>
-            <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Weekly Schedule</h1>
-            <p className="text-white/60 max-w-xl mx-auto text-lg">Find a training session that fits your schedule.</p>
+            <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Training Schedule</h1>
+            <p className="text-white/60 max-w-xl mx-auto text-lg">Football and futsal sessions Monday through Saturday. Find the right time for your child in Tarkeshwar, Kathmandu.</p>
           </motion.div>
         </div>
       </section>
@@ -134,6 +135,27 @@ export default function Schedule() {
           <div className="text-center mt-12">
             <p className="text-gray-500 mb-4">Ready to start your training journey?</p>
             <Link to="/enroll" className="btn-primary">Enroll Now <FaArrowRight /></Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Internal Links */}
+      <section className="py-12 px-4 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="font-heading font-bold text-navy text-center text-lg mb-6">Explore More</h2>
+          <div className="flex flex-wrap justify-center gap-3">
+            {[
+              { to: '/programs',  label: 'Training Programs',        emoji: '📋' },
+              { to: '/pricing',   label: 'Membership & Pricing',     emoji: '💰' },
+              { to: '/coaches',   label: 'Meet Our Coaches',         emoji: '🧑‍🏫' },
+              { to: '/sports/football-futsal', label: 'Football & Futsal', emoji: '⚽' },
+              { to: '/enroll',    label: 'Enroll Now',               emoji: '🎯' },
+            ].map(({ to, label, emoji }) => (
+              <Link key={to} to={to}
+                className="flex items-center gap-2 bg-light hover:bg-navy hover:text-white border border-gray-200 hover:border-navy text-gray-700 rounded-xl px-5 py-3 text-sm font-medium transition-all duration-200 shadow-sm">
+                <span>{emoji}</span> {label}
+              </Link>
+            ))}
           </div>
         </div>
       </section>

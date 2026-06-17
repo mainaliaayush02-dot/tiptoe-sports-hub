@@ -11,8 +11,8 @@ const DEFAULT_SPORTS = {
   'football-futsal': {
     name: 'Football & Futsal',
     emoji: '⚽',
-    tagline: "Nepal's #1 Football & Futsal Academy — Tiptoe Sports Academy",
-    description: "Tiptoe Sports Academy, operating under Tiptoe Sports Hub, is Nepal's #1 private football and futsal academy — delivering world-class coaching to 370+ students daily in Tarkeshwar, Kathmandu. Our structured programs run from ages 4 to 18, combining technical skill development, tactical training, and international exposure through annual Thailand training camps and cross-border tournaments with Thai Division clubs. Whether your child is picking up a ball for the first time or aiming for national selection, Tiptoe Sports Academy provides the environment, the coaches, and the pathway to achieve it.",
+    tagline: "Nepal's #1 Football & Futsal Academy in Kathmandu",
+    description: "Tiptoe Sports Academy, operating under Tiptoe Sports Hub, is Nepal's #1 private football and futsal academy. We deliver world-class coaching to 370+ students daily in Tarkeshwar, Kathmandu. Our structured programs run from ages 4 to 18, combining technical skill development, tactical training, and international exposure through annual Thailand training camps and cross-border tournaments with Thai Division clubs. Whether your child is picking up a ball for the first time or aiming for national selection, Tiptoe Sports Academy provides the environment, the coaches, and the pathway to achieve it.",
     features: ['Professional national-level coaching staff', 'Age-structured programs (4–18)', 'Annual Thailand training camps', 'International tournament exposure', 'Girls-dedicated football program', 'Indoor futsal & outdoor football'],
     facilities: ['Full-size outdoor football field', 'Indoor futsal court', 'Changing rooms & showers', 'Equipment room & kit storage', 'Coaching video analysis setup'],
     pricing: [
@@ -23,8 +23,9 @@ const DEFAULT_SPORTS = {
       { plan: 'Girls Football',      age: 'Age 8–18',  price: 'NPR 2,500/month', desc: 'Safe, empowering development environment' },
     ],
     schedule: 'Mon–Fri: 6AM–8AM & 3PM–7PM | Sat–Sun: 7AM–12PM',
-    seoTitle: 'Football & Futsal Academy in Kathmandu | Tiptoe Sports Hub',
-    seoDescription: "Nepal's #1 football and futsal academy in Tarkeshwar, Kathmandu. Programs for ages 4–18, professional coaches, and international exposure to Thailand.",
+    seoTitle: 'Football & Futsal Academy in Kathmandu',
+    h1: 'Football & Futsal Academy in Kathmandu',
+    seoDescription: "Nepal's #1 football and futsal academy in Tarkeshwar, Kathmandu. Programs for ages 4–18, professional coaches, and international Thailand training camps.",
     color: '#06145F',
     badge: 'Primary Sport',
   },
@@ -56,8 +57,9 @@ const DEFAULT_SPORTS = {
       { plan: 'Youth Academy',     age: 'Age 8–18',    price: 'NPR 3,500/month',   desc: 'Structured youth development' },
     ],
     schedule: 'Daily: 6AM–8PM | Ground bookings available all week',
-    seoTitle: 'Cricket Ground in Kathmandu | Tiptoe Sports Hub',
-    seoDescription: 'Professional cricket ground and training facilities in Tarkeshwar, Kathmandu. Ground hire, net practice, coaching programs and youth cricket academy at Tiptoe Sports Hub.',
+    seoTitle: 'Cricket Ground & Coaching in Kathmandu',
+    h1: 'Cricket Ground & Coaching in Kathmandu',
+    seoDescription: 'Cricket ground and coaching in Tarkeshwar, Kathmandu. Ground hire, batting nets, bowling machine, and youth academy at Tiptoe Sports Hub.',
     color: '#1B5E20',
     badge: 'Cricket',
   },
@@ -65,7 +67,7 @@ const DEFAULT_SPORTS = {
     name: 'Basketball',
     emoji: '🏀',
     tagline: 'Premium Courts & Professional Coaching',
-    description: "Experience premium basketball training and open play at Tiptoe Sports Hub. Our professional-grade courts and coaching staff provide the perfect environment for players of all skill levels — from beginners picking up a ball for the first time to competitive athletes sharpening their game.",
+    description: "Experience premium basketball training and open play at Tiptoe Sports Hub. Our professional-grade courts and coaching staff provide the perfect environment for players of all skill levels. From beginners picking up a ball for the first time to competitive athletes sharpening their game.",
     features: ['Professional full-size courts', 'Skill development coaching sessions', 'Open play & recreational hours', 'Youth & adult training groups', 'Team booking available', 'Competitive league registration support'],
     facilities: ['Full-size basketball court', 'Scoreboard & timing system', 'Comfortable spectator seating', 'Locker rooms with showers', 'Ball & equipment rental'],
     pricing: [
@@ -75,7 +77,8 @@ const DEFAULT_SPORTS = {
       { plan: 'Team Package',     age: '5+ players', price: 'NPR 6,000/month',  desc: 'Team court time + coach feedback' },
     ],
     schedule: 'Daily: 6AM–10PM | Coached sessions: Tue, Thu, Sat 5PM–7PM',
-    seoTitle: 'Basketball Courts & Training in Kathmandu | Tiptoe Sports Hub',
+    seoTitle: 'Basketball Courts & Training in Kathmandu',
+    h1: 'Basketball Courts & Training in Kathmandu',
     seoDescription: 'Premium basketball courts and professional training in Tarkeshwar, Kathmandu. Open play, monthly memberships, and coached sessions for all ages.',
     color: '#B85A00',
     badge: 'Popular',
@@ -94,7 +97,8 @@ const DEFAULT_SPORTS = {
       { plan: 'Tournament Entry', age: 'Members',   price: 'NPR 500/event',    desc: 'Monthly competitive events' },
     ],
     schedule: 'Daily: 6AM–10PM | Beginner sessions: Mon, Wed 6PM–8PM',
-    seoTitle: 'Pickleball Courts in Kathmandu | Tiptoe Sports Hub',
+    seoTitle: 'Pickleball Courts in Kathmandu',
+    h1: 'Pickleball Courts in Kathmandu',
     seoDescription: "Nepal's premier pickleball facility in Tarkeshwar, Kathmandu. Beginner-friendly courts, equipment included, coaching and monthly tournaments.",
     color: '#1B7F5E',
     badge: 'Trending',
@@ -113,7 +117,8 @@ const DEFAULT_SPORTS = {
       { plan: 'Day Pass',         age: 'All Ages', price: 'NPR 400/day',       desc: 'Full day table access' },
     ],
     schedule: 'Daily: 10AM–11PM | Open 7 days a week',
-    seoTitle: 'Snooker Club in Kathmandu | Tiptoe Sports Hub',
+    seoTitle: 'Premium Snooker Club in Kathmandu',
+    h1: 'Premium Snooker Club in Kathmandu',
     seoDescription: 'Premium snooker club with professional tables in Tarkeshwar, Kathmandu. Table hire, memberships, VIP packages and a relaxed club atmosphere.',
     color: '#2D7D46',
     badge: 'Members Club',
@@ -132,7 +137,8 @@ const DEFAULT_SPORTS = {
       { plan: 'Match Day Package', age: 'Groups',    price: 'NPR 5,000 / 10 pax', price2: 'Food + drinks + reserved seating' },
     ],
     schedule: 'Mon–Thu: 4PM–11PM | Fri–Sun: 12PM–12AM | Special event hours vary',
-    seoTitle: 'Sports Bar in Kathmandu | Tiptoe Sports Hub',
+    seoTitle: 'Sports Bar in Kathmandu',
+    h1: 'Sports Bar in Tarkeshwar, Kathmandu',
     seoDescription: "Kathmandu's premier sports bar in Tarkeshwar. Live sports on big screens, premium drinks, great food and unforgettable match-day atmospheres.",
     color: '#8B4A00',
     badge: 'Social Hub',
@@ -216,8 +222,9 @@ export default function SportPage() {
         title={sport.seoTitle}
         description={sport.seoDescription}
         path={`/sports/${slug}`}
+        breadcrumb
+        schema={structuredData}
       />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
 
       {/* HERO */}
       <section className="relative min-h-[60vh] flex items-end bg-dark overflow-hidden">
@@ -237,7 +244,7 @@ export default function SportPage() {
               </motion.div>
             )}
             <motion.h1 variants={fadeUp} className="font-heading font-extrabold text-4xl sm:text-5xl md:text-6xl text-white leading-tight mb-4">
-              {sport.name}
+              {sport.h1 || sport.name}
             </motion.h1>
             <motion.p variants={fadeUp} className="text-white/60 text-lg md:text-xl leading-relaxed mb-8 max-w-xl font-light">
               {sport.tagline}

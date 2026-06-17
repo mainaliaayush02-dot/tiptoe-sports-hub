@@ -10,6 +10,27 @@ import LoadingSkeleton from '../components/LoadingSkeleton'
 
 const publishedQ = query(blogCol, orderBy('publishedAt', 'desc'))
 
+const FALLBACK_BLOG = [
+  {
+    id: 'b1', status: 'published', category: 'International',
+    title: 'Tiptoe Sports Academy Students Complete Thailand Training Camp with Silie Sports Club',
+    excerpt: 'Selected students from Tiptoe Sports Academy traveled to Bangkok for an intensive football training camp with Silie Sports Club, gaining international match experience against Thai Division sides.',
+    author: 'Tiptoe Sports Hub', slug: '#', publishedAt: new Date('2025-03-01'),
+  },
+  {
+    id: 'b2', status: 'published', category: 'Coaching',
+    title: "Nepal's #1 Football Academy: How Tiptoe Sports Hub Develops Champions from Age 4",
+    excerpt: "Tiptoe Sports Academy's structured age-group programs guide young athletes from their first kick at age 4 all the way to elite-level competition at 18, with professional national-level coaching at every stage.",
+    author: 'Tiptoe Sports Hub', slug: '#', publishedAt: new Date('2025-01-15'),
+  },
+  {
+    id: 'b3', status: 'published', category: 'Coaching',
+    title: 'Meet Gaurav Basnet: The Coach Who Led Nepal to Three Futsal Championships',
+    excerpt: "Nepal National Futsal Team Head Coach for three consecutive terms, Gaurav Basnet brings world-class expertise to every session at Tiptoe Sports Academy in Tarkeshwar, Kathmandu.",
+    author: 'Tiptoe Sports Hub', slug: '#', publishedAt: new Date('2024-11-20'),
+  },
+]
+
 const CATEGORY_COLORS = {
   News: 'bg-blue-100 text-blue-700',
   Training: 'bg-green/10 text-green',
@@ -26,14 +47,15 @@ function formatDate(ts) {
 
 export default function Blog() {
   const { docs, loading } = useCollection(publishedQ)
-  const posts = docs.filter(p => p.status === 'published')
+  const posts = docs.length > 0 ? docs.filter(p => p.status === 'published') : FALLBACK_BLOG
 
   return (
     <>
       <SEOHead
-        title="Blog"
-        description="Read the latest news, training tips, and stories from Tiptoe Sports Hub — Nepal's #1 football and futsal academy."
+        title="News & Stories from Tiptoe Sports Hub"
+        description="Latest news, training tips, and stories from Tiptoe Sports Hub, Nepal's #1 football and futsal academy in Tarkeshwar, Kathmandu."
         path="/blog"
+        breadcrumb
       />
 
       {/* Hero */}
@@ -43,8 +65,8 @@ export default function Blog() {
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <span className="badge-gold mb-5">Blog</span>
-            <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">News &amp; Stories</h1>
-            <p className="text-white/60 max-w-xl mx-auto text-lg">Academy updates, training tips, player stories, and more.</p>
+            <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">News & Stories from the Academy</h1>
+            <p className="text-white/60 max-w-xl mx-auto text-lg">Football training tips, player stories, tournament updates, and more from Tiptoe Sports Hub, Kathmandu.</p>
           </motion.div>
         </div>
       </section>

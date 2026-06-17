@@ -4,7 +4,7 @@ const SITE_NAME = 'Tiptoe Sports Hub'
 const BASE_URL = 'https://tiptoesportshub.com'
 const DEFAULT_IMAGE = `${BASE_URL}/logo.jpeg`
 const DEFAULT_DESC =
-  "Tiptoe Sports Hub — Kathmandu's premier multi-sport destination in Tarkeshwar. Football, Cricket, Basketball, Pickleball, Snooker & Sports Bar. Home of Tiptoe Sports Academy, Nepal's #1 football & futsal academy."
+  "Tiptoe Sports Hub is Kathmandu's premier multi-sport destination in Tarkeshwar. Football, Cricket, Basketball, Pickleball, Snooker and Sports Bar. Home of Tiptoe Sports Academy, Nepal's #1 football and futsal academy."
 
 const BREADCRUMB_BASE = {
   '@context': 'https://schema.org',
@@ -20,10 +20,11 @@ export default function SEOHead({
   path = '',
   image = DEFAULT_IMAGE,
   breadcrumb,
+  schema,
 }) {
   const fullTitle = title
-    ? `${title} | ${SITE_NAME} — Sports Hub & Academy, Kathmandu`
-    : `${SITE_NAME} | Multi-Sport Hub & Football Academy in Kathmandu, Nepal`
+    ? `${title} | ${SITE_NAME}`
+    : `${SITE_NAME} | Football Academy & Multi-Sport Hub in Kathmandu`
   const url = `${BASE_URL}${path}`
 
   const breadcrumbSchema = breadcrumb
@@ -62,6 +63,12 @@ export default function SEOHead({
       {breadcrumbSchema && (
         <script type="application/ld+json">
           {JSON.stringify(breadcrumbSchema)}
+        </script>
+      )}
+      {/* Page-level structured data */}
+      {schema && (
+        <script type="application/ld+json">
+          {JSON.stringify(schema)}
         </script>
       )}
     </Helmet>

@@ -109,7 +109,8 @@ export default function Home() {
   return (
     <>
       <SEOHead
-        description="Nepal's #1 multi-sport hub in Tarkeshwar, Kathmandu — Football, Basketball, Pickleball, Snooker & Sports Bar. 370+ students, professional coaching for ages 4–18."
+        title="Nepal's #1 Football Academy & Multi-Sport Hub in Kathmandu"
+        description="Football, Cricket, Basketball, Pickleball, Snooker and Sports Bar at Tiptoe Sports Hub in Tarkeshwar, Kathmandu. 370+ students with professional coaching for ages 4 to 18."
         path="/"
       />
 
@@ -132,13 +133,14 @@ export default function Home() {
               </motion.div>
 
               <motion.h1 variants={fadeUp} className="font-heading font-extrabold text-5xl sm:text-6xl md:text-7xl text-white leading-[1.05] tracking-tight mb-6">
+                <span className="sr-only">Football Academy and Multi-Sport Hub in Tarkeshwar, Kathmandu. </span>
                 One Hub.<br />
                 <span className="text-gold">All Sports.</span>{' '}
                 <span className="text-green">One Family.</span>
               </motion.h1>
 
               <motion.p variants={fadeUp} className="text-white/55 text-lg md:text-xl leading-relaxed mb-10 max-w-xl font-light">
-                Football, Basketball, Pickleball, Snooker &amp; Sports Bar — all under one roof in Tarkeshwar, Kathmandu. Professional coaching for ages 4–18 with international exposure.
+                Football, Basketball, Pickleball, Snooker and Sports Bar, all under one roof in Tarkeshwar, Kathmandu. Professional coaching for ages 4 to 18 with international exposure.
               </motion.p>
 
               <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4">
@@ -195,7 +197,7 @@ export default function Home() {
             <motion.h2 variants={fadeUp} className="section-title-white">All Sports. One Hub.</motion.h2>
             <motion.div variants={fadeUp} className="gold-divider mx-auto mt-4" />
             <motion.p variants={fadeUp} className="text-white/45 mt-4 max-w-lg mx-auto text-sm leading-relaxed">
-              Kathmandu's only destination for Football, Basketball, Pickleball, Snooker, and a Sports Bar — all under one premium roof.
+              Kathmandu's only destination for Football, Basketball, Pickleball, Snooker, and a Sports Bar, all under one premium roof.
             </motion.p>
           </motion.div>
 
@@ -285,9 +287,9 @@ export default function Home() {
               <motion.div variants={stagger} className="space-y-5">
                 {[
                   { title: 'Professional Coaching Staff',  desc: "Led by Nepal's National Futsal Head Coach and all-time highest international goal scorer." },
-                  { title: 'Based in Kathmandu',          desc: "Conveniently located in Tarkeshwar — the heart of Nepal's sports community." },
+                  { title: 'Based in Kathmandu',          desc: "Conveniently located in Tarkeshwar, the heart of Nepal's sports community." },
                   { title: 'International Exposure',      desc: 'Annual Thailand training camps, cross-border tournaments, and foreign club trials.' },
-                  { title: 'Multi-Sport Destination',     desc: 'Football, Basketball, Pickleball, Snooker & Sports Bar — everything in one premium hub.' },
+                  { title: 'Multi-Sport Destination',     desc: 'Football, Basketball, Pickleball, Snooker and Sports Bar, everything in one premium hub.' },
                 ].map(({ title, desc }) => (
                   <motion.div key={title} variants={fadeUp} className="flex gap-4">
                     <div className="w-1.5 h-1.5 rounded-full bg-gold mt-2.5 shrink-0" />
@@ -440,7 +442,7 @@ export default function Home() {
               Ready to Join<br />Kathmandu's Best Sports Hub?
             </motion.h2>
             <motion.p variants={fadeUp} className="text-white/70 text-lg max-w-xl mx-auto mb-10">
-              Football, Basketball, Pickleball, Snooker &amp; Sports Bar — all at Tarkeshwar, Kathmandu. Ages 4–18, all skill levels welcome.
+              Football, Basketball, Pickleball, Snooker and Sports Bar, all at Tarkeshwar, Kathmandu. Ages 4 to 18, all skill levels welcome.
             </motion.p>
             <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/enroll" className="btn-primary py-4 px-10">Enroll Now <FaArrowRight size={13} /></Link>

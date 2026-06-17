@@ -12,13 +12,13 @@ import LoadingSkeleton from '../components/LoadingSkeleton'
 const FILTERS = ['All', 'Football', 'Futsal', 'Basketball', 'Pickleball', 'Snooker', 'Special']
 
 const FALLBACK_PROGRAMS = [
-  { id: 'f1', name: 'Football Academy', sport: 'Football', ageGroup: 'Age 4–10', description: 'Foundation skills, coordination, and a love for the beautiful game. Perfect starting point for young players.', schedule: 'Mon, Wed, Fri — 5:00 PM–6:30 PM', fee: 'NPR 2,500/month', active: true },
-  { id: 'f2', name: 'Football Academy', sport: 'Football', ageGroup: 'Age 11–15', description: 'Intermediate tactical training focusing on positioning, team play, and individual skill development.', schedule: 'Mon, Wed, Fri — 4:00 PM–6:00 PM', fee: 'NPR 3,000/month', active: true },
-  { id: 'f3', name: 'Football Academy', sport: 'Football', ageGroup: 'Age 16–18', description: 'Elite performance program with professional-level training methodologies and match analysis.', schedule: 'Tue, Thu, Sat — 6:00 AM–8:00 AM', fee: 'NPR 3,500/month', active: true },
-  { id: 'fu1', name: 'Futsal Academy', sport: 'Futsal', ageGroup: 'All Ages', description: 'Indoor futsal techniques, fast-paced play skills, and futsal-specific tactics for all ages.', schedule: 'Tue, Thu, Sat — 4:00 PM–6:00 PM', fee: 'NPR 2,800/month', active: true },
-  { id: 'sp1', name: "Girls Football Program", sport: 'Special', ageGroup: 'Age 8–18', description: 'A dedicated program empowering girls through football. Supportive environment with female-focused coaching.', schedule: 'Mon, Wed, Fri — 3:00 PM–5:00 PM', fee: 'NPR 2,500/month', active: true },
-  { id: 'sp2', name: 'Holiday Camps', sport: 'Special', ageGroup: 'All Ages', description: 'Intensive short-term programs during school holidays. Focus on accelerated skill development and fun.', schedule: 'Daily during school holidays — 8:00 AM–12:00 PM', fee: 'NPR 5,000/week', active: true },
-  { id: 'sp3', name: 'International Exposure', sport: 'Special', ageGroup: 'Selected', description: 'Thailand training camps, Asian championship participation, and trials with Thai Division clubs for selected students.', schedule: 'Annual — Thailand (Bangkok)', fee: 'Contact for details', active: true },
+  { id: 'f1', name: 'Football Academy', sport: 'Football', ageGroup: 'Age 4–10', description: 'Foundation skills, coordination, and a love for the beautiful game. Perfect starting point for young players.', schedule: 'Mon, Wed, Fri:5:00 PM–6:30 PM', fee: 'NPR 2,500/month', active: true },
+  { id: 'f2', name: 'Football Academy', sport: 'Football', ageGroup: 'Age 11–15', description: 'Intermediate tactical training focusing on positioning, team play, and individual skill development.', schedule: 'Mon, Wed, Fri:4:00 PM–6:00 PM', fee: 'NPR 3,000/month', active: true },
+  { id: 'f3', name: 'Football Academy', sport: 'Football', ageGroup: 'Age 16–18', description: 'Elite performance program with professional-level training methodologies and match analysis.', schedule: 'Tue, Thu, Sat:6:00 AM–8:00 AM', fee: 'NPR 3,500/month', active: true },
+  { id: 'fu1', name: 'Futsal Academy', sport: 'Futsal', ageGroup: 'All Ages', description: 'Indoor futsal techniques, fast-paced play skills, and futsal-specific tactics for all ages.', schedule: 'Tue, Thu, Sat:4:00 PM–6:00 PM', fee: 'NPR 2,800/month', active: true },
+  { id: 'sp1', name: "Girls Football Program", sport: 'Special', ageGroup: 'Age 8–18', description: 'A dedicated program empowering girls through football. Supportive environment with female-focused coaching.', schedule: 'Mon, Wed, Fri:3:00 PM–5:00 PM', fee: 'NPR 2,500/month', active: true },
+  { id: 'sp2', name: 'Holiday Camps', sport: 'Special', ageGroup: 'All Ages', description: 'Intensive short-term programs during school holidays. Focus on accelerated skill development and fun.', schedule: 'Daily during school holidays: 8:00 AM–12:00 PM', fee: 'NPR 5,000/week', active: true },
+  { id: 'sp3', name: 'International Exposure', sport: 'Special', ageGroup: 'Selected', description: 'Thailand training camps, Asian championship participation, and trials with Thai Division clubs for selected students.', schedule: 'Annual, Thailand (Bangkok)', fee: 'Contact for details', active: true },
 ]
 
 const SPORT_GRADIENT = {
@@ -42,9 +42,10 @@ export default function Programs() {
   return (
     <>
       <SEOHead
-        title="Programs"
-        description="Explore Tiptoe Sports Hub's football and futsal programs for ages 4–18. Beginner to elite, with girls programs, holiday camps, and international exposure."
+        title="Football & Futsal Training Programs in Kathmandu"
+        description="Football and futsal training programs for ages 4–18 at Tiptoe Sports Academy, Tarkeshwar Kathmandu. Foundation to elite level, girls programs, and Thailand international camps."
         path="/programs"
+        breadcrumb
       />
 
       {/* Hero */}
@@ -54,9 +55,9 @@ export default function Programs() {
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <span className="badge-gold mb-5">Programs</span>
-            <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Training Programs</h1>
+            <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Football & Futsal Programs</h1>
             <p className="text-white/60 max-w-xl mx-auto text-lg">
-              Structured programs for every age and skill level — from your child's first kick to elite performance.
+              Structured programs for every age, from your child's first kick at age 4 to elite performance at 18, in Tarkeshwar, Kathmandu.
             </p>
           </motion.div>
         </div>

@@ -71,23 +71,29 @@ export default function Pricing() {
   const plans = activeDocs.length > 0 ? activeDocs : FALLBACK_PRICING
   const filtered = tab === 'All' ? plans : plans.filter(p => p.sport === tab)
 
-  const faqSchema = {
+  const pricingSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'Tiptoe Sports Hub Membership & Pricing',
     description: 'Pricing plans for Football, Cricket, Basketball, Pickleball, Snooker, and Sports Bar at Tiptoe Sports Hub, Kathmandu',
     url: 'https://tiptoesportshub.com/pricing',
+    itemListElement: FALLBACK_PRICING.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: `${p.sport}: ${p.title}`,
+      description: `${p.price}${p.period ? ' ' + p.period : ''}${p.features?.length ? ' · ' + p.features[0] : ''}`,
+    })),
   }
 
   return (
     <>
       <SEOHead
-        title="Membership & Pricing"
-        description="Transparent pricing for all sports at Tiptoe Sports Hub, Kathmandu. Football, Cricket, Basketball, Pickleball, Snooker memberships and Sports Bar packages. NPR pricing, no hidden fees."
+        title="Sports Membership & Pricing in Kathmandu"
+        description="Transparent pricing for Football, Cricket, Basketball, Pickleball, Snooker and Sports Bar at Tiptoe Sports Hub in Kathmandu. NPR pricing, no hidden fees."
         path="/pricing"
         breadcrumb
+        schema={pricingSchema}
       />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       {/* Hero */}
       <section className="pt-32 pb-20 px-4 bg-dark relative overflow-hidden">
@@ -98,7 +104,7 @@ export default function Pricing() {
             <span className="badge-gold mb-5">Pricing</span>
             <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Membership & Pricing</h1>
             <p className="text-white/60 max-w-xl mx-auto text-lg">
-              Transparent pricing for every sport — no hidden fees. All prices in Nepali Rupees (NPR).
+              Transparent pricing for every sport. No hidden fees. All prices in Nepali Rupees (NPR).
             </p>
           </motion.div>
         </div>

@@ -11,7 +11,7 @@ const CATEGORIES = ['All', 'General', 'Academy', 'Pricing', 'Sports Hub']
 
 const FALLBACK_FAQS = [
   { id: 'q1', category: 'General', order: 1, question: 'Where is Tiptoe Sports Hub located?', answer: 'Tiptoe Sports Hub is located in Tarkeshwar, Kathmandu, Nepal. We are easily accessible from Ring Road and have parking available on site.' },
-  { id: 'q2', category: 'General', order: 2, question: 'What sports facilities does Tiptoe Sports Hub offer?', answer: 'We offer Football & Futsal, Cricket, Basketball, Pickleball, Snooker, and a Sports Bar — all under one roof in Tarkeshwar, Kathmandu. Tiptoe Sports Academy (football & futsal coaching) also operates from here.' },
+  { id: 'q2', category: 'General', order: 2, question: 'What sports facilities does Tiptoe Sports Hub offer?', answer: 'We offer Football and Futsal, Cricket, Basketball, Pickleball, Snooker, and a Sports Bar, all under one roof in Tarkeshwar, Kathmandu. Tiptoe Sports Academy (football and futsal coaching) also operates from here.' },
   { id: 'q3', category: 'General', order: 3, question: 'What are your opening hours?', answer: 'Mon–Fri: 6AM–9PM | Saturday: 6AM–8PM | Sunday: 7AM–12PM. Sports Bar: Mon–Thu 4PM–11PM, Fri–Sun 12PM–12AM. Hours may vary on public holidays.' },
   { id: 'q4', category: 'General', order: 4, question: 'Is parking available at Tiptoe Sports Hub?', answer: 'Yes, we have on-site parking for both two-wheelers and four-wheelers. Parking is free for all members and visitors.' },
   { id: 'q5', category: 'Academy', order: 5, question: 'What age groups does Tiptoe Sports Academy accept?', answer: 'Tiptoe Sports Academy accepts students from age 4 to 18. We offer: Football Foundation (Age 4–10), Youth Development (Age 11–15), Elite Performance (Age 16–18), Girls Football (Age 8–18), and Futsal Academy (all ages).' },
@@ -98,12 +98,12 @@ export default function FAQ() {
   return (
     <>
       <SEOHead
-        title="FAQ"
-        description="Frequently asked questions about Tiptoe Sports Hub and Tiptoe Sports Academy in Kathmandu. Programs, pricing, facilities, enrollment, and more."
+        title="Frequently Asked Questions"
+        description="Common questions about Tiptoe Sports Hub and Academy in Kathmandu, covering programs, pricing, enrollment, age groups, facilities, and international exposure."
         path="/faq"
         breadcrumb
+        schema={faqSchema}
       />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       {/* Hero */}
       <section className="pt-32 pb-20 px-4 bg-dark relative overflow-hidden">

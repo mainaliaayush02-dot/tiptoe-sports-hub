@@ -7,7 +7,7 @@ import SEOHead from '../components/SEOHead'
 export default function NotFound() {
   return (
     <>
-      <SEOHead title="404 — Page Not Found" description="The page you're looking for doesn't exist." path="/404" />
+      <SEOHead title="404: Page Not Found" description="The page you're looking for doesn't exist." path="/404" />
       <div className="min-h-screen bg-dark relative overflow-hidden flex items-center justify-center px-4 text-white">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#06145F_0%,_#030A2E_60%)]" />
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green/5 rounded-full blur-[100px]" />

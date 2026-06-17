@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { FaArrowRight, FaCheckCircle, FaFutbol } from 'react-icons/fa'
@@ -58,9 +59,10 @@ export default function Enroll() {
   return (
     <>
       <SEOHead
-        title="Enroll Now"
-        description="Enroll at Tiptoe Sports Hub — Nepal's #1 football and futsal academy. Fill out the form and our team will contact you within 24 hours."
+        title="Enroll at Tiptoe Sports Academy in Kathmandu"
+        description="Enroll your child at Tiptoe Sports Academy in Tarkeshwar, Kathmandu. Nepal's #1 football and futsal academy. Fill in the form and we'll contact you within 24 hours."
         path="/enroll"
+        breadcrumb
       />
 
       {/* Hero */}
@@ -70,14 +72,14 @@ export default function Enroll() {
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <span className="badge-gold mb-5">Join Us</span>
-            <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Enroll Now</h1>
-            <p className="text-white/60 max-w-xl mx-auto text-lg">Fill out the form below and our team will contact you within 24 hours to get you started.</p>
+            <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Enroll at Tiptoe Sports Academy</h1>
+            <p className="text-white/60 max-w-xl mx-auto text-lg">Fill out the form and our team will contact you within 24 hours to find the right program for your child in Kathmandu.</p>
           </motion.div>
         </div>
       </section>
 
       {/* Form */}
-      <section className="py-20 px-4 bg-light">
+      <section className="py-20 px-4 bg-light" id="form">
         <div className="max-w-3xl mx-auto">
           <motion.div className="bg-white rounded-2xl shadow-md p-8 md:p-10" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <div className="flex items-center gap-3 mb-8">
@@ -86,7 +88,7 @@ export default function Enroll() {
               </div>
               <div>
                 <h2 className="font-black text-2xl text-navy">Enrollment Inquiry</h2>
-                <p className="text-gray-500 text-sm">No commitment — just the first step</p>
+                <p className="text-gray-500 text-sm">No commitment. Just the first step.</p>
               </div>
             </div>
 
@@ -206,6 +208,27 @@ export default function Enroll() {
               </button>
             </form>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Internal Links */}
+      <section className="py-12 px-4 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="font-heading font-bold text-navy text-center text-lg mb-6">Learn More Before You Enroll</h2>
+          <div className="flex flex-wrap justify-center gap-3">
+            {[
+              { to: '/programs',  label: 'Training Programs',            emoji: '📋' },
+              { to: '/pricing',   label: 'Membership & Pricing',         emoji: '💰' },
+              { to: '/coaches',   label: 'Meet Our Coaches',             emoji: '🧑‍🏫' },
+              { to: '/faq',       label: 'Frequently Asked Questions',   emoji: '❓' },
+              { to: '/sports/football-futsal', label: 'Football & Futsal', emoji: '⚽' },
+            ].map(({ to, label, emoji }) => (
+              <Link key={to} to={to}
+                className="flex items-center gap-2 bg-light hover:bg-navy hover:text-white border border-gray-200 hover:border-navy text-gray-700 rounded-xl px-5 py-3 text-sm font-medium transition-all duration-200 shadow-sm">
+                <span>{emoji}</span> {label}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
     </>
