@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#06145F" />
     <meta name="robots" content="index, follow" />
-    <title>Tiptoe Sports Hub | Nepal's #1 Football &amp; Futsal Academy</title>
-    <meta name="description" content="Nepal's premier private football and futsal academy in Tarkeshwar, Kathmandu. Professional coaching for ages 4–18 with international exposure to Thailand." />
+    <title>Tiptoe Sports Hub | Multi-Sport Destination in Kathmandu — Football, Cricket, Basketball &amp; More</title>
+    <meta name="description" content="Tiptoe Sports Hub — Kathmandu's premier multi-sport destination in Tarkeshwar. Football, Cricket, Basketball, Pickleball, Snooker & Sports Bar. Home of Tiptoe Sports Academy, Nepal's #1 football & futsal academy." />
+    <meta name="keywords" content="Sports Hub Kathmandu, Football Academy Kathmandu, Cricket Ground Kathmandu, Basketball Court Kathmandu, Pickleball Kathmandu, Snooker Kathmandu, Sports Bar Kathmandu, Tiptoe Sports Hub, Tiptoe Academy, Football Coaching Kathmandu, Youth Football Nepal, Futsal Academy Kathmandu, Multi Sports Facility Kathmandu" />
     <!-- Google Fonts: Outfit (headings) + Inter (body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,19 +17,21 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "SportsActivityLocation",
+      "@type": ["SportsActivityLocation", "LocalBusiness"],
       "name": "Tiptoe Sports Hub",
-      "description": "Nepal's #1 private football and futsal academy. Professional coaching for ages 4–18 with international exposure.",
+      "description": "Kathmandu's premier multi-sport destination — Football, Cricket, Basketball, Pickleball, Snooker & Sports Bar. Home of Tiptoe Sports Academy, Nepal's #1 football and futsal academy.",
       "url": "https://tiptoesportshub.com",
       "logo": "https://tiptoesportshub.com/logo.jpeg",
       "image": "https://tiptoesportshub.com/logo.jpeg",
       "telephone": "+977-980-0000000",
       "email": "info@tiptoesportshub.com",
       "foundingDate": "2021",
+      "priceRange": "NPR",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Tarkeshwar",
         "addressLocality": "Kathmandu",
+        "addressRegion": "Bagmati",
         "addressCountry": "NP"
       },
       "geo": {
@@ -36,13 +39,23 @@
         "latitude": 27.7368,
         "longitude": 85.3047
       },
-      "openingHours": ["Mo-Fr 05:00-20:00", "Sa 06:00-14:00"],
+      "openingHoursSpecification": [
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "06:00", "closes": "21:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "06:00", "closes": "20:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "07:00", "closes": "12:00" }
+      ],
       "sameAs": [
         "https://www.instagram.com/tiptoesportshub",
         "https://www.facebook.com/tiptoeacademy",
         "https://www.tiktok.com/@tiptoesportshub1504"
       ],
-      "hasMap": "https://maps.app.goo.gl/qSVDwXY53wtm5F576"
+      "hasMap": "https://maps.app.goo.gl/qSVDwXY53wtm5F576",
+      "department": {
+        "@type": "SportsActivityLocation",
+        "name": "Tiptoe Sports Academy",
+        "description": "Nepal's #1 private football and futsal academy. Structured programs for ages 4–18 with international exposure to Thailand.",
+        "logo": "https://tiptoesportshub.com/academy-logo.jpeg"
+      }
     }
     </script>
   </head>

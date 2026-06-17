@@ -4,7 +4,7 @@ const SITE_NAME = 'Tiptoe Sports Hub'
 const BASE_URL = 'https://tiptoesportshub.com'
 const DEFAULT_IMAGE = `${BASE_URL}/logo.jpeg`
 const DEFAULT_DESC =
-  "Nepal's #1 private football and futsal academy in Tarkeshwar, Kathmandu. Professional coaching for ages 4–18 with international exposure to Thailand."
+  "Tiptoe Sports Hub — Kathmandu's premier multi-sport destination in Tarkeshwar. Football, Cricket, Basketball, Pickleball, Snooker & Sports Bar. Home of Tiptoe Sports Academy, Nepal's #1 football & futsal academy."
 
 const BREADCRUMB_BASE = {
   '@context': 'https://schema.org',
@@ -22,8 +22,8 @@ export default function SEOHead({
   breadcrumb,
 }) {
   const fullTitle = title
-    ? `${title} | ${SITE_NAME} — Football & Futsal Academy, Kathmandu`
-    : `${SITE_NAME} | Nepal's #1 Football & Futsal Academy in Kathmandu`
+    ? `${title} | ${SITE_NAME} — Sports Hub & Academy, Kathmandu`
+    : `${SITE_NAME} | Multi-Sport Hub & Football Academy in Kathmandu, Nepal`
   const url = `${BASE_URL}${path}`
 
   const breadcrumbSchema = breadcrumb

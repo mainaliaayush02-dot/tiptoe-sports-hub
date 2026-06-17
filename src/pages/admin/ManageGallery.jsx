@@ -11,6 +11,7 @@ const CATEGORIES = ['Training', 'Events', 'Tournaments', 'International']
 export default function ManageGallery() {
   const [newUrl, setNewUrl] = useState('')
   const [newCaption, setNewCaption] = useState('')
+  const [newAlt, setNewAlt] = useState('')
   const [selectedCat, setSelectedCat] = useState('Training')
   const [adding, setAdding] = useState(false)
   const [deleteId, setDeleteId] = useState(null)
@@ -25,9 +26,10 @@ export default function ManageGallery() {
     if (!newUrl.trim()) { toast.error('Please paste an image URL.'); return }
     setAdding(true)
     try {
-      await addDocument(galleryCol, { url: newUrl.trim(), category: selectedCat, caption: newCaption.trim(), order: Date.now() })
+      await addDocument(galleryCol, { url: newUrl.trim(), category: selectedCat, caption: newCaption.trim(), alt: newAlt.trim(), order: Date.now(), createdAt: Date.now() })
       setNewUrl('')
       setNewCaption('')
+      setNewAlt('')
       toast.success('Image added!')
     } catch { toast.error('Failed to add image.') }
     finally { setAdding(false) }
@@ -71,12 +73,18 @@ export default function ManageGallery() {
             value={newCaption}
             onChange={e => setNewCaption(e.target.value)}
             className="input-field flex-1"
-            placeholder="Caption (optional)"
+            placeholder="Caption (optional — shown on hover)"
           />
           <button onClick={handleAdd} disabled={adding} className="btn-primary text-sm py-2.5 disabled:opacity-60 whitespace-nowrap">
             <MdAdd size={18} /> {adding ? 'Adding...' : 'Add Image'}
           </button>
         </div>
+        <input
+          value={newAlt}
+          onChange={e => setNewAlt(e.target.value)}
+          className="input-field w-full mt-3"
+          placeholder="SEO Alt Text — describe the photo for search engines (e.g. Tiptoe Academy football training Kathmandu Nepal)"
+        />
 
         {/* Preview */}
         {newUrl && (

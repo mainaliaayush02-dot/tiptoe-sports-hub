@@ -8,13 +8,19 @@ import SEOHead from '../components/SEOHead'
 import LoadingSkeleton from '../components/LoadingSkeleton'
 
 const CATEGORIES = ['All', 'Training', 'Events', 'Tournaments', 'International']
-const allQ = query(galleryCol, orderBy('order'))
+const allQ = query(galleryCol, orderBy('createdAt', 'desc'))
+
+const FALLBACK_IMAGES = [
+  { id: 'f1', url: '/1.png',  category: 'Training',      caption: 'Tiptoe Academy vs SWSC FA — Tarkeshwar, Kathmandu', alt: 'Tiptoe Sports Academy football team group photo with coaches at training ground in Tarkeshwar Kathmandu Nepal' },
+  { id: 'f2', url: '/2.jpg',  category: 'Training',      caption: 'Tiptoe Academy player in match training session',    alt: 'Young footballer in Tiptoe Academy yellow jersey training at Kathmandu football academy Nepal' },
+]
 
 export default function Gallery() {
   const [cat, setCat] = useState('All')
   const [lightbox, setLightbox] = useState(null)
-  const { docs: images, loading } = useCollection(allQ)
+  const { docs, loading } = useCollection(allQ)
 
+  const images = docs.length > 0 ? docs : FALLBACK_IMAGES
   const filtered = cat === 'All' ? images : images.filter(img => img.category === cat)
 
   const openLightbox = idx => setLightbox(idx)
@@ -87,7 +93,7 @@ export default function Gallery() {
                   <div className="relative group">
                     <img
                       src={img.url}
-                      alt={img.caption || img.category}
+                      alt={img.alt || img.caption || `Tiptoe Sports Academy ${img.category} Kathmandu Nepal`}
                       className="w-full object-cover"
                       loading="lazy"
                     />
@@ -146,7 +152,7 @@ export default function Gallery() {
             >
               <img
                 src={filtered[lightbox]?.url}
-                alt={filtered[lightbox]?.caption || ''}
+                alt={filtered[lightbox]?.alt || filtered[lightbox]?.caption || 'Tiptoe Sports Academy Kathmandu Nepal'}
                 className="max-w-full max-h-[85vh] object-contain rounded-xl"
               />
               {filtered[lightbox]?.caption && (
