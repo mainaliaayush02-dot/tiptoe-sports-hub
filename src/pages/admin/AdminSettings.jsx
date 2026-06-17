@@ -9,7 +9,7 @@ const DEFAULTS = {
   academyName: 'Tiptoe Sports Hub',
   tagline: 'A Home for Future Players',
   phone: '',
-  email: 'info@tiptoesportshub.com',
+  email: 'tiptoesportshub@gmail.com',
   address: 'Tarkeshwar, Kathmandu, Nepal',
   whatsapp: '9779800000000',
   logoURL: '',

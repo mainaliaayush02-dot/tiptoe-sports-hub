@@ -5,8 +5,8 @@ import { settingsDoc } from '../firebase/collections'
 const DEFAULTS = {
   academyName: 'Tiptoe Sports Hub',
   tagline: 'A Home for Future Players',
-  phone: '+977 980-0000000',
-  email: 'info@tiptoesportshub.com',
+  phone: '+977 984-1416893',
+  email: 'tiptoesportshub@gmail.com',
   address: 'Tarkeshwar, Kathmandu, Nepal',
   whatsapp: '9779800000000',
   logoURL: '/logo.jpeg',

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { MdPeople, MdSportsScore, MdEventNote, MdPhotoLibrary, MdInbox, MdArrowForward, MdRocketLaunch, MdCheckCircle } from 'react-icons/md'
 import { query, orderBy, limit, addDoc, getDocs } from 'firebase/firestore'
-import { programsCol, eventsCol, galleryCol, inquiriesCol, coachesCol, scheduleCol, sportsCol } from '../../firebase/collections'
+import { programsCol, eventsCol, galleryCol, inquiriesCol, coachesCol, scheduleCol, sportsCol, pricingCol, faqCol } from '../../firebase/collections'
 import { useCollection } from '../../hooks/useFirestore'
 import toast from 'react-hot-toast'
 
@@ -58,6 +58,43 @@ const SEED_SPORTS = [
   { name: 'Sports Bar', slug: 'sports-bar', emoji: '🍹', tagline: 'Live Sports, Premium Drinks & Great Vibes', description: "The ultimate sports viewing experience at Tiptoe Sports Hub. Multiple large HD screens, live sports broadcasts, premium drinks, great food, and a vibrant community atmosphere. Watch Champions League, World Cup, or Nepal Super League.", facilities: "Multiple large HD projection screens\nFull bar service\nIndoor lounge seating\nOutdoor terrace area\nPrivate event space (up to 50 guests)\nLive sports satellite subscription", pricing: "Walk-In - Free entry with drink purchase\nVIP Table (4 pax) - NPR 2,000 minimum spend\nMatch Day Package - NPR 5,000 for 10 pax (food + drinks + seating)\nPrivate Event - Contact for quote", schedule: 'Mon-Thu: 4PM-11PM | Fri-Sun: 12PM-12AM | Special event hours vary', seoTitle: 'Sports Bar in Kathmandu | Tiptoe Sports Hub', seoDescription: "Kathmandu's premier sports bar in Tarkeshwar. Live sports on big screens, premium drinks, great food.", color: '#8B4A00', active: true, order: 5 },
 ]
 
+const SEED_PRICING = [
+  { sport: 'Football', title: 'Football Foundation', price: 'NPR 2,500', period: '/month', badge: '',        features: ['3 sessions/week', 'Age 4–10', 'Foundation skills & fun', 'Certified coaching', 'Kit provided'],                        active: true, order: 1 },
+  { sport: 'Football', title: 'Youth Development',   price: 'NPR 3,000', period: '/month', badge: 'Popular', features: ['3 sessions/week', 'Age 11–15', 'Tactical & competitive prep', 'Match analysis', 'Certified coaching'],                 active: true, order: 2 },
+  { sport: 'Football', title: 'Elite Performance',   price: 'NPR 3,500', period: '/month', badge: '',        features: ['5 sessions/week', 'Age 16–18', 'High-intensity professional track', 'International exposure', 'Video analysis'],       active: true, order: 3 },
+  { sport: 'Football', title: 'Futsal Academy',       price: 'NPR 2,800', period: '/month', badge: '',        features: ['3 sessions/week', 'All ages', 'Indoor futsal specific', 'Certified coaching'],                                          active: true, order: 4 },
+  { sport: 'Football', title: 'Girls Football',       price: 'NPR 2,500', period: '/month', badge: '',        features: ['3 sessions/week', 'Age 8–18', 'Female-focused coaching', 'Safe supportive environment'],                               active: true, order: 5 },
+  { sport: 'Cricket',  title: 'Ground Hire',          price: 'NPR 3,000', period: '/session', badge: '',      features: ['Full ground (2 hrs)', 'Professional pitch', 'Changing rooms included', 'Equipment available'],                          active: true, order: 6 },
+  { sport: 'Cricket',  title: 'Net Practice',         price: 'NPR 800',   period: '/hr',      badge: '',      features: ['Batting nets (4 lanes)', 'Equipment available', 'Bowling machine access'],                                             active: true, order: 7 },
+  { sport: 'Cricket',  title: 'Coaching Program',     price: 'NPR 4,000', period: '/month',   badge: 'Popular', features: ['All ages', 'Skill tracking', 'Professional coaches', 'Video analysis'],                                             active: true, order: 8 },
+  { sport: 'Basketball', title: 'Court Hire',         price: 'NPR 1,500', period: '/hr',      badge: '',      features: ['Full court access', 'Walk-ins welcome', 'Ball included'],                                                             active: true, order: 9 },
+  { sport: 'Basketball', title: 'Monthly Membership', price: 'NPR 4,000', period: '/month',   badge: 'Popular', features: ['Unlimited court access', 'All ages', 'Locker room access'],                                                         active: true, order: 10 },
+  { sport: 'Pickleball', title: 'Court Hire',         price: 'NPR 1,200', period: '/hr',      badge: '',      features: ['Paddles & balls included', 'Walk-ins welcome', 'Professional courts'],                                               active: true, order: 11 },
+  { sport: 'Pickleball', title: 'Monthly Access',     price: 'NPR 3,500', period: '/month',   badge: 'Popular', features: ['Unlimited court access', 'All ages', 'Equipment included'],                                                        active: true, order: 12 },
+  { sport: 'Snooker',  title: 'Table Hire',           price: 'NPR 800',   period: '/hr',      badge: '',      features: ['Professional tables', 'Cues & chalk included', 'Walk-ins welcome'],                                                  active: true, order: 13 },
+  { sport: 'Snooker',  title: 'Monthly Member',       price: 'NPR 3,000', period: '/month',   badge: 'Popular', features: ['Unlimited play', 'Priority booking', 'Club atmosphere'],                                                           active: true, order: 14 },
+  { sport: 'Snooker',  title: 'VIP Membership',       price: 'NPR 5,000', period: '/month',   badge: 'Best Value', features: ['Priority booking', 'Lounge access', 'Exclusive events'],                                                       active: true, order: 15 },
+  { sport: 'Sports Bar', title: 'Walk-In',            price: 'Free entry', period: '',         badge: '',      features: ['With minimum drink purchase', 'Live sports on big screens', 'Full drinks & food menu'],                              active: true, order: 16 },
+  { sport: 'Sports Bar', title: 'VIP Table',          price: 'NPR 2,000', period: 'min spend', badge: 'Popular', features: ['Reserved seating for 4', 'Priority service', 'All major sports events'],                                          active: true, order: 17 },
+]
+
+const SEED_FAQ = [
+  { category: 'General',    order: 1,  active: true, question: 'Where is Tiptoe Sports Hub located?',                            answer: 'Tiptoe Sports Hub is located in Tarkeshwar, Kathmandu, Nepal. We are easily accessible from Ring Road and have parking available on site.' },
+  { category: 'General',    order: 2,  active: true, question: 'What sports facilities does Tiptoe Sports Hub offer?',           answer: 'We offer Football & Futsal, Cricket, Basketball, Pickleball, Snooker, and a Sports Bar — all under one roof in Tarkeshwar, Kathmandu.' },
+  { category: 'General',    order: 3,  active: true, question: 'What are your opening hours?',                                    answer: 'Mon–Fri: 6AM–9PM | Saturday: 6AM–8PM | Sunday: 7AM–12PM. Sports Bar: Mon–Thu 4PM–11PM, Fri–Sun 12PM–12AM. Hours may vary on public holidays.' },
+  { category: 'Academy',    order: 4,  active: true, question: 'What age groups does Tiptoe Sports Academy accept?',             answer: 'Tiptoe Sports Academy accepts students from age 4 to 18. Programs: Football Foundation (Age 4–10), Youth Development (Age 11–15), Elite Performance (Age 16–18), Girls Football (Age 8–18), and Futsal Academy (all ages).' },
+  { category: 'Academy',    order: 5,  active: true, question: 'Do you offer international exposure for students?',              answer: 'Yes! Selected students participate in annual Thailand training camps and international tournaments, including exposure to Thai Division clubs for elite players.' },
+  { category: 'Academy',    order: 6,  active: true, question: 'How many students are currently enrolled?',                      answer: 'Tiptoe Sports Academy has 370+ active students enrolled across all programs, making us one of the largest private football & futsal academies in Nepal.' },
+  { category: 'Academy',    order: 7,  active: true, question: 'Do you have a girls-only football program?',                     answer: 'Yes! Our Girls Football Program is open to ages 8–18, providing a safe, supportive, and empowering environment with female-focused coaching.' },
+  { category: 'Academy',    order: 8,  active: true, question: 'How do I enroll my child in the academy?',                       answer: 'Fill in the enrollment form at /enroll, or contact us directly via phone or WhatsApp. We will schedule a trial session and confirm enrollment with program details and fees.' },
+  { category: 'Pricing',    order: 9,  active: true, question: 'How much does it cost to join the football academy?',            answer: 'Football programs start from NPR 2,500/month (Age 4–10), NPR 3,000/month (Age 11–15), and NPR 3,500/month for the Elite program (Age 16–18). Futsal Academy is NPR 2,800/month. Girls Football is NPR 2,500/month.' },
+  { category: 'Pricing',    order: 10, active: true, question: 'Is there a registration fee to join?',                           answer: 'Yes, there is a one-time registration and kit fee upon enrollment. Please contact us or visit the Pricing page for the latest amounts and any current promotions.' },
+  { category: 'Pricing',    order: 11, active: true, question: 'Do you offer monthly or annual memberships?',                    answer: 'We offer monthly memberships for all sports. Basketball, Pickleball, and Snooker monthly memberships include unlimited access. Contact us for corporate group packages and seasonal discounts.' },
+  { category: 'Sports Hub', order: 12, active: true, question: 'Can I book a cricket ground for a private match?',               answer: 'Yes! The full cricket ground is available for hire at NPR 3,000/session (2 hours). Net practice lanes are NPR 800/hr. Contact us to check availability and make a booking.' },
+  { category: 'Sports Hub', order: 13, active: true, question: 'Is Pickleball beginner-friendly?',                               answer: 'Absolutely! We provide paddles and balls, run beginner coaching every Monday and Wednesday evening, and our staff will help you get started on day one.' },
+  { category: 'Sports Hub', order: 14, active: true, question: 'Can I host a private event at the Sports Bar?',                  answer: 'Yes! The Sports Bar is available for private events for up to 50 guests, with exclusive venue hire, full catering, and live sports broadcasting. Contact us for a custom quote.' },
+]
+
 /* ── Stat card ─────────────────────────────────────────────────────────── */
 const STATUS_COLORS = {
   new: 'bg-blue-100 text-blue-700',
@@ -101,22 +138,27 @@ export default function Dashboard() {
   const allCoachesQ    = useMemo(() => query(coachesCol), [])
   const allScheduleQ   = useMemo(() => query(scheduleCol), [])
   const allSportsQ     = useMemo(() => query(sportsCol), [])
+  const allPricingQ    = useMemo(() => query(pricingCol), [])
+  const allFaqQ        = useMemo(() => query(faqCol), [])
 
-  const { docs: programs,     loading: pLoad } = useCollection(programsQ)
-  const { docs: events,       loading: eLoad } = useCollection(eventsQ)
-  const { docs: gallery,      loading: gLoad } = useCollection(galleryQ)
-  const { docs: recent,       loading: rLoad } = useCollection(recentQ)
-  const { docs: allInquiries, loading: iLoad } = useCollection(allInquiriesQ)
-  const { docs: allPrograms,  loading: apLoad } = useCollection(allProgramsQ)
-  const { docs: allCoaches,   loading: acLoad } = useCollection(allCoachesQ)
-  const { docs: allSchedule,  loading: asLoad } = useCollection(allScheduleQ)
+  const { docs: programs,     loading: pLoad }   = useCollection(programsQ)
+  const { docs: events,       loading: eLoad }   = useCollection(eventsQ)
+  const { docs: gallery,      loading: gLoad }   = useCollection(galleryQ)
+  const { docs: recent,       loading: rLoad }   = useCollection(recentQ)
+  const { docs: allInquiries, loading: iLoad }   = useCollection(allInquiriesQ)
+  const { docs: allPrograms,  loading: apLoad }  = useCollection(allProgramsQ)
+  const { docs: allCoaches,   loading: acLoad }  = useCollection(allCoachesQ)
+  const { docs: allSchedule,  loading: asLoad }  = useCollection(allScheduleQ)
   const { docs: allSports,    loading: assLoad } = useCollection(allSportsQ)
+  const { docs: allPricing,   loading: prLoad }  = useCollection(allPricingQ)
+  const { docs: allFaq,       loading: fqLoad }  = useCollection(allFaqQ)
 
   const newCount = allInquiries.filter(i => i.status === 'new').length
-  const anyLoading = apLoad || acLoad || asLoad || assLoad
+  const anyLoading = apLoad || acLoad || asLoad || assLoad || prLoad || fqLoad
 
   const needsSetup = !anyLoading && (
-    allPrograms.length === 0 || allCoaches.length === 0 || allSchedule.length === 0 || allSports.length === 0
+    allPrograms.length === 0 || allCoaches.length === 0 || allSchedule.length === 0 ||
+    allSports.length === 0   || allPricing.length === 0 || allFaq.length === 0
   )
 
   const missingLabels = !anyLoading ? [
@@ -124,17 +166,21 @@ export default function Dashboard() {
     allCoaches.length   === 0 && 'Coaches',
     allSchedule.length  === 0 && 'Schedule',
     allSports.length    === 0 && 'Sports & Facilities',
+    allPricing.length   === 0 && 'Pricing',
+    allFaq.length       === 0 && 'FAQ',
   ].filter(Boolean) : []
 
   async function seedAll() {
     setSeeding(true)
     try {
       let count = 0
-      const [pSnap, cSnap, sSnap, spSnap] = await Promise.all([
+      const [pSnap, cSnap, sSnap, spSnap, prSnap, fqSnap] = await Promise.all([
         getDocs(programsCol),
         getDocs(coachesCol),
         getDocs(scheduleCol),
         getDocs(sportsCol),
+        getDocs(pricingCol),
+        getDocs(faqCol),
       ])
 
       if (pSnap.empty) {
@@ -152,6 +198,14 @@ export default function Dashboard() {
       if (spSnap.empty) {
         for (const item of SEED_SPORTS) await addDoc(sportsCol, item)
         count += SEED_SPORTS.length
+      }
+      if (prSnap.empty) {
+        for (const item of SEED_PRICING) await addDoc(pricingCol, item)
+        count += SEED_PRICING.length
+      }
+      if (fqSnap.empty) {
+        for (const item of SEED_FAQ) await addDoc(faqCol, item)
+        count += SEED_FAQ.length
       }
 
       if (count > 0) {
@@ -256,12 +310,14 @@ export default function Dashboard() {
       {/* Content Status Overview */}
       <div className="bg-white rounded-2xl shadow-sm p-5">
         <h2 className="font-bold text-navy text-base mb-4">Content Status</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3">
           {[
             { label: 'Sports',    count: allSports.length,   to: '/admin/sports',    loading: assLoad },
             { label: 'Programs',  count: allPrograms.length,  to: '/admin/programs',  loading: apLoad },
             { label: 'Coaches',   count: allCoaches.length,   to: '/admin/coaches',   loading: acLoad },
             { label: 'Schedule',  count: allSchedule.length,  to: '/admin/schedule',  loading: asLoad },
+            { label: 'Pricing',   count: allPricing.length,   to: '/admin/pricing',   loading: prLoad },
+            { label: 'FAQ',       count: allFaq.length,       to: '/admin/faq',       loading: fqLoad },
           ].map(({ label, count, to, loading }) => (
             <Link key={label} to={to}
               className={`rounded-xl p-3 border text-center hover:border-navy/30 transition-all ${count === 0 ? 'border-amber-200 bg-amber-50' : 'border-gray-100 bg-gray-50'}`}>
