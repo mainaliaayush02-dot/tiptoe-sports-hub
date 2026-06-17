@@ -16,18 +16,14 @@ const SPORTS_LINKS = [
 ]
 
 const QUICK_LINKS = [
-  { to: '/',            label: 'Home' },
-  { to: '/about',       label: 'About Us' },
-  { to: '/programs',    label: 'Programs' },
-  { to: '/coaches',     label: 'Coaches' },
-  { to: '/pricing',     label: 'Pricing' },
-  { to: '/faq',         label: 'FAQ' },
-  { to: '/schedule',    label: 'Schedule' },
-  { to: '/events',      label: 'Events' },
-  { to: '/gallery',     label: 'Gallery' },
-  { to: '/blog',        label: 'Blog' },
-  { to: '/testimonials',label: 'Testimonials' },
-  { to: '/contact',     label: 'Contact' },
+  { to: '/',         label: 'Home' },
+  { to: '/about',    label: 'About Us' },
+  { to: '/academy',  label: 'Academy' },
+  { to: '/programs', label: 'Programs' },
+  { to: '/coaches',  label: 'Coaches' },
+  { to: '/pricing',  label: 'Pricing' },
+  { to: '/faq',      label: 'FAQ' },
+  { to: '/contact',  label: 'Contact' },
 ]
 
 export default function Footer() {
@@ -58,32 +54,32 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-4 mb-5">
-              {/* Hub logo */}
-              <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 bg-white rounded-lg overflow-hidden p-1 shrink-0">
+              {/* Hub logo — clicks to Home */}
+              <Link to="/" className="flex items-center gap-2.5 group">
+                <div className="w-10 h-10 bg-white rounded-lg overflow-hidden p-1 shrink-0 group-hover:ring-2 group-hover:ring-gold/50 transition-all">
                   <img src={logoURL} alt="Tiptoe Sports Hub"
                     className="w-full h-full object-contain"
                     onError={e => e.target.style.display = 'none'} />
                 </div>
                 <div>
-                  <div className="font-heading font-extrabold text-white text-[14px] tracking-tight leading-none">TIPTOE</div>
+                  <div className="font-heading font-extrabold text-white text-[14px] tracking-tight leading-none group-hover:text-gold transition-colors">TIPTOE</div>
                   <div className="text-gold font-heading font-semibold text-[8px] tracking-[0.2em] uppercase mt-0.5">Sports Hub</div>
                 </div>
-              </div>
+              </Link>
               {/* Divider */}
               <div className="w-px h-8 bg-white/15 shrink-0" />
-              {/* Academy logo */}
-              <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 bg-white rounded-lg overflow-hidden p-0.5 shrink-0">
+              {/* Academy logo — clicks to Academy page */}
+              <Link to="/academy" className="flex items-center gap-2.5 group">
+                <div className="w-10 h-10 bg-white rounded-lg overflow-hidden p-0.5 shrink-0 group-hover:ring-2 group-hover:ring-gold/50 transition-all">
                   <img src={academyLogoURL} alt="Tiptoe Sports Academy"
                     className="w-full h-full object-contain"
                     onError={e => e.target.style.display = 'none'} />
                 </div>
                 <div>
-                  <div className="font-heading font-extrabold text-white text-[14px] tracking-tight leading-none">TIPTOE</div>
+                  <div className="font-heading font-extrabold text-white text-[14px] tracking-tight leading-none group-hover:text-gold transition-colors">TIPTOE</div>
                   <div className="text-gold font-heading font-semibold text-[8px] tracking-[0.2em] uppercase mt-0.5">Academy</div>
                 </div>
-              </div>
+              </Link>
             </div>
 
             <p className="text-white/45 text-sm leading-relaxed mb-5">
@@ -141,27 +137,20 @@ export default function Footer() {
             </ul>
 
             <div className="mt-6 pt-5 border-t border-white/8">
-              <h4 className="font-heading font-semibold text-white text-xs uppercase tracking-widest mb-3">
-                Programs
-              </h4>
-              <ul className="space-y-2">
-                {[
-                  'Football (Age 4–10)',
-                  'Football (Age 11–15)',
-                  'Elite Program (Age 16–18)',
-                  'Girls Football',
-                  'Futsal Academy',
-                  'International Exposure',
-                ].map(p => (
-                  <li key={p}>
-                    <Link to="/programs"
-                      className="text-white/45 hover:text-gold text-xs transition-colors duration-200 flex items-center gap-2 group">
-                      <span className="w-1 h-1 bg-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
-                      {p}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              <Link to="/academy"
+                className="flex items-center gap-2 text-white/45 hover:text-gold text-sm font-semibold transition-colors duration-200 group">
+                <span className="w-1.5 h-1.5 bg-gold rounded-full opacity-60 group-hover:opacity-100 transition-opacity shrink-0" />
+                About the Academy
+              </Link>
+              <Link to="/programs"
+                className="flex items-center gap-2 text-white/45 hover:text-gold text-sm font-semibold mt-2.5 transition-colors duration-200 group">
+                <span className="w-1.5 h-1.5 bg-gold rounded-full opacity-60 group-hover:opacity-100 transition-opacity shrink-0" />
+                Training Programs
+              </Link>
+              <Link to="/enroll"
+                className="inline-flex items-center gap-2 mt-4 bg-gold text-navy text-xs font-bold px-4 py-2.5 rounded-lg hover:bg-yellow-400 transition-colors">
+                Enroll Now <FaArrowRight size={10} />
+              </Link>
             </div>
           </div>
 

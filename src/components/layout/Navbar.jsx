@@ -6,6 +6,7 @@ import { FaArrowRight, FaChevronDown } from 'react-icons/fa'
 import { useSite } from '../../contexts/SiteContext'
 
 const ACADEMY_NAV = [
+  { to: '/academy',                emoji: '🏟️', label: 'About the Academy',         desc: 'Our story, mission & achievements' },
   { to: '/sports/football-futsal', emoji: '⚽', label: 'Football & Futsal Academy', desc: 'Programs for ages 4–18 · Thailand exposure' },
   { to: '/coaches',                emoji: '🧑‍🏫', label: 'Our Coaches',              desc: 'National-level coaching staff' },
   { to: '/programs',               emoji: '📋', label: 'Training Programs',         desc: 'All programs & enrollment info' },
@@ -97,7 +98,7 @@ export default function Navbar() {
   const openHub   = () => { clearTimeout(hubTimer.current); setHubOpen(true) }
   const closeHub  = () => { hubTimer.current = setTimeout(() => setHubOpen(false), 120) }
 
-  const isAcademyActive = ['/coaches', '/programs', '/sports/football-futsal'].includes(location.pathname)
+  const isAcademyActive = ['/academy', '/coaches', '/programs', '/sports/football-futsal'].includes(location.pathname)
   const isHubActive     = location.pathname.startsWith('/sports')
 
   return (

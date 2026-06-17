@@ -5,6 +5,7 @@ import AdminLayout from './pages/admin/AdminLayout'
 
 import Home from './pages/Home'
 import About from './pages/About'
+import Academy from './pages/Academy'
 import Programs from './pages/Programs'
 import Coaches from './pages/Coaches'
 import Schedule from './pages/Schedule'
@@ -41,6 +42,7 @@ export default function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
+        <Route path="academy" element={<Academy />} />
         <Route path="programs" element={<Programs />} />
         <Route path="coaches" element={<Coaches />} />
         <Route path="schedule" element={<Schedule />} />
