@@ -20,6 +20,8 @@ const QUICK_LINKS = [
   { to: '/about',       label: 'About Us' },
   { to: '/programs',    label: 'Programs' },
   { to: '/coaches',     label: 'Coaches' },
+  { to: '/pricing',     label: 'Pricing' },
+  { to: '/faq',         label: 'FAQ' },
   { to: '/schedule',    label: 'Schedule' },
   { to: '/events',      label: 'Events' },
   { to: '/gallery',     label: 'Gallery' },

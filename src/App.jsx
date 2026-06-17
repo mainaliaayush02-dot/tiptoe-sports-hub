@@ -16,6 +16,8 @@ import Testimonials from './pages/Testimonials'
 import Contact from './pages/Contact'
 import Enroll from './pages/Enroll'
 import SportPage from './pages/sports/SportPage'
+import Pricing from './pages/Pricing'
+import FAQ from './pages/FAQ'
 import NotFound from './pages/NotFound'
 
 import AdminLogin from './pages/admin/AdminLogin'
@@ -30,6 +32,8 @@ import ManageBlog from './pages/admin/ManageBlog'
 import ManageTestimonials from './pages/admin/ManageTestimonials'
 import ManageInquiries from './pages/admin/ManageInquiries'
 import AdminSettings from './pages/admin/AdminSettings'
+import ManagePricing from './pages/admin/ManagePricing'
+import ManageFAQ from './pages/admin/ManageFAQ'
 
 export default function App() {
   return (
@@ -48,6 +52,8 @@ export default function App() {
         <Route path="contact" element={<Contact />} />
         <Route path="enroll" element={<Enroll />} />
         <Route path="sports/:slug" element={<SportPage />} />
+        <Route path="pricing" element={<Pricing />} />
+        <Route path="faq" element={<FAQ />} />
       </Route>
 
       <Route path="/admin/login" element={<AdminLogin />} />
@@ -64,6 +70,8 @@ export default function App() {
           <Route path="blog" element={<ManageBlog />} />
           <Route path="testimonials" element={<ManageTestimonials />} />
           <Route path="inquiries" element={<ManageInquiries />} />
+          <Route path="pricing" element={<ManagePricing />} />
+          <Route path="faq" element={<ManageFAQ />} />
           <Route path="settings" element={<AdminSettings />} />
         </Route>
       </Route>

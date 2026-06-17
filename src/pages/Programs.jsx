@@ -143,6 +143,28 @@ export default function Programs() {
           </div>
         </div>
       </section>
+
+      {/* Internal Links */}
+      <section className="py-12 px-4 bg-light">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="font-heading font-bold text-navy text-center text-lg mb-6">Explore More</h2>
+          <div className="flex flex-wrap justify-center gap-3">
+            {[
+              { to: '/coaches',   label: 'Meet Our Coaches',        emoji: '🧑‍🏫' },
+              { to: '/schedule',  label: 'View Training Schedule',  emoji: '📅' },
+              { to: '/pricing',   label: 'Membership & Pricing',    emoji: '💰' },
+              { to: '/faq',       label: 'Frequently Asked Questions', emoji: '❓' },
+              { to: '/sports/football-futsal', label: 'Football & Futsal', emoji: '⚽' },
+              { to: '/enroll',    label: 'Enroll Now',              emoji: '🎯' },
+            ].map(({ to, label, emoji }) => (
+              <Link key={to} to={to}
+                className="flex items-center gap-2 bg-white hover:bg-navy hover:text-white border border-gray-200 hover:border-navy text-gray-700 rounded-xl px-5 py-3 text-sm font-medium transition-all duration-200 shadow-sm">
+                <span>{emoji}</span> {label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
     </>
   )
 }
