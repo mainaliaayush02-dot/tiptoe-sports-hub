@@ -6,7 +6,7 @@ import { query, orderBy } from 'firebase/firestore'
 import { galleryCol } from '../firebase/collections'
 import { useCollection } from '../hooks/useFirestore'
 import SEOHead from '../components/SEOHead'
-import LoadingSkeleton from '../components/LoadingSkeleton'
+import ContentLoader from '../components/ContentLoader'
 
 const CATEGORIES = ['All', 'Training', 'Events', 'Tournaments', 'International']
 const allQ = query(galleryCol, orderBy('createdAt', 'desc'))
@@ -77,46 +77,46 @@ export default function Gallery() {
       {/* Grid */}
       <section className="py-12 px-4 bg-light min-h-screen">
         <div className="max-w-7xl mx-auto">
-          {loading ? (
-            <LoadingSkeleton count={9} />
-          ) : filtered.length > 0 ? (
-            <div className="columns-2 md:columns-3 lg:columns-4 gap-3 space-y-3">
-              {filtered.map((img, i) => (
-                <motion.div
-                  key={img.id}
-                  className="break-inside-avoid cursor-pointer overflow-hidden rounded-xl"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: (i % 4) * 0.06 }}
-                  onClick={() => openLightbox(i)}
-                  whileHover={{ scale: 1.02 }}
-                >
-                  <div className="relative group">
-                    <img
-                      src={img.url}
-                      alt={img.alt || img.caption || `Tiptoe Sports Academy ${img.category} Kathmandu Nepal`}
-                      className="w-full object-cover"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-navy/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
-                      {img.caption && <p className="text-white text-xs font-semibold">{img.caption}</p>}
+          <ContentLoader loading={loading} count={9}>
+            {filtered.length > 0 ? (
+              <div className="columns-2 md:columns-3 lg:columns-4 gap-3 space-y-3">
+                {filtered.map((img, i) => (
+                  <motion.div
+                    key={img.id}
+                    className="break-inside-avoid cursor-pointer overflow-hidden rounded-xl"
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: (i % 4) * 0.05 }}
+                    onClick={() => openLightbox(i)}
+                    whileHover={{ scale: 1.02 }}
+                  >
+                    <div className="relative group">
+                      <img
+                        src={img.url}
+                        alt={img.alt || img.caption || `Tiptoe Sports Academy ${img.category} Kathmandu Nepal`}
+                        className="w-full object-cover"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-navy/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                        {img.caption && <p className="text-white text-xs font-semibold">{img.caption}</p>}
+                      </div>
+                      {img.category && (
+                        <span className="absolute top-2 left-2 text-xs bg-gold text-navy font-bold px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                          {img.category}
+                        </span>
+                      )}
                     </div>
-                    {img.category && (
-                      <span className="absolute top-2 left-2 text-xs bg-gold text-navy font-bold px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                        {img.category}
-                      </span>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-24">
-              <FaImages className="text-6xl text-gray-200 mx-auto mb-4" />
-              <p className="text-gray-400 text-lg">No photos in this category yet.</p>
-            </div>
-          )}
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-24">
+                <FaImages className="text-6xl text-gray-200 mx-auto mb-4" />
+                <p className="text-gray-400 text-lg">No photos in this category yet.</p>
+              </div>
+            )}
+          </ContentLoader>
         </div>
       </section>
 

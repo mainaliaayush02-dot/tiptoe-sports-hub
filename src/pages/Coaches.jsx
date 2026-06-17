@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { FaArrowRight, FaStar, FaTrophy, FaFutbol } from 'react-icons/fa'
 import { query, orderBy } from 'firebase/firestore'
@@ -92,9 +92,16 @@ export default function Coaches() {
         </div>
       </section>
 
-      {/* Loading skeleton */}
-      {loading && (
-        <section className="py-20 px-4 bg-white">
+      <AnimatePresence mode="wait">
+      {loading ? (
+        <motion.section
+          key="coaches-skel"
+          className="py-20 px-4 bg-white"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.18 }}
+        >
           <div className="max-w-7xl mx-auto space-y-10">
             {[1, 2].map(i => (
               <div key={i} className="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -108,11 +115,16 @@ export default function Coaches() {
               </div>
             ))}
           </div>
-        </section>
-      )}
+        </motion.section>
+      ) : (
+        <motion.div
+          key="coaches-content"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.22 }}
+        >
 
       {/* Featured Coaches (first 2 from Firestore) */}
-      {!loading && (
         <section className="py-20 px-4 bg-white">
           <div className="max-w-7xl mx-auto space-y-16">
             {featured.map((coach, i) => {
@@ -179,10 +191,9 @@ export default function Coaches() {
             })}
           </div>
         </section>
-      )}
 
       {/* Additional Coaches (3rd onwards) */}
-      {!loading && rest.length > 0 && (
+      {rest.length > 0 && (
         <section className="py-20 px-4 bg-light">
           <div className="max-w-7xl mx-auto">
             <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
@@ -200,8 +211,8 @@ export default function Coaches() {
                     : []
                 return (
                   <motion.div key={coach.id || coach.name} className="card p-6 text-center"
-                    initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
+                    initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
                     {coach.photoURL
                       ? <img src={coach.photoURL} alt={coach.name} className="w-24 h-24 rounded-full object-cover mx-auto mb-4 ring-4 ring-gold/30" />
                       : <div className="w-24 h-24 rounded-full bg-navy flex items-center justify-center font-heading font-extrabold text-gold text-2xl mx-auto mb-4">{initial}</div>
@@ -222,6 +233,9 @@ export default function Coaches() {
           </div>
         </section>
       )}
+        </motion.div>
+      )}
+      </AnimatePresence>
 
       {/* CTA */}
       <section className="py-16 px-4 bg-navy text-white">

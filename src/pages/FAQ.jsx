@@ -6,6 +6,7 @@ import { query, orderBy } from 'firebase/firestore'
 import { faqCol } from '../firebase/collections'
 import { useCollection } from '../hooks/useFirestore'
 import SEOHead from '../components/SEOHead'
+import ContentLoader from '../components/ContentLoader'
 
 const CATEGORIES = ['All', 'General', 'Academy', 'Pricing', 'Sports Hub']
 
@@ -137,26 +138,31 @@ export default function FAQ() {
       {/* FAQ Accordion */}
       <section className="py-14 px-4 bg-light min-h-[60vh]">
         <div className="max-w-4xl mx-auto">
-          {loading ? (
-            <div className="space-y-3">
-              {Array.from({ length: 6 }).map((_, i) => <div key={i} className="h-16 bg-white rounded-2xl animate-pulse" />)}
-            </div>
-          ) : filtered.length > 0 ? (
-            <div className="space-y-3">
-              {filtered.map(faq => (
-                <FAQItem
-                  key={faq.id}
-                  faq={faq}
-                  isOpen={openId === faq.id}
-                  onToggle={() => setOpenId(openId === faq.id ? null : faq.id)}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-20 text-gray-400">
-              <p className="text-lg font-semibold">No questions in this category yet.</p>
-            </div>
-          )}
+          <ContentLoader
+            loading={loading}
+            skeleton={
+              <div className="space-y-3">
+                {Array.from({ length: 6 }).map((_, i) => <div key={i} className="h-16 bg-white rounded-2xl animate-pulse" />)}
+              </div>
+            }
+          >
+            {filtered.length > 0 ? (
+              <div className="space-y-3">
+                {filtered.map(faq => (
+                  <FAQItem
+                    key={faq.id}
+                    faq={faq}
+                    isOpen={openId === faq.id}
+                    onToggle={() => setOpenId(openId === faq.id ? null : faq.id)}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-20 text-gray-400">
+                <p className="text-lg font-semibold">No questions in this category yet.</p>
+              </div>
+            )}
+          </ContentLoader>
         </div>
       </section>
 

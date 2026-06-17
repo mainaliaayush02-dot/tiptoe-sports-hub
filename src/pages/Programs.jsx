@@ -7,7 +7,7 @@ import { query, orderBy } from 'firebase/firestore'
 import { programsCol } from '../firebase/collections'
 import { useCollection } from '../hooks/useFirestore'
 import SEOHead from '../components/SEOHead'
-import LoadingSkeleton from '../components/LoadingSkeleton'
+import ContentLoader from '../components/ContentLoader'
 
 const FILTERS = ['All', 'Football', 'Futsal', 'Basketball', 'Pickleball', 'Snooker', 'Special']
 
@@ -84,52 +84,50 @@ export default function Programs() {
             ))}
           </div>
 
-          {loading ? (
-            <LoadingSkeleton count={6} />
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map((prog, i) => (
-                <motion.div
-                  key={prog.id}
-                  className="card overflow-hidden flex flex-col"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.07 }}
-                >
-                  <div className={`bg-gradient-to-br ${SPORT_GRADIENT[prog.sport] || 'from-navy to-blue-800'} p-6 text-white`}>
-                    <div className="flex justify-between items-start mb-4">
-                      <GiSoccerBall className="text-4xl opacity-80" />
-                      <span className="text-xs bg-white/20 px-3 py-1 rounded-full font-semibold">{prog.ageGroup}</span>
-                    </div>
-                    <h3 className="font-bold text-xl">{prog.name}</h3>
-                    <span className={`text-xs font-semibold mt-1 inline-block ${prog.sport === 'Special' ? 'text-gold' : 'text-white/70'}`}>{prog.sport}</span>
-                  </div>
-                  <div className="p-6 flex flex-col flex-1">
-                    <p className="text-gray-600 text-sm leading-relaxed flex-1 mb-4">{prog.description}</p>
-                    {prog.schedule && (
-                      <div className="text-xs text-gray-400 mb-1">
-                        <span className="font-semibold text-gray-500">Schedule:</span> {prog.schedule}
+          <ContentLoader loading={loading} count={6}>
+            {filtered.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filtered.map((prog, i) => (
+                  <motion.div
+                    key={prog.id}
+                    className="card overflow-hidden flex flex-col"
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.06 }}
+                  >
+                    <div className={`bg-gradient-to-br ${SPORT_GRADIENT[prog.sport] || 'from-navy to-blue-800'} p-6 text-white`}>
+                      <div className="flex justify-between items-start mb-4">
+                        <GiSoccerBall className="text-4xl opacity-80" />
+                        <span className="text-xs bg-white/20 px-3 py-1 rounded-full font-semibold">{prog.ageGroup}</span>
                       </div>
-                    )}
-                    {prog.fee && (
-                      <div className="text-sm font-bold text-green mt-2 mb-4">{prog.fee}</div>
-                    )}
-                    <Link to="/enroll" className="btn-primary text-sm py-2.5 justify-center">
-                      Enroll Now <FaArrowRight size={12} />
-                    </Link>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          )}
-
-          {!loading && filtered.length === 0 && (
-            <div className="text-center py-20">
-              <GiSoccerBall className="text-6xl text-gray-200 mx-auto mb-4" />
-              <p className="text-gray-400 text-lg">No programs found for this category.</p>
-            </div>
-          )}
+                      <h3 className="font-bold text-xl">{prog.name}</h3>
+                      <span className={`text-xs font-semibold mt-1 inline-block ${prog.sport === 'Special' ? 'text-gold' : 'text-white/70'}`}>{prog.sport}</span>
+                    </div>
+                    <div className="p-6 flex flex-col flex-1">
+                      <p className="text-gray-600 text-sm leading-relaxed flex-1 mb-4">{prog.description}</p>
+                      {prog.schedule && (
+                        <div className="text-xs text-gray-400 mb-1">
+                          <span className="font-semibold text-gray-500">Schedule:</span> {prog.schedule}
+                        </div>
+                      )}
+                      {prog.fee && (
+                        <div className="text-sm font-bold text-green mt-2 mb-4">{prog.fee}</div>
+                      )}
+                      <Link to="/enroll" className="btn-primary text-sm py-2.5 justify-center">
+                        Enroll Now <FaArrowRight size={12} />
+                      </Link>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-20">
+                <GiSoccerBall className="text-6xl text-gray-200 mx-auto mb-4" />
+                <p className="text-gray-400 text-lg">No programs found for this category.</p>
+              </div>
+            )}
+          </ContentLoader>
         </div>
       </section>
 

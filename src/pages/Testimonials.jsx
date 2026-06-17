@@ -5,6 +5,7 @@ import { query, orderBy } from 'firebase/firestore'
 import { testimonialsCol } from '../firebase/collections'
 import { useCollection } from '../hooks/useFirestore'
 import SEOHead from '../components/SEOHead'
+import ContentLoader from '../components/ContentLoader'
 
 const visibleQ = query(testimonialsCol, orderBy('createdAt', 'desc'))
 
@@ -71,20 +72,23 @@ export default function Testimonials() {
       {/* Testimonials Grid */}
       <section className="py-20 px-4 bg-light min-h-screen">
         <div className="max-w-7xl mx-auto">
-          {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Array.from({ length: 6 }).map((_, i) => <div key={i} className="card p-6 h-48 animate-pulse bg-gray-100" />)}
-            </div>
-          ) : (
+          <ContentLoader
+            loading={loading}
+            skeleton={
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {Array.from({ length: 6 }).map((_, i) => <div key={i} className="card p-6 h-48 animate-pulse bg-gray-100" />)}
+              </div>
+            }
+          >
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {testimonials.map((t, i) => (
                 <motion.div
                   key={t.id}
                   className="card p-6 flex flex-col"
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.07 }}
+                  transition={{ delay: i * 0.06 }}
                 >
                   <FaQuoteLeft className="text-gold/30 text-4xl mb-4" />
                   <div className="flex gap-0.5 mb-3">
@@ -104,7 +108,7 @@ export default function Testimonials() {
                 </motion.div>
               ))}
             </div>
-          )}
+          </ContentLoader>
         </div>
       </section>
 

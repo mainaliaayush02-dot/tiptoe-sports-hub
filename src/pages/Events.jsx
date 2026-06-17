@@ -7,7 +7,7 @@ import { query, orderBy, where } from 'firebase/firestore'
 import { eventsCol } from '../firebase/collections'
 import { useCollection } from '../hooks/useFirestore'
 import SEOHead from '../components/SEOHead'
-import LoadingSkeleton from '../components/LoadingSkeleton'
+import ContentLoader from '../components/ContentLoader'
 
 const upcomingQ = query(eventsCol, where('isUpcoming', '==', true), orderBy('date'))
 const pastQ = query(eventsCol, where('isUpcoming', '==', false), orderBy('date', 'desc'))
@@ -62,50 +62,50 @@ export default function Events() {
       {/* Events Grid */}
       <section className="py-16 px-4 bg-light min-h-screen">
         <div className="max-w-7xl mx-auto">
-          {loading ? (
-            <LoadingSkeleton count={6} />
-          ) : events.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {events.map((ev, i) => (
-                <motion.div key={ev.id} className="card overflow-hidden flex flex-col" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
-                  {ev.bannerURL
-                    ? <img src={ev.bannerURL} alt={ev.title} className="w-full h-48 object-cover" />
-                    : (
-                      <div className="w-full h-48 bg-gradient-to-br from-navy to-green flex items-center justify-center">
-                        <GiSoccerBall className="text-7xl text-white/20" />
+          <ContentLoader loading={loading} count={6}>
+            {events.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {events.map((ev, i) => (
+                  <motion.div key={ev.id} className="card overflow-hidden flex flex-col" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
+                    {ev.bannerURL
+                      ? <img src={ev.bannerURL} alt={ev.title} className="w-full h-48 object-cover" />
+                      : (
+                        <div className="w-full h-48 bg-gradient-to-br from-navy to-green flex items-center justify-center">
+                          <GiSoccerBall className="text-7xl text-white/20" />
+                        </div>
+                      )
+                    }
+                    <div className="p-6 flex flex-col flex-1">
+                      <div className="flex items-center gap-4 text-xs text-gray-400 mb-3">
+                        <span className="flex items-center gap-1 text-gold font-semibold"><FaCalendarAlt /> {ev.date}</span>
+                        {ev.venue && <span className="flex items-center gap-1"><FaMapMarkerAlt /> {ev.venue}</span>}
                       </div>
-                    )
-                  }
-                  <div className="p-6 flex flex-col flex-1">
-                    <div className="flex items-center gap-4 text-xs text-gray-400 mb-3">
-                      <span className="flex items-center gap-1 text-gold font-semibold"><FaCalendarAlt /> {ev.date}</span>
-                      {ev.venue && <span className="flex items-center gap-1"><FaMapMarkerAlt /> {ev.venue}</span>}
+                      <h3 className="font-bold text-navy text-xl mb-2">{ev.title}</h3>
+                      {ev.description && <p className="text-gray-500 text-sm leading-relaxed flex-1 mb-4">{ev.description}</p>}
+                      <div className="flex items-center justify-between mt-auto">
+                        <span className={`text-xs font-bold px-3 py-1 rounded-full ${ev.isUpcoming ? 'bg-green/10 text-green' : 'bg-gray-100 text-gray-500'}`}>
+                          {ev.isUpcoming ? 'Upcoming' : 'Past'}
+                        </span>
+                        {ev.registrationLink && ev.isUpcoming && (
+                          <a href={ev.registrationLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-navy font-semibold text-sm hover:text-gold transition-colors">
+                            Register <FaExternalLinkAlt size={11} />
+                          </a>
+                        )}
+                      </div>
                     </div>
-                    <h3 className="font-bold text-navy text-xl mb-2">{ev.title}</h3>
-                    {ev.description && <p className="text-gray-500 text-sm leading-relaxed flex-1 mb-4">{ev.description}</p>}
-                    <div className="flex items-center justify-between mt-auto">
-                      <span className={`text-xs font-bold px-3 py-1 rounded-full ${ev.isUpcoming ? 'bg-green/10 text-green' : 'bg-gray-100 text-gray-500'}`}>
-                        {ev.isUpcoming ? 'Upcoming' : 'Past'}
-                      </span>
-                      {ev.registrationLink && ev.isUpcoming && (
-                        <a href={ev.registrationLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-navy font-semibold text-sm hover:text-gold transition-colors">
-                          Register <FaExternalLinkAlt size={11} />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-24">
-              <FaCalendarAlt className="text-6xl text-gray-200 mx-auto mb-4" />
-              <h3 className="font-bold text-gray-400 text-xl mb-2">
-                {tab === 'upcoming' ? 'No upcoming events at the moment' : 'No past events found'}
-              </h3>
-              <p className="text-gray-400">Check back soon for new events and programs.</p>
-            </div>
-          )}
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-24">
+                <FaCalendarAlt className="text-6xl text-gray-200 mx-auto mb-4" />
+                <h3 className="font-bold text-gray-400 text-xl mb-2">
+                  {tab === 'upcoming' ? 'No upcoming events at the moment' : 'No past events found'}
+                </h3>
+                <p className="text-gray-400">Check back soon for new events and programs.</p>
+              </div>
+            )}
+          </ContentLoader>
         </div>
       </section>
 

@@ -6,6 +6,7 @@ import { query, orderBy } from 'firebase/firestore'
 import { pricingCol } from '../firebase/collections'
 import { useCollection } from '../hooks/useFirestore'
 import SEOHead from '../components/SEOHead'
+import ContentLoader from '../components/ContentLoader'
 
 const SPORT_TABS = ['All', 'Football', 'Cricket', 'Basketball', 'Pickleball', 'Snooker', 'Sports Bar']
 
@@ -125,11 +126,12 @@ export default function Pricing() {
       {/* Cards Grid */}
       <section className="py-16 px-4 bg-light min-h-[60vh]">
         <div className="max-w-7xl mx-auto">
-          {loading ? (
+          <ContentLoader loading={loading} count={8} skeleton={
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
               {Array.from({ length: 8 }).map((_, i) => <div key={i} className="h-56 bg-white rounded-2xl animate-pulse" />)}
             </div>
-          ) : filtered.length > 0 ? (
+          }>
+            {filtered.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
               {filtered.map((plan, i) => {
                 const color = SPORT_COLORS[plan.sport] || '#06145F'
@@ -188,10 +190,11 @@ export default function Pricing() {
               })}
             </div>
           ) : (
-            <div className="text-center py-20 text-gray-400">
-              <p className="text-lg font-semibold">No plans found for this category.</p>
-            </div>
-          )}
+              <div className="text-center py-20 text-gray-400">
+                <p className="text-lg font-semibold">No plans found for this category.</p>
+              </div>
+            )}
+          </ContentLoader>
 
           <p className="text-center text-gray-400 text-sm mt-10">
             All prices in Nepali Rupees (NPR). Contact us for group, corporate, or seasonal packages.
