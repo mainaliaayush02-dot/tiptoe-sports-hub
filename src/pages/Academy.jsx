@@ -1,9 +1,14 @@
+import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { FaArrowRight, FaStar, FaTrophy, FaUsers, FaGlobe, FaCheckCircle } from 'react-icons/fa'
 import { GiSoccerBall } from 'react-icons/gi'
 import { MdSportsSoccer } from 'react-icons/md'
+import { query, orderBy } from 'firebase/firestore'
+import { programsCol } from '../firebase/collections'
+import { useCollection } from '../hooks/useFirestore'
 import SEOHead from '../components/SEOHead'
+import LoadingSkeleton from '../components/LoadingSkeleton'
 import { useSite } from '../contexts/SiteContext'
 
 const STATS = [
@@ -13,27 +18,18 @@ const STATS = [
   { value: '2+',   label: "Int'l Destinations",  Icon: FaGlobe },
 ]
 
-const PROGRAMS = [
-  {
-    emoji: '⚽', title: 'Football Foundation', age: 'Age 4–10', fee: 'NPR 2,500/month', color: 'bg-navy',
-    points: ['3 sessions per week', 'Ball skills, coordination & fun', 'Certified coaching', 'Kit provided'],
-  },
-  {
-    emoji: '🏃', title: 'Youth Development', age: 'Age 11–15', fee: 'NPR 3,000/month', color: 'bg-green',
-    points: ['3 sessions per week', 'Tactical & competitive training', 'Match analysis', 'Tournament participation'],
-  },
-  {
-    emoji: '🏆', title: 'Elite Performance', age: 'Age 16–18', fee: 'NPR 3,500/month', color: 'bg-gold',
-    points: ['5 sessions per week', 'High-intensity professional track', 'Video analysis', 'International exposure'],
-  },
-  {
-    emoji: '🥅', title: 'Futsal Academy', age: 'All Ages', fee: 'NPR 2,800/month', color: 'bg-navy',
-    points: ['3 sessions per week', 'Indoor futsal techniques', 'Fast-paced tactics', 'All skill levels welcome'],
-  },
-  {
-    emoji: '⭐', title: 'Girls Football', age: 'Age 8–18', fee: 'NPR 2,500/month', color: 'bg-green',
-    points: ['3 sessions per week', 'Female-focused coaching', 'Safe & empowering environment', 'Competitive matches'],
-  },
+const SPORT_COLOR = {
+  Football: 'bg-navy',
+  Futsal:   'bg-green',
+  Special:  'bg-[#c47d00]',
+}
+
+const FALLBACK_PROGRAMS = [
+  { id: 'f1', name: 'Football Foundation', sport: 'Football', ageGroup: 'Age 4–10',   description: 'Foundation skills, coordination and a love for the beautiful game.', schedule: 'Mon, Wed, Fri — 3:00 PM–5:00 PM', fee: 'NPR 2,500/month', emoji: '⚽', active: true, order: 1 },
+  { id: 'f2', name: 'Youth Development',   sport: 'Football', ageGroup: 'Age 11–15',  description: 'Intermediate tactical training focusing on positioning, team play and skill development.', schedule: 'Mon, Wed, Fri — 4:00 PM–6:00 PM', fee: 'NPR 3,000/month', emoji: '⚽', active: true, order: 2 },
+  { id: 'f3', name: 'Elite Performance',   sport: 'Football', ageGroup: 'Age 16–18',  description: 'Elite performance program with professional-level training methodologies and match analysis.', schedule: 'Tue, Thu, Sat — 6:00 AM–8:00 AM', fee: 'NPR 3,500/month', emoji: '🏆', active: true, order: 3 },
+  { id: 'fu1', name: 'Futsal Academy',     sport: 'Futsal',   ageGroup: 'All Ages',   description: 'Indoor futsal techniques, fast-paced play skills and futsal-specific tactics for all ages.', schedule: 'Tue, Thu, Sat — 4:00 PM–6:00 PM', fee: 'NPR 2,800/month', emoji: '🥅', active: true, order: 4 },
+  { id: 'sp1', name: 'Girls Football',     sport: 'Special',  ageGroup: 'Age 8–18',   description: 'A dedicated program empowering girls through football. Supportive environment with female-focused coaching.', schedule: 'Mon, Wed, Fri — 3:00 PM–5:00 PM', fee: 'NPR 2,500/month', emoji: '⭐', active: true, order: 5 },
 ]
 
 const COACHES = [
@@ -74,6 +70,14 @@ const fadeUp = { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transi
 
 export default function Academy() {
   const { academyLogoURL } = useSite()
+
+  const programsQ = useMemo(() => query(programsCol, orderBy('order')), [])
+  const { docs, loading: programsLoading } = useCollection(programsQ)
+
+  // Academy-relevant sports only; respect active flag set in admin panel
+  const ACADEMY_SPORTS = ['Football', 'Futsal', 'Special']
+  const activePrograms = docs.filter(p => p.active !== false && ACADEMY_SPORTS.includes(p.sport))
+  const programs = activePrograms.length > 0 ? activePrograms : FALLBACK_PROGRAMS
 
   return (
     <>
@@ -187,34 +191,37 @@ export default function Academy() {
               Every program is designed for a specific age group and skill level. All sessions are run by certified coaches at our Tarkeshwar facility.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {PROGRAMS.map((p, i) => (
-              <motion.div key={p.title}
-                className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
-                <div className={`${p.color} px-6 py-5`}>
-                  <div className="text-3xl mb-2">{p.emoji}</div>
-                  <h3 className="font-black text-white text-lg leading-tight">{p.title}</h3>
-                  <p className="text-white/60 text-xs mt-1 font-semibold uppercase tracking-wide">{p.age}</p>
-                </div>
-                <div className="px-6 py-5">
-                  <ul className="space-y-2 mb-5">
-                    {p.points.map(pt => (
-                      <li key={pt} className="flex items-center gap-2 text-sm text-gray-600">
-                        <FaCheckCircle className="text-green shrink-0" size={13} /> {pt}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="flex items-center justify-between">
-                    <span className="font-black text-navy text-sm">{p.fee}</span>
-                    <Link to="/enroll" className="text-xs font-bold text-gold hover:text-navy transition-colors flex items-center gap-1">
-                      Enroll <FaArrowRight size={9} />
-                    </Link>
+          {programsLoading ? (
+            <LoadingSkeleton count={5} />
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {programs.map((p, i) => (
+                <motion.div key={p.id}
+                  className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
+                  <div className={`${SPORT_COLOR[p.sport] || 'bg-navy'} px-6 py-5`}>
+                    <div className="text-3xl mb-2">{p.emoji || '⚽'}</div>
+                    <h3 className="font-black text-white text-lg leading-tight">{p.name}</h3>
+                    <p className="text-white/60 text-xs mt-1 font-semibold uppercase tracking-wide">{p.ageGroup}</p>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                  <div className="px-6 py-5 flex flex-col flex-1">
+                    <p className="text-gray-500 text-sm leading-relaxed mb-4">{p.description}</p>
+                    {p.schedule && (
+                      <p className="text-xs text-gray-400 mb-3">
+                        <span className="font-semibold text-gray-500">Schedule:</span> {p.schedule}
+                      </p>
+                    )}
+                    <div className="flex items-center justify-between mt-auto pt-3 border-t border-gray-100">
+                      {p.fee && <span className="font-black text-navy text-sm">{p.fee}</span>}
+                      <Link to="/enroll" className="text-xs font-bold text-gold hover:text-navy transition-colors flex items-center gap-1 ml-auto">
+                        Enroll <FaArrowRight size={9} />
+                      </Link>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
           <div className="text-center mt-10">
             <Link to="/programs" className="btn-primary text-sm">
               View Full Program Details <FaArrowRight size={12} />
