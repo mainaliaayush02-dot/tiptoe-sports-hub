@@ -13,6 +13,7 @@ const DEFAULTS = {
   address: 'Tarkeshwar, Kathmandu, Nepal',
   whatsapp: '9779800000000',
   logoURL: '',
+  academyLogoURL: '',
   mapsLink: 'https://maps.app.goo.gl/qSVDwXY53wtm5F576',
   mapsEmbedURL: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.58!2d85.3047!3d27.7368!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb199a534fb789%3A0x9b5cd5299ace8bc!2sTarkeshwar%2C+Kathmandu!5e0!3m2!1sen!2snp!4v1',
   socialLinks: {
@@ -73,12 +74,13 @@ export default function AdminSettings() {
         </button>
       </div>
 
-      {/* Logo */}
+      {/* Hub Logo */}
       <div className="bg-white rounded-2xl shadow-sm p-6">
-        <h2 className="font-bold text-navy mb-4">Academy Logo</h2>
+        <h2 className="font-bold text-navy mb-1">Hub Logo</h2>
+        <p className="text-xs text-gray-400 mb-4">Used in the navbar and hub-related pages.</p>
         <div className="flex items-center gap-4 mb-2">
           {form.logoURL
-            ? <img src={form.logoURL} alt="Logo" className="w-20 h-20 object-contain rounded-xl border border-gray-200" onError={e => e.target.style.display='none'} />
+            ? <img src={form.logoURL} alt="Hub Logo" className="w-20 h-20 object-contain rounded-xl border border-gray-200" onError={e => e.target.style.display='none'} />
             : <div className="w-20 h-20 rounded-xl bg-gray-100 flex items-center justify-center text-gray-300"><MdSettings size={32} /></div>
           }
           <div className="flex-1">
@@ -86,9 +88,30 @@ export default function AdminSettings() {
               value={form.logoURL}
               onChange={e => set('logoURL', e.target.value)}
               className="input-field text-sm"
-              placeholder="Paste logo image URL"
+              placeholder="Paste Hub logo image URL"
             />
-            <p className="text-xs text-gray-400 mt-1">Upload logo to <strong>imgur.com</strong> free, then paste the link here.</p>
+            <p className="text-xs text-gray-400 mt-1">Upload to <strong>imgur.com</strong> free, then paste the direct link here.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Academy Logo */}
+      <div className="bg-white rounded-2xl shadow-sm p-6">
+        <h2 className="font-bold text-navy mb-1">Academy Logo</h2>
+        <p className="text-xs text-gray-400 mb-4">Used on Academy pages (Football Academy, Futsal Academy, Coaches, Programs).</p>
+        <div className="flex items-center gap-4 mb-2">
+          {form.academyLogoURL
+            ? <img src={form.academyLogoURL} alt="Academy Logo" className="w-20 h-20 object-contain rounded-xl border border-gray-200" onError={e => e.target.style.display='none'} />
+            : <div className="w-20 h-20 rounded-xl bg-gray-100 flex items-center justify-center text-gray-300"><MdSettings size={32} /></div>
+          }
+          <div className="flex-1">
+            <input
+              value={form.academyLogoURL}
+              onChange={e => set('academyLogoURL', e.target.value)}
+              className="input-field text-sm"
+              placeholder="Paste Academy logo image URL"
+            />
+            <p className="text-xs text-gray-400 mt-1">Upload to <strong>imgur.com</strong> free, then paste the direct link here.</p>
           </div>
         </div>
       </div>

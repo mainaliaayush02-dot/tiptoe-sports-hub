@@ -5,31 +5,77 @@ import { HiMenuAlt3, HiX } from 'react-icons/hi'
 import { FaArrowRight, FaChevronDown } from 'react-icons/fa'
 import { useSite } from '../../contexts/SiteContext'
 
-const SPORTS_NAV = [
-  { to: '/sports/football-futsal', emoji: '⚽', label: 'Football / Futsal',  desc: 'Academy programs for ages 4–18' },
-  { to: '/sports/basketball',      emoji: '🏀', label: 'Basketball',          desc: 'Courts & professional coaching' },
-  { to: '/sports/pickleball',      emoji: '🎾', label: 'Pickleball',          desc: "Nepal's premier pickleball courts" },
-  { to: '/sports/snooker',         emoji: '🎱', label: 'Snooker',             desc: 'Premium club & professional tables' },
-  { to: '/sports/sports-bar',      emoji: '🍹', label: 'Sports Bar',          desc: 'Live sports, drinks & great vibes' },
+const ACADEMY_NAV = [
+  { to: '/sports/football-futsal', emoji: '⚽', label: 'Football Academy',   desc: 'Structured programs for ages 4–18' },
+  { to: '/sports/football-futsal', emoji: '🥅', label: 'Futsal Academy',     desc: 'Indoor futsal coaching & development' },
+  { to: '/coaches',                emoji: '🧑‍🏫', label: 'Our Coaches',       desc: 'National-level coaching staff' },
+  { to: '/programs',               emoji: '📋', label: 'Training Programs',  desc: 'All programs & enrollment info' },
 ]
 
-const LINKS = [
-  { to: '/about',    label: 'About' },
-  { to: '/programs', label: 'Programs' },
-  { to: '/gallery',  label: 'Gallery' },
-  { to: '/blog',     label: 'Blog' },
-  { to: '/contact',  label: 'Contact' },
+const HUB_NAV = [
+  { to: '/sports/football-futsal', emoji: '⚽', label: 'Football & Futsal', desc: 'Facilities & open play' },
+  { to: '/sports/cricket',         emoji: '🏏', label: 'Cricket',           desc: 'Cricket ground & facilities' },
+  { to: '/sports/basketball',      emoji: '🏀', label: 'Basketball',        desc: 'Courts & professional coaching' },
+  { to: '/sports/pickleball',      emoji: '🎾', label: 'Pickleball',        desc: "Nepal's premier pickleball courts" },
+  { to: '/sports/snooker',         emoji: '🎱', label: 'Snooker',           desc: 'Premium club & professional tables' },
+  { to: '/sports/sports-bar',      emoji: '🍹', label: 'Sports Bar',        desc: 'Live sports, drinks & great vibes' },
 ]
+
+function DropdownMenu({ items, header, subheader, ctaLabel, ctaTo, onMouseEnter, onMouseLeave, wide }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8, scale: 0.97 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: 6, scale: 0.97 }}
+      transition={{ duration: 0.18 }}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 ${wide ? 'w-[360px]' : 'w-[320px]'} bg-[#0A1A6A] border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50`}
+    >
+      <div className="px-4 pt-4 pb-2 border-b border-white/8">
+        <p className="text-gold text-[10px] font-heading font-semibold uppercase tracking-widest">{header}</p>
+        <p className="text-white/40 text-xs mt-0.5">{subheader}</p>
+      </div>
+      <div className="p-2">
+        {items.map(({ to, emoji, label, desc }) => (
+          <Link key={`${to}-${label}`} to={to}
+            className="flex items-center gap-3.5 px-3 py-2.5 rounded-xl hover:bg-white/8 transition-all duration-150 group">
+            <div className="w-9 h-9 rounded-xl bg-white/8 group-hover:bg-gold/15 flex items-center justify-center text-lg shrink-0 transition-colors duration-150">
+              {emoji}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-white font-heading font-semibold text-[13px] leading-none mb-0.5 group-hover:text-gold transition-colors">{label}</div>
+              <div className="text-white/40 text-[11px] leading-snug truncate">{desc}</div>
+            </div>
+            <FaArrowRight size={9} className="text-white/20 group-hover:text-gold transition-colors shrink-0" />
+          </Link>
+        ))}
+      </div>
+      {ctaLabel && (
+        <div className="px-4 pb-4 pt-1 border-t border-white/8">
+          <Link to={ctaTo}
+            className="flex items-center justify-center gap-2 w-full bg-gold text-navy font-heading font-bold text-xs py-2.5 rounded-xl hover:bg-yellow-400 transition-colors">
+            {ctaLabel} <FaArrowRight size={10} />
+          </Link>
+        </div>
+      )}
+    </motion.div>
+  )
+}
 
 export default function Navbar() {
   const { logoURL, academyName } = useSite()
-  const [scrolled, setScrolled] = useState(false)
-  const [open, setOpen] = useState(false)
-  const [dropdownOpen, setDropdownOpen] = useState(false)
-  const [mobileDropOpen, setMobileDropOpen] = useState(false)
-  const dropdownRef = useRef(null)
-  const closeTimer = useRef(null)
-  const location = useLocation()
+  const [scrolled, setScrolled]           = useState(false)
+  const [open, setOpen]                   = useState(false)
+  const [academyOpen, setAcademyOpen]     = useState(false)
+  const [hubOpen, setHubOpen]             = useState(false)
+  const [mobileAcadOpen, setMobileAcadOpen] = useState(false)
+  const [mobileHubOpen, setMobileHubOpen]   = useState(false)
+  const academyRef  = useRef(null)
+  const hubRef      = useRef(null)
+  const acadTimer   = useRef(null)
+  const hubTimer    = useRef(null)
+  const location    = useLocation()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -42,22 +88,18 @@ export default function Navbar() {
     return () => { document.body.style.overflow = '' }
   }, [open])
 
-  // Close mobile menu on route change
   useEffect(() => {
-    setOpen(false)
-    setDropdownOpen(false)
-    setMobileDropOpen(false)
+    setOpen(false); setAcademyOpen(false); setHubOpen(false)
+    setMobileAcadOpen(false); setMobileHubOpen(false)
   }, [location.pathname])
 
-  const openDropdown = () => {
-    clearTimeout(closeTimer.current)
-    setDropdownOpen(true)
-  }
-  const closeDropdown = () => {
-    closeTimer.current = setTimeout(() => setDropdownOpen(false), 120)
-  }
+  const openAcad  = () => { clearTimeout(acadTimer.current); setAcademyOpen(true) }
+  const closeAcad = () => { acadTimer.current = setTimeout(() => setAcademyOpen(false), 120) }
+  const openHub   = () => { clearTimeout(hubTimer.current); setHubOpen(true) }
+  const closeHub  = () => { hubTimer.current = setTimeout(() => setHubOpen(false), 120) }
 
-  const isSportsActive = location.pathname.startsWith('/sports')
+  const isAcademyActive = ['/coaches', '/programs', '/sports/football-futsal'].includes(location.pathname)
+  const isHubActive     = location.pathname.startsWith('/sports')
 
   return (
     <>
@@ -84,66 +126,64 @@ export default function Navbar() {
               About
             </NavLink>
 
-            {/* Sports & Facilities Dropdown */}
-            <div className="relative" ref={dropdownRef} onMouseEnter={openDropdown} onMouseLeave={closeDropdown}>
+            {/* Academy Dropdown */}
+            <div className="relative" ref={academyRef} onMouseEnter={openAcad} onMouseLeave={closeAcad}>
               <button
-                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-md text-[13px] font-heading font-medium transition-all duration-200 ${isSportsActive ? 'text-gold bg-white/10' : 'text-white/70 hover:text-white hover:bg-white/8'}`}
-                onClick={() => setDropdownOpen(v => !v)}
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-md text-[13px] font-heading font-medium transition-all duration-200 ${isAcademyActive ? 'text-gold bg-white/10' : 'text-white/70 hover:text-white hover:bg-white/8'}`}
+                onClick={() => setAcademyOpen(v => !v)}
               >
-                Sports &amp; Facilities
-                <motion.span animate={{ rotate: dropdownOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                Academy
+                <motion.span animate={{ rotate: academyOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
                   <FaChevronDown size={10} />
                 </motion.span>
               </button>
-
               <AnimatePresence>
-                {dropdownOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8, scale: 0.97 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 6, scale: 0.97 }}
-                    transition={{ duration: 0.18 }}
-                    onMouseEnter={openDropdown}
-                    onMouseLeave={closeDropdown}
-                    className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[340px] bg-[#0A1A6A] border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50"
-                  >
-                    {/* Dropdown header */}
-                    <div className="px-4 pt-4 pb-2 border-b border-white/8">
-                      <p className="text-gold text-[10px] font-heading font-semibold uppercase tracking-widest">Sports &amp; Facilities</p>
-                      <p className="text-white/40 text-xs mt-0.5">One Hub. Many Experiences.</p>
-                    </div>
-
-                    <div className="p-2">
-                      {SPORTS_NAV.map(({ to, emoji, label, desc }) => (
-                        <Link
-                          key={to}
-                          to={to}
-                          className="flex items-center gap-3.5 px-3 py-3 rounded-xl hover:bg-white/8 transition-all duration-150 group"
-                        >
-                          <div className="w-10 h-10 rounded-xl bg-white/8 group-hover:bg-gold/15 flex items-center justify-center text-xl shrink-0 transition-colors duration-150">
-                            {emoji}
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="text-white font-heading font-semibold text-[13px] leading-none mb-0.5 group-hover:text-gold transition-colors">{label}</div>
-                            <div className="text-white/40 text-[11px] leading-snug truncate">{desc}</div>
-                          </div>
-                          <FaArrowRight size={9} className="text-white/20 group-hover:text-gold transition-colors shrink-0" />
-                        </Link>
-                      ))}
-                    </div>
-
-                    <div className="px-4 pb-4 pt-1 border-t border-white/8">
-                      <Link to="/enroll"
-                        className="flex items-center justify-center gap-2 w-full bg-gold text-navy font-heading font-bold text-xs py-2.5 rounded-xl hover:bg-yellow-400 transition-colors">
-                        Enroll in Any Sport <FaArrowRight size={10} />
-                      </Link>
-                    </div>
-                  </motion.div>
+                {academyOpen && (
+                  <DropdownMenu
+                    items={ACADEMY_NAV}
+                    header="Tiptoe Sports Academy"
+                    subheader="Football & Futsal development programs"
+                    ctaLabel="Enroll in Academy"
+                    ctaTo="/enroll"
+                    onMouseEnter={openAcad}
+                    onMouseLeave={closeAcad}
+                  />
                 )}
               </AnimatePresence>
             </div>
 
-            {LINKS.filter(l => l.to !== '/about').map(({ to, label }) => (
+            {/* Sports Hub Dropdown */}
+            <div className="relative" ref={hubRef} onMouseEnter={openHub} onMouseLeave={closeHub}>
+              <button
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-md text-[13px] font-heading font-medium transition-all duration-200 ${isHubActive && !isAcademyActive ? 'text-gold bg-white/10' : 'text-white/70 hover:text-white hover:bg-white/8'}`}
+                onClick={() => setHubOpen(v => !v)}
+              >
+                Sports Hub
+                <motion.span animate={{ rotate: hubOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                  <FaChevronDown size={10} />
+                </motion.span>
+              </button>
+              <AnimatePresence>
+                {hubOpen && (
+                  <DropdownMenu
+                    items={HUB_NAV}
+                    header="Tiptoe Sports Hub"
+                    subheader="Multi-sport destination · All facilities"
+                    ctaLabel="Explore All Sports"
+                    ctaTo="/sports/football-futsal"
+                    onMouseEnter={openHub}
+                    onMouseLeave={closeHub}
+                    wide
+                  />
+                )}
+              </AnimatePresence>
+            </div>
+
+            {[
+              { to: '/gallery', label: 'Gallery' },
+              { to: '/blog',    label: 'Blog' },
+              { to: '/contact', label: 'Contact' },
+            ].map(({ to, label }) => (
               <NavLink key={to} to={to}
                 className={({ isActive }) => `px-3.5 py-2 rounded-md text-[13px] font-heading font-medium transition-all duration-200 ${isActive ? 'text-gold bg-white/10' : 'text-white/70 hover:text-white hover:bg-white/8'}`}>
                 {label}
@@ -192,39 +232,26 @@ export default function Navbar() {
               <nav className="flex-1 px-3 py-4 space-y-0.5">
                 <MobileNavLink to="/about" label="About" />
 
-                {/* Sports & Facilities expandable */}
-                <div>
-                  <button
-                    onClick={() => setMobileDropOpen(v => !v)}
-                    className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-heading font-medium transition-all ${isSportsActive ? 'bg-gold/15 text-gold' : 'text-white/70 hover:text-white hover:bg-white/8'}`}
-                  >
-                    <span>Sports &amp; Facilities</span>
-                    <motion.span animate={{ rotate: mobileDropOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                      <FaChevronDown size={12} />
-                    </motion.span>
-                  </button>
+                {/* Academy expandable */}
+                <MobileDropSection
+                  label="Academy"
+                  badge="Football & Futsal"
+                  isOpen={mobileAcadOpen}
+                  onToggle={() => setMobileAcadOpen(v => !v)}
+                  isActive={isAcademyActive}
+                  items={ACADEMY_NAV}
+                />
 
-                  <AnimatePresence>
-                    {mobileDropOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.22 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="ml-3 mt-1 space-y-0.5 border-l border-white/10 pl-3">
-                          {SPORTS_NAV.map(({ to, emoji, label }) => (
-                            <Link key={to} to={to}
-                              className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-heading font-medium text-white/60 hover:text-gold hover:bg-white/5 transition-all">
-                              <span>{emoji}</span> {label}
-                            </Link>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
+                {/* Sports Hub expandable */}
+                <MobileDropSection
+                  label="Sports Hub"
+                  badge="All Facilities"
+                  isOpen={mobileHubOpen}
+                  onToggle={() => setMobileHubOpen(v => !v)}
+                  isActive={isHubActive && !isAcademyActive}
+                  items={HUB_NAV}
+                />
 
-                <MobileNavLink to="/programs" label="Programs" />
                 <MobileNavLink to="/gallery"  label="Gallery" />
                 <MobileNavLink to="/blog"     label="Blog" />
                 <MobileNavLink to="/contact"  label="Contact" />
@@ -253,5 +280,42 @@ function MobileNavLink({ to, label }) {
       {label}
       <FaArrowRight size={10} className="opacity-40" />
     </NavLink>
+  )
+}
+
+function MobileDropSection({ label, badge, isOpen, onToggle, isActive, items }) {
+  return (
+    <div>
+      <button
+        onClick={onToggle}
+        className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-heading font-medium transition-all ${isActive ? 'bg-gold/15 text-gold' : 'text-white/70 hover:text-white hover:bg-white/8'}`}
+      >
+        <div className="flex flex-col items-start">
+          <span>{label}</span>
+          <span className="text-[10px] text-white/30 font-normal mt-0.5">{badge}</span>
+        </div>
+        <motion.span animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+          <FaChevronDown size={12} />
+        </motion.span>
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.22 }}
+            className="overflow-hidden"
+          >
+            <div className="ml-3 mt-1 space-y-0.5 border-l border-white/10 pl-3">
+              {items.map(({ to, emoji, label: itemLabel }) => (
+                <Link key={`${to}-${itemLabel}`} to={to}
+                  className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-heading font-medium text-white/60 hover:text-gold hover:bg-white/5 transition-all">
+                  <span>{emoji}</span> {itemLabel}
+                </Link>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   )
 }

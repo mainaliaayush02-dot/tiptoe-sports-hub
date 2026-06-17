@@ -25,6 +25,7 @@ const EMPTY = {
 
 const SLUG_SUGGESTIONS = [
   { slug: 'football-futsal', emoji: '⚽', name: 'Football / Futsal' },
+  { slug: 'cricket',         emoji: '🏏', name: 'Cricket' },
   { slug: 'basketball',      emoji: '🏀', name: 'Basketball' },
   { slug: 'pickleball',      emoji: '🎾', name: 'Pickleball' },
   { slug: 'snooker',         emoji: '🎱', name: 'Snooker' },

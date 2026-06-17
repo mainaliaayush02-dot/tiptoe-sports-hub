@@ -24,7 +24,7 @@ export default function About() {
     <>
       <SEOHead
         title="About Us"
-        description="Learn about Tiptoe Sports Hub — Nepal's #1 private football and futsal academy founded in 2021. Our story, mission, vision, and international partnerships."
+        description="Learn about Tiptoe Sports Hub — Kathmandu's premier multi-sport destination and home of Tiptoe Sports Academy, Nepal's #1 football and futsal academy."
         path="/about"
       />
 
@@ -39,7 +39,7 @@ export default function About() {
               About Tiptoe<br /><span className="text-gold">Sports Hub</span>
             </motion.h1>
             <motion.p variants={fadeUp} className="text-white/60 text-lg max-w-2xl mx-auto">
-              Nepal's #1 Private Football &amp; Futsal Academy — shaping champions since 2021.
+              Kathmandu's premier multi-sport destination — Football, Cricket, Basketball, Pickleball, Snooker & Sports Bar. Home of Tiptoe Sports Academy.
             </motion.p>
           </motion.div>
         </div>
@@ -62,17 +62,22 @@ export default function About() {
       <section className="section-padding bg-white">
         <div className="container-max grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
           <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-            <span className="section-label mb-3">Our Journey</span>
+            <span className="section-label mb-3">Our Story</span>
             <h2 className="section-title mb-2">Welcome to Tiptoe Sports Hub</h2>
             <div className="gold-divider mb-7" />
             <div className="space-y-4 text-gray-500 text-sm leading-relaxed">
-              <p>Tiptoe Sports Hub is Nepal's #1 Private Football &amp; Futsal Academy. We believe in the power of sports to shape character, build discipline, and unlock potential in each individual.</p>
-              <p>Based in Tarkeshwar, Kathmandu, with 370+ students training daily, we are a community dedicated to nurturing the next generation of Nepali football talent — from the very first kick to the international stage.</p>
-              <p>Our academy was founded on the belief that every child in Nepal deserves access to world-class football coaching, structured development programs, and the inspiration to dream big.</p>
+              <p><strong className="text-navy">Tiptoe Sports Hub</strong> is Kathmandu's premier multi-sport destination, located in Tarkeshwar. We are a complete sports community — offering Football, Cricket, Basketball, Pickleball, Snooker, and a Sports Bar all under one roof.</p>
+              <p>Within the Hub operates <strong className="text-navy">Tiptoe Sports Academy</strong> — Nepal's #1 private Football &amp; Futsal Academy with 370+ students training daily. The Academy focuses exclusively on youth football and futsal development, with structured programs from ages 4 to 18 and international exposure through Thailand training camps.</p>
+              <p>Whether you are a young athlete joining the Academy, a weekend cricketer booking a ground, or a sports fan watching the big game at our Sports Bar — Tiptoe Sports Hub is your home for sports in Kathmandu.</p>
             </div>
-            <Link to="/enroll" className="btn-primary mt-8 text-sm">
-              Join the Academy <FaArrowRight size={12} />
-            </Link>
+            <div className="flex flex-wrap gap-3 mt-8">
+              <Link to="/enroll" className="btn-primary text-sm">
+                Join the Academy <FaArrowRight size={12} />
+              </Link>
+              <Link to="/sports/cricket" className="btn-outline text-sm">
+                Explore All Sports <FaArrowRight size={12} />
+              </Link>
+            </div>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>

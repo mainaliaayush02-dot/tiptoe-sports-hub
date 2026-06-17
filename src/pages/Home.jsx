@@ -24,10 +24,11 @@ const STATS = [
 
 const SPORTS_SHOWCASE = [
   { to: '/sports/football-futsal', emoji: '⚽', name: 'Football & Futsal', desc: 'Academy programs for ages 4–18', primary: true },
-  { to: '/sports/basketball',      emoji: '🏀', name: 'Basketball',         desc: 'Courts & coaching' },
-  { to: '/sports/pickleball',      emoji: '🎾', name: 'Pickleball',         desc: "Nepal's premier courts" },
-  { to: '/sports/snooker',         emoji: '🎱', name: 'Snooker',            desc: 'Premium club & tables' },
-  { to: '/sports/sports-bar',      emoji: '🍹', name: 'Sports Bar',         desc: 'Live sports & great vibes' },
+  { to: '/sports/cricket',         emoji: '🏏', name: 'Cricket',           desc: 'Ground hire & coaching' },
+  { to: '/sports/basketball',      emoji: '🏀', name: 'Basketball',        desc: 'Courts & coaching' },
+  { to: '/sports/pickleball',      emoji: '🎾', name: 'Pickleball',        desc: "Nepal's premier courts" },
+  { to: '/sports/snooker',         emoji: '🎱', name: 'Snooker',           desc: 'Premium club & tables' },
+  { to: '/sports/sports-bar',      emoji: '🍹', name: 'Sports Bar',        desc: 'Live sports & great vibes' },
 ]
 
 const FALLBACK_PROGRAMS = [

@@ -5,6 +5,7 @@ import { FaArrowRight, FaStar, FaTrophy, FaFutbol } from 'react-icons/fa'
 import { query, orderBy } from 'firebase/firestore'
 import { coachesCol } from '../firebase/collections'
 import { useCollection } from '../hooks/useFirestore'
+import { useSite } from '../contexts/SiteContext'
 import SEOHead from '../components/SEOHead'
 
 const FALLBACK_COACHES = [
@@ -23,6 +24,7 @@ const FALLBACK_COACHES = [
 ]
 
 export default function Coaches() {
+  const { academyLogoURL } = useSite()
   const coachesQ = useMemo(() => query(coachesCol, orderBy('order')), [])
   const { docs, loading } = useCollection(coachesQ)
 
@@ -34,8 +36,8 @@ export default function Coaches() {
   return (
     <>
       <SEOHead
-        title="Coaches"
-        description="Meet our world-class coaches at Tiptoe Sports Hub — including Gaurav Basnet, Nepal National Futsal Head Coach, and Hari Khadka, Nepal's all-time top scorer."
+        title="Coaches | Tiptoe Sports Academy"
+        description="Meet our world-class coaches at Tiptoe Sports Academy — including Gaurav Basnet, Nepal National Futsal Head Coach, and Hari Khadka, Nepal's all-time top scorer."
         path="/coaches"
       />
 
@@ -45,7 +47,11 @@ export default function Coaches() {
         <div className="absolute top-0 right-0 w-96 h-96 bg-green/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3" />
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <span className="badge-gold mb-5">World-Class Coaching</span>
+            {academyLogoURL && (
+              <img src={academyLogoURL} alt="Tiptoe Sports Academy" className="w-20 h-20 object-contain mx-auto mb-4 drop-shadow-lg"
+                onError={e => e.target.style.display = 'none'} />
+            )}
+            <span className="badge-gold mb-5">Tiptoe Sports Academy</span>
             <h1 className="font-heading font-extrabold text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Meet Our Coaches</h1>
             <p className="text-white/60 max-w-xl mx-auto text-lg">
               Learn from Nepal's finest — coaches who have represented Nepal on the international stage and now dedicate their expertise to developing the next generation.
