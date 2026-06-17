@@ -30,8 +30,12 @@ export default function Coaches() {
 
   const activeCoaches = docs.filter(c => c.active !== false)
   const coaches = docs.length > 0 ? activeCoaches : FALLBACK_COACHES
-  const featured = coaches.slice(0, 2)
-  const rest = coaches.slice(2)
+
+  // Featured coaches (marked in admin) always show at top in full-width layout.
+  // Fall back to first 2 by order if no one has featured: true (handles old/unseeded data).
+  const hasFeatured = coaches.some(c => c.featured === true)
+  const featured = hasFeatured ? coaches.filter(c => c.featured === true) : coaches.slice(0, 2)
+  const rest     = hasFeatured ? coaches.filter(c => c.featured !== true) : coaches.slice(2)
 
   return (
     <>

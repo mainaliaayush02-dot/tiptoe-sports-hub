@@ -6,7 +6,7 @@ import { query, orderBy } from 'firebase/firestore'
 import { coachesCol } from '../../firebase/collections'
 import { useCollection, addDocument, updateDocument, deleteDocument } from '../../hooks/useFirestore'
 
-const EMPTY = { name: '', role: '', bio: '', experience: '', achievements: '', photoURL: '', order: 0, active: true }
+const EMPTY = { name: '', role: '', bio: '', experience: '', achievements: '', photoURL: '', order: 99, active: true, featured: false }
 
 function Modal({ item, onClose, onSave }) {
   const [form, setForm] = useState(
@@ -81,12 +81,22 @@ function Modal({ item, onClose, onSave }) {
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1">Order</label>
               <input type="number" value={form.order} onChange={e => set('order', Number(e.target.value))} className="input-field" />
+              <p className="text-xs text-gray-400 mt-1">Lower = higher on page. Add new coaches at 10, 20… to keep Gaurav (1) & Hari (2) on top.</p>
             </div>
-            <div className="flex items-center gap-3 self-end pb-1">
-              <label className="text-sm font-semibold text-gray-700">Active</label>
-              <button type="button" onClick={() => set('active', !form.active)} className={`w-10 h-6 rounded-full transition-all flex items-center px-0.5 ${form.active ? 'bg-green justify-end' : 'bg-gray-300 justify-start'}`}>
-                <div className="w-5 h-5 bg-white rounded-full shadow" />
-              </button>
+            <div className="col-span-2 grid grid-cols-2 gap-4">
+              <div className="flex items-center gap-3">
+                <label className="text-sm font-semibold text-gray-700">Active</label>
+                <button type="button" onClick={() => set('active', !form.active)} className={`w-10 h-6 rounded-full transition-all flex items-center px-0.5 ${form.active ? 'bg-green justify-end' : 'bg-gray-300 justify-start'}`}>
+                  <div className="w-5 h-5 bg-white rounded-full shadow" />
+                </button>
+              </div>
+              <div className="flex items-center gap-3">
+                <label className="text-sm font-semibold text-gray-700">⭐ Featured</label>
+                <button type="button" onClick={() => set('featured', !form.featured)} className={`w-10 h-6 rounded-full transition-all flex items-center px-0.5 ${form.featured ? 'bg-gold justify-end' : 'bg-gray-300 justify-start'}`}>
+                  <div className="w-5 h-5 bg-white rounded-full shadow" />
+                </button>
+              </div>
+              <p className="col-span-2 text-xs text-gray-400 -mt-2">Featured coaches appear at the top of the Coaches page in the large full-width layout.</p>
             </div>
           </div>
           <div className="flex gap-3 pt-2">
@@ -146,6 +156,7 @@ export default function ManageCoaches() {
                   <th className="px-4 py-3 text-left font-semibold">Role</th>
                   <th className="px-4 py-3 text-left font-semibold">Experience</th>
                   <th className="px-4 py-3 text-left font-semibold">Order</th>
+                  <th className="px-4 py-3 text-left font-semibold">Featured</th>
                   <th className="px-4 py-3 text-right font-semibold">Actions</th>
                 </tr>
               </thead>
@@ -164,6 +175,13 @@ export default function ManageCoaches() {
                     <td className="px-4 py-3 text-gray-600">{coach.role}</td>
                     <td className="px-4 py-3 text-gray-600">{coach.experience}</td>
                     <td className="px-4 py-3 text-gray-400">{coach.order}</td>
+                    <td className="px-4 py-3">
+                      {coach.featured ? (
+                        <span className="inline-flex items-center gap-1 text-xs font-bold text-gold">⭐ Featured</span>
+                      ) : (
+                        <span className="text-xs text-gray-300">—</span>
+                      )}
+                    </td>
                     <td className="px-4 py-3">
                       <div className="flex justify-end gap-2">
                         <button onClick={() => setModal(coach)} className="p-1.5 text-gray-400 hover:text-navy hover:bg-navy/5 rounded-lg transition-colors"><MdEdit size={16} /></button>

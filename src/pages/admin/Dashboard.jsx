@@ -23,13 +23,13 @@ const SEED_COACHES = [
     name: 'Gaurav Basnet', role: 'President & Head Coach', experience: '27+ Years',
     bio: "With over 27 years in football, Gaurav Basnet is one of Nepal's most respected football minds. As a former coach of Manang Marshyangdi Club in Nepal's A Division and the Nepal National Futsal Team for three consecutive terms, he has brought international-level expertise to every player he has trained.",
     achievements: ['Nepal National Futsal Team Head Coach - 3 consecutive terms', 'Former Head Coach, Manang Marshyangdi Club (A Division)', 'Led Nepal internationally: Iran, Kyrgyzstan, Mongolia', 'Co-founded Tiptoe Sports Hub in 2021', 'Pioneer of structured youth football development in Nepal'],
-    photoURL: '', active: true, order: 1,
+    photoURL: '', active: true, featured: true, order: 1,
   },
   {
     name: 'Hari Khadka', role: 'Brand Ambassador & Technical Advisor', experience: '20+ Years',
     bio: "A living legend of Nepali football, Hari Khadka is Nepal's all-time highest international goal scorer and the former captain of the National Men's Football Team. His passion for developing the next generation of Nepali talent makes him an invaluable part of the Tiptoe Sports Hub family.",
     achievements: ["Nepal's All-Time Highest International Goal Scorer", 'Former Captain, Nepal National Football Team', "Former Head Coach, National Women's Football Team", 'Former Acting Technical Director, ANFA', 'Inspiration to an entire generation of Nepali footballers'],
-    photoURL: '', active: true, order: 2,
+    photoURL: '', active: true, featured: true, order: 2,
   },
 ]
 
