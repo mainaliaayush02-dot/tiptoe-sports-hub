@@ -5,7 +5,7 @@ import { FaArrowRight, FaCheckCircle } from 'react-icons/fa'
 import { query, orderBy } from 'firebase/firestore'
 import { pricingCol } from '../firebase/collections'
 import { useCollection } from '../hooks/useFirestore'
-import SEOHead from '../components/SEOHead'
+import SEOHead, { BASE_URL } from '../components/SEOHead'
 import ContentLoader from '../components/ContentLoader'
 
 const SPORT_TABS = ['All', 'Football', 'Cricket', 'Basketball', 'Pickleball', 'Snooker', 'Sports Bar']
@@ -77,7 +77,7 @@ export default function Pricing() {
     '@type': 'ItemList',
     name: 'Tiptoe Sports Hub Membership & Pricing',
     description: 'Pricing plans for Football, Cricket, Basketball, Pickleball, Snooker, and Sports Bar at Tiptoe Sports Hub, Kathmandu',
-    url: 'https://tiptoesportshub.com/pricing',
+    url: `${BASE_URL}/pricing`,
     itemListElement: FALLBACK_PRICING.map((p, i) => ({
       '@type': 'ListItem',
       position: i + 1,

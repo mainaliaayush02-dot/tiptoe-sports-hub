@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { FaArrowRight, FaStar, FaTrophy, FaUsers, FaGlobe, FaCheckCircle } from 'react-icons/fa'
 import { GiSoccerBall } from 'react-icons/gi'
-import SEOHead from '../components/SEOHead'
+import SEOHead, { BASE_URL } from '../components/SEOHead'
 
 const MILESTONES = [
   { year: '2021', title: 'Founded', desc: "Tiptoe Sports Hub was established in Tarkeshwar, Kathmandu with a vision to nurture Nepal's football talent from the grassroots up." },
@@ -31,8 +31,8 @@ export default function About() {
           '@context': 'https://schema.org',
           '@type': 'Organization',
           name: 'Tiptoe Sports Hub',
-          url: 'https://tiptoesportshub.com',
-          logo: 'https://tiptoesportshub.com/logo.jpeg',
+          url: BASE_URL,
+          logo: `${BASE_URL}/logo.jpeg`,
           foundingDate: '2021',
           description: "Nepal's premier multi-sport destination in Tarkeshwar, Kathmandu. Football, Cricket, Basketball, Pickleball, Snooker and Sports Bar. Home of Tiptoe Sports Academy.",
           address: {

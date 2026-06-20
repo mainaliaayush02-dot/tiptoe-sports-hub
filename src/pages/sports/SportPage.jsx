@@ -5,7 +5,7 @@ import { query, where, limit, onSnapshot } from 'firebase/firestore'
 import { FaArrowRight, FaCheckCircle, FaCalendarAlt, FaMapMarkerAlt, FaPhoneAlt } from 'react-icons/fa'
 import { sportsCol } from '../../firebase/collections'
 import { useSite } from '../../contexts/SiteContext'
-import SEOHead from '../../components/SEOHead'
+import SEOHead, { BASE_URL } from '../../components/SEOHead'
 
 const DEFAULT_SPORTS = {
   'football-futsal': {
@@ -205,14 +205,14 @@ export default function SportPage() {
     '@type': 'SportsActivityLocation',
     name: `Tiptoe Sports Hub – ${sport.name}`,
     description: sport.seoDescription,
-    url: `https://tiptoesportshub.com/sports/${slug}`,
+    url: `${BASE_URL}/sports/${slug}`,
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Tarkeshwar',
       addressLocality: 'Kathmandu',
       addressCountry: 'NP',
     },
-    telephone: phone,
+    ...(phone && { telephone: phone }),
     openingHours: sport.schedule,
   }
 

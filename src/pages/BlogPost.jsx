@@ -5,7 +5,7 @@ import { FaArrowLeft, FaCalendarAlt, FaTag, FaUser } from 'react-icons/fa'
 import { FaInstagram, FaFacebook } from 'react-icons/fa'
 import { query, where, getDocs, limit } from 'firebase/firestore'
 import { blogCol } from '../firebase/collections'
-import SEOHead from '../components/SEOHead'
+import SEOHead, { BASE_URL } from '../components/SEOHead'
 import { GiSoccerBall } from 'react-icons/gi'
 import DOMPurify from 'dompurify'
 
@@ -53,7 +53,7 @@ export default function BlogPost() {
     )
   }
 
-  const shareUrl = `https://tiptoesportshub.com/blog/${post.slug}`
+  const shareUrl = `${BASE_URL}/blog/${post.slug}`
 
   return (
     <>
