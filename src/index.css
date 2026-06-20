@@ -9,7 +9,7 @@
   }
 
   body {
-    @apply font-sans text-gray-800 bg-white antialiased;
+    @apply font-sans text-gray-800 bg-dark antialiased;
     font-size: 16px;
     line-height: 1.6;
   }

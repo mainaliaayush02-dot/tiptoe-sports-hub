@@ -116,12 +116,24 @@ export default function Home() {
 
       {/* HERO */}
       <section className="relative min-h-screen flex items-center bg-dark overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_#06145F_0%,_#030A2E_70%)]" />
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-green/10 rounded-full blur-[120px] -translate-y-1/3 translate-x-1/4" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gold/5 rounded-full blur-[80px] translate-y-1/3 -translate-x-1/4" />
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 opacity-[0.04] pointer-events-none">
-          <img src={logoURL} alt="" className="w-[600px] h-[600px] object-contain" onError={e => e.target.style.display = 'none'} />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_#06145F_0%,_#030A2E_65%)]" />
+
+        {/* Ground photo — right panel on desktop, subtle full bg on mobile */}
+        <div className="absolute right-0 top-0 bottom-0 w-full lg:w-[58%] pointer-events-none overflow-hidden">
+          <img
+            src="/ground.jpg"
+            alt=""
+            className="w-full h-full object-cover object-center opacity-30 lg:opacity-100"
+          />
+          {/* Blend left edge into dark on desktop */}
+          <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/80 lg:via-dark/50 to-transparent" />
+          {/* Top & bottom vignette */}
+          <div className="absolute inset-0 bg-gradient-to-b from-dark/60 via-transparent to-dark/70" />
+          {/* Extra dark overlay on mobile so text stays readable */}
+          <div className="absolute inset-0 bg-dark/50 lg:bg-transparent" />
         </div>
+
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gold/5 rounded-full blur-[80px] translate-y-1/3 -translate-x-1/4 pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 pt-28 pb-16 w-full">
           <div className="max-w-3xl">
