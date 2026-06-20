@@ -116,22 +116,18 @@ export default function Home() {
 
       {/* HERO */}
       <section className="relative min-h-screen flex items-center bg-dark overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_#06145F_0%,_#030A2E_65%)]" />
 
-        {/* Ground photo — right panel on desktop, subtle full bg on mobile */}
-        <div className="absolute right-0 top-0 bottom-0 w-full lg:w-[58%] pointer-events-none overflow-hidden">
-          <img
-            src="/ground.jpg"
-            alt=""
-            className="w-full h-full object-cover object-center opacity-30 lg:opacity-100"
-          />
-          {/* Blend left edge into dark on desktop */}
-          <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/80 lg:via-dark/50 to-transparent" />
-          {/* Top & bottom vignette */}
-          <div className="absolute inset-0 bg-gradient-to-b from-dark/60 via-transparent to-dark/70" />
-          {/* Extra dark overlay on mobile so text stays readable */}
-          <div className="absolute inset-0 bg-dark/50 lg:bg-transparent" />
-        </div>
+        {/* Ground photo — full bleed, visible on right, fades to dark on left */}
+        <img
+          src="/ground.jpg"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none"
+          style={{ opacity: 0.45 }}
+        />
+        {/* Strong dark gradient left side (covers text area) fading to transparent right */}
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #030A2E 38%, #030A2Ecc 55%, #030A2E55 75%, transparent 100%)' }} />
+        {/* Top & bottom vignette */}
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #030A2Eaa 0%, transparent 30%, transparent 70%, #030A2Ecc 100%)' }} />
 
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gold/5 rounded-full blur-[80px] translate-y-1/3 -translate-x-1/4 pointer-events-none" />
 
