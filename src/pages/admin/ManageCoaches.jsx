@@ -3,10 +3,32 @@ import { motion, AnimatePresence } from 'framer-motion'
 import toast from 'react-hot-toast'
 import { MdAdd, MdEdit, MdDelete, MdClose, MdPeople, MdCloudUpload } from 'react-icons/md'
 import { query, orderBy } from 'firebase/firestore'
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { coachesCol } from '../../firebase/collections'
-import { storage } from '../../firebase/config'
 import { useCollection, addDocument, updateDocument, deleteDocument } from '../../hooks/useFirestore'
+
+const CLOUD_NAME   = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+const CLOUD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
+const canUpload    = !!(CLOUD_NAME && CLOUD_PRESET)
+
+async function uploadToCloudinary(file, onProgress) {
+  const fd = new FormData()
+  fd.append('file', file)
+  fd.append('upload_preset', CLOUD_PRESET)
+  fd.append('folder', 'coaches')
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest()
+    xhr.upload.onprogress = e => {
+      if (e.lengthComputable) onProgress(Math.round(e.loaded / e.total * 100))
+    }
+    xhr.onload = () => {
+      if (xhr.status === 200) resolve(JSON.parse(xhr.responseText).secure_url)
+      else reject(new Error('Upload failed'))
+    }
+    xhr.onerror = () => reject(new Error('Network error'))
+    xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`)
+    xhr.send(fd)
+  })
+}
 
 const EMPTY = { name: '', role: '', bio: '', experience: '', achievements: '', photoURL: '', order: 99, active: true, featured: false }
 
@@ -40,26 +62,16 @@ function Modal({ item, onClose, onSave }) {
     const file = e.target.files?.[0]
     if (!file) return
     if (!file.type.startsWith('image/')) { toast.error('Please select an image file'); return }
-    if (file.size > 8 * 1024 * 1024) { toast.error('Image must be under 8 MB'); return }
+    if (file.size > 10 * 1024 * 1024) { toast.error('Image must be under 10 MB'); return }
     setUploading(true)
     setUploadPct(0)
     try {
-      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_')
-      const storageRef = ref(storage, `coaches/${Date.now()}-${safeName}`)
-      const task = uploadBytesResumable(storageRef, file)
-      task.on(
-        'state_changed',
-        snap => setUploadPct(Math.round(snap.bytesTransferred / snap.totalBytes * 100)),
-        () => { toast.error('Upload failed — check Firebase Storage rules'); setUploading(false) },
-        async () => {
-          const url = await getDownloadURL(task.snapshot.ref)
-          set('photoURL', url)
-          setUploading(false)
-          toast.success('Photo uploaded!')
-        }
-      )
+      const url = await uploadToCloudinary(file, setUploadPct)
+      set('photoURL', url)
+      toast.success('Photo uploaded!')
     } catch {
-      toast.error('Upload failed')
+      toast.error('Upload failed. Check your Cloudinary settings.')
+    } finally {
       setUploading(false)
     }
   }
@@ -113,15 +125,21 @@ function Modal({ item, onClose, onSave }) {
                   onChange={handleFileUpload}
                   className="hidden"
                 />
-                <button
-                  type="button"
-                  onClick={() => fileRef.current?.click()}
-                  disabled={uploading || saving}
-                  className="w-full btn-primary text-sm py-3 justify-center gap-2 disabled:opacity-60"
-                >
-                  <MdCloudUpload size={18} />
-                  {uploading ? `Uploading... ${uploadPct}%` : 'Upload from Device / Gallery'}
-                </button>
+                {canUpload ? (
+                  <button
+                    type="button"
+                    onClick={() => fileRef.current?.click()}
+                    disabled={uploading || saving}
+                    className="w-full btn-primary text-sm py-3 justify-center gap-2 disabled:opacity-60"
+                  >
+                    <MdCloudUpload size={18} />
+                    {uploading ? `Uploading... ${uploadPct}%` : 'Upload from Device / Gallery'}
+                  </button>
+                ) : (
+                  <div className="w-full text-xs bg-amber-50 border border-amber-200 text-amber-700 rounded-xl p-3 leading-relaxed">
+                    <strong>Setup needed:</strong> Add <code className="bg-amber-100 px-1 rounded">VITE_CLOUDINARY_CLOUD_NAME</code> and <code className="bg-amber-100 px-1 rounded">VITE_CLOUDINARY_UPLOAD_PRESET</code> to your <code>.env.local</code> and Vercel settings. See instructions below.
+                  </div>
+                )}
                 {uploading && (
                   <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
                     <div className="h-full bg-green transition-all duration-200" style={{ width: `${uploadPct}%` }} />
