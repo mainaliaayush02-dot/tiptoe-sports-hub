@@ -230,6 +230,19 @@ export default function Footer() {
             <Link to="/about"   className="text-white/25 hover:text-gold text-xs transition-colors">About</Link>
           </div>
         </div>
+        <div className="max-w-7xl mx-auto px-5 md:px-8 pb-5 text-center">
+          <p className="text-white/20 text-xs">
+            Designed &amp; crafted by{' '}
+            <a
+              href="https://aayushmainali.me/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/35 hover:text-gold transition-colors duration-200"
+            >
+              Aayush Mainali
+            </a>
+          </p>
+        </div>
       </div>
 
     </footer>
