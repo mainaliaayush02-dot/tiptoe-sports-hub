@@ -8,6 +8,22 @@ import { useCollection, addDocument, updateDocument, deleteDocument } from '../.
 
 const EMPTY = { name: '', role: '', bio: '', experience: '', achievements: '', photoURL: '', order: 99, active: true, featured: false }
 
+function normalizePhotoUrl(url) {
+  if (!url) return url
+  try {
+    const u = new URL(url)
+    if (u.hostname === 'imgur.com') {
+      // imgur.com/a/XXXX or imgur.com/gallery/XXXX → i.imgur.com/XXXX.jpg
+      const album = u.pathname.match(/^\/(?:a|gallery)\/([a-zA-Z0-9]+)/)
+      if (album) return `https://i.imgur.com/${album[1]}.jpg`
+      // imgur.com/XXXX (page view, no extension) → i.imgur.com/XXXX.jpg
+      const page = u.pathname.match(/^\/([a-zA-Z0-9]+)$/)
+      if (page) return `https://i.imgur.com/${page[1]}.jpg`
+    }
+  } catch {}
+  return url
+}
+
 function Modal({ item, onClose, onSave }) {
   const [form, setForm] = useState(
     item ? { ...item, achievements: Array.isArray(item.achievements) ? item.achievements.join('\n') : (item.achievements || '') } : EMPTY
@@ -21,6 +37,7 @@ function Modal({ item, onClose, onSave }) {
     try {
       const data = {
         ...form,
+        photoURL: normalizePhotoUrl(form.photoURL),
         achievements: form.achievements.split('\n').filter(a => a.trim()),
       }
       await onSave(data)
@@ -41,20 +58,29 @@ function Modal({ item, onClose, onSave }) {
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Photo</label>
             <div className="flex items-center gap-4 mb-2">
-              {form.photoURL
-                ? <img src={form.photoURL} alt="Preview" className="w-16 h-16 rounded-full object-cover ring-2 ring-gold/30" onError={e => e.target.style.display='none'} />
-                : <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center text-gray-300"><MdPeople size={28} /></div>
-              }
+              <div className="relative w-16 h-16 rounded-full shrink-0 bg-gray-100 flex items-center justify-center text-gray-300 overflow-hidden">
+                <MdPeople size={28} />
+                {form.photoURL && (
+                  <img
+                    src={normalizePhotoUrl(form.photoURL)}
+                    alt="Preview"
+                    className="absolute inset-0 w-16 h-16 rounded-full object-cover ring-2 ring-gold/30"
+                    onError={e => e.target.style.display = 'none'}
+                  />
+                )}
+              </div>
               <div className="flex-1">
                 <input
                   value={form.photoURL}
                   onChange={e => set('photoURL', e.target.value)}
                   className="input-field text-sm"
-                  placeholder="Paste image URL (e.g. from Imgur or Google Photos)"
+                  placeholder="https://i.imgur.com/XXXXX.jpg"
                 />
               </div>
             </div>
-            <p className="text-xs text-gray-400">Upload your photo to <strong>imgur.com</strong> for free, then paste the link here.</p>
+            <p className="text-xs text-gray-400">
+              Upload to <strong>imgur.com</strong>, then right-click the image and choose <strong>Copy image address</strong> to get a direct URL like <code className="bg-gray-100 px-1 rounded">https://i.imgur.com/XXXXX.jpg</code>. Album and page links are converted automatically.
+            </p>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -165,10 +191,12 @@ export default function ManageCoaches() {
                   <tr key={coach.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
-                        {coach.photoURL
-                          ? <img src={coach.photoURL} alt={coach.name} className="w-10 h-10 rounded-full object-cover" />
-                          : <div className="w-10 h-10 rounded-full bg-navy flex items-center justify-center text-gold font-bold text-sm">{coach.name?.[0]}</div>
-                        }
+                        <div className="relative w-10 h-10 rounded-full shrink-0 bg-navy flex items-center justify-center text-gold font-bold text-sm overflow-hidden">
+                          {coach.name?.[0]}
+                          {coach.photoURL && (
+                            <img src={coach.photoURL} alt={coach.name} className="absolute inset-0 w-10 h-10 object-cover" onError={e => e.target.style.display = 'none'} />
+                          )}
+                        </div>
                         <span className="font-semibold text-navy">{coach.name}</span>
                       </div>
                     </td>

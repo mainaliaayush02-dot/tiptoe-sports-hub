@@ -145,19 +145,23 @@ export default function Coaches() {
                   {/* Photo / Avatar */}
                   <div className={i % 2 === 1 ? 'lg:order-2' : ''}>
                     <div className="relative bg-gradient-to-br from-navy to-green rounded-2xl aspect-square max-w-sm mx-auto flex items-center justify-center overflow-hidden">
-                      {coach.photoURL ? (
-                        <img src={coach.photoURL} alt={coach.name} className="w-full h-full object-cover" />
-                      ) : (
-                        <>
-                          <div className="text-[180px] font-black text-white/10 select-none">{initial}</div>
-                          <div className="absolute inset-0 flex flex-col items-center justify-center">
-                            <div className="w-28 h-28 rounded-full bg-gold flex items-center justify-center font-heading font-extrabold text-navy text-4xl mb-4">
-                              {initial}
-                            </div>
-                            <p className="text-white font-heading font-bold text-xl text-center px-4">{coach.name}</p>
-                            <p className="text-gold text-sm mt-1 text-center px-4">{coach.role}</p>
-                          </div>
-                        </>
+                      {/* Avatar always visible as fallback */}
+                      <div className="text-[180px] font-black text-white/10 select-none">{initial}</div>
+                      <div className="absolute inset-0 flex flex-col items-center justify-center">
+                        <div className="w-28 h-28 rounded-full bg-gold flex items-center justify-center font-heading font-extrabold text-navy text-4xl mb-4">
+                          {initial}
+                        </div>
+                        <p className="text-white font-heading font-bold text-xl text-center px-4">{coach.name}</p>
+                        <p className="text-gold text-sm mt-1 text-center px-4">{coach.role}</p>
+                      </div>
+                      {/* Photo overlaid — hides on error so avatar shows through */}
+                      {coach.photoURL && (
+                        <img
+                          src={coach.photoURL}
+                          alt={coach.name}
+                          className="absolute inset-0 w-full h-full object-cover"
+                          onError={e => e.target.style.display = 'none'}
+                        />
                       )}
                     </div>
                   </div>
@@ -213,10 +217,19 @@ export default function Coaches() {
                   <motion.div key={coach.id || coach.name} className="card p-6 text-center"
                     initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
-                    {coach.photoURL
-                      ? <img src={coach.photoURL} alt={coach.name} className="w-24 h-24 rounded-full object-cover mx-auto mb-4 ring-4 ring-gold/30" />
-                      : <div className="w-24 h-24 rounded-full bg-navy flex items-center justify-center font-heading font-extrabold text-gold text-2xl mx-auto mb-4">{initial}</div>
-                    }
+                    <div className="relative w-24 h-24 rounded-full mx-auto mb-4">
+                      <div className="w-24 h-24 rounded-full bg-navy flex items-center justify-center font-heading font-extrabold text-gold text-2xl">
+                        {initial}
+                      </div>
+                      {coach.photoURL && (
+                        <img
+                          src={coach.photoURL}
+                          alt={coach.name}
+                          className="absolute inset-0 w-24 h-24 rounded-full object-cover ring-4 ring-gold/30"
+                          onError={e => e.target.style.display = 'none'}
+                        />
+                      )}
+                    </div>
                     <h3 className="font-heading font-bold text-navy text-lg">{coach.name}</h3>
                     <p className="text-green text-sm mt-1 mb-3">{coach.role}</p>
                     {coach.experience && <p className="text-gold text-xs font-semibold mb-3">{coach.experience}</p>}
