@@ -1,9 +1,11 @@
-﻿import { useState, useMemo } from 'react'
+﻿import { useState, useMemo, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import toast from 'react-hot-toast'
-import { MdAdd, MdEdit, MdDelete, MdClose, MdPeople } from 'react-icons/md'
+import { MdAdd, MdEdit, MdDelete, MdClose, MdPeople, MdCloudUpload } from 'react-icons/md'
 import { query, orderBy } from 'firebase/firestore'
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { coachesCol } from '../../firebase/collections'
+import { storage } from '../../firebase/config'
 import { useCollection, addDocument, updateDocument, deleteDocument } from '../../hooks/useFirestore'
 
 const EMPTY = { name: '', role: '', bio: '', experience: '', achievements: '', photoURL: '', order: 99, active: true, featured: false }
@@ -29,7 +31,38 @@ function Modal({ item, onClose, onSave }) {
     item ? { ...item, achievements: Array.isArray(item.achievements) ? item.achievements.join('\n') : (item.achievements || '') } : EMPTY
   )
   const [saving, setSaving] = useState(false)
+  const [uploading, setUploading] = useState(false)
+  const [uploadPct, setUploadPct] = useState(0)
+  const fileRef = useRef(null)
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    if (!file.type.startsWith('image/')) { toast.error('Please select an image file'); return }
+    if (file.size > 8 * 1024 * 1024) { toast.error('Image must be under 8 MB'); return }
+    setUploading(true)
+    setUploadPct(0)
+    try {
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_')
+      const storageRef = ref(storage, `coaches/${Date.now()}-${safeName}`)
+      const task = uploadBytesResumable(storageRef, file)
+      task.on(
+        'state_changed',
+        snap => setUploadPct(Math.round(snap.bytesTransferred / snap.totalBytes * 100)),
+        () => { toast.error('Upload failed — check Firebase Storage rules'); setUploading(false) },
+        async () => {
+          const url = await getDownloadURL(task.snapshot.ref)
+          set('photoURL', url)
+          setUploading(false)
+          toast.success('Photo uploaded!')
+        }
+      )
+    } catch {
+      toast.error('Upload failed')
+      setUploading(false)
+    }
+  }
 
   const handleSave = async () => {
     if (!form.name) { toast.error('Name is required.'); return }
@@ -54,33 +87,69 @@ function Modal({ item, onClose, onSave }) {
           <button onClick={onClose}><MdClose size={22} className="text-gray-400" /></button>
         </div>
         <div className="p-6 space-y-4">
-          {/* Photo URL */}
+          {/* Photo Upload */}
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Photo</label>
-            <div className="flex items-center gap-4 mb-2">
-              <div className="relative w-16 h-16 rounded-full shrink-0 bg-gray-100 flex items-center justify-center text-gray-300 overflow-hidden">
-                <MdPeople size={28} />
+            <label className="block text-sm font-semibold text-gray-700 mb-3">Coach Photo</label>
+            <div className="flex items-center gap-4 mb-3">
+              {/* Preview */}
+              <div className="relative w-20 h-20 rounded-full shrink-0 bg-gray-100 flex items-center justify-center text-gray-300 overflow-hidden ring-2 ring-gray-200">
+                <MdPeople size={32} />
                 {form.photoURL && (
                   <img
                     src={normalizePhotoUrl(form.photoURL)}
                     alt="Preview"
-                    className="absolute inset-0 w-16 h-16 rounded-full object-cover ring-2 ring-gold/30"
+                    className="absolute inset-0 w-20 h-20 object-cover rounded-full"
                     onError={e => e.target.style.display = 'none'}
                   />
                 )}
               </div>
-              <div className="flex-1">
+
+              {/* Upload button + progress */}
+              <div className="flex-1 space-y-2">
                 <input
-                  value={form.photoURL}
-                  onChange={e => set('photoURL', e.target.value)}
-                  className="input-field text-sm"
-                  placeholder="https://i.imgur.com/XXXXX.jpg"
+                  type="file"
+                  accept="image/*"
+                  ref={fileRef}
+                  onChange={handleFileUpload}
+                  className="hidden"
                 />
+                <button
+                  type="button"
+                  onClick={() => fileRef.current?.click()}
+                  disabled={uploading || saving}
+                  className="w-full btn-primary text-sm py-3 justify-center gap-2 disabled:opacity-60"
+                >
+                  <MdCloudUpload size={18} />
+                  {uploading ? `Uploading... ${uploadPct}%` : 'Upload from Device / Gallery'}
+                </button>
+                {uploading && (
+                  <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                    <div className="h-full bg-green transition-all duration-200" style={{ width: `${uploadPct}%` }} />
+                  </div>
+                )}
               </div>
             </div>
-            <p className="text-xs text-gray-400">
-              Upload to <strong>imgur.com</strong>, then right-click the image and choose <strong>Copy image address</strong> to get a direct URL like <code className="bg-gray-100 px-1 rounded">https://i.imgur.com/XXXXX.jpg</code>. Album and page links are converted automatically.
-            </p>
+
+            {/* URL fallback */}
+            <div className="flex gap-2">
+              <input
+                value={form.photoURL}
+                onChange={e => set('photoURL', normalizePhotoUrl(e.target.value))}
+                onBlur={e => set('photoURL', normalizePhotoUrl(e.target.value))}
+                className="input-field text-xs flex-1"
+                placeholder="Or paste an image URL"
+              />
+              {form.photoURL && (
+                <button
+                  type="button"
+                  onClick={() => set('photoURL', '')}
+                  className="px-3 text-xs text-red-400 hover:text-red-600 border border-gray-200 rounded-xl"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+            <p className="text-xs text-gray-400 mt-1.5">Upload directly from your phone or computer. Or paste a direct image URL.</p>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
