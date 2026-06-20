@@ -7,6 +7,7 @@ import { query, where, getDocs, limit } from 'firebase/firestore'
 import { blogCol } from '../firebase/collections'
 import SEOHead from '../components/SEOHead'
 import { GiSoccerBall } from 'react-icons/gi'
+import DOMPurify from 'dompurify'
 
 function formatDate(ts) {
   if (!ts) return ''
@@ -114,7 +115,7 @@ export default function BlogPost() {
             )}
             <div
               className="prose prose-lg max-w-none prose-headings:font-display prose-headings:text-navy prose-a:text-navy prose-strong:text-navy"
-              dangerouslySetInnerHTML={{ __html: post.content }}
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }}
             />
           </motion.div>
 

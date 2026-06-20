@@ -65,7 +65,7 @@ export default function AdminLogin() {
                   {...register('password', { required: 'Password is required' })}
                   type="password"
                   className={`input-field pl-10 ${errors.password ? 'border-red-400' : ''}`}
-                  placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+                  placeholder="••••••••"
                   autoComplete="current-password"
                 />
               </div>
@@ -90,7 +90,7 @@ export default function AdminLogin() {
         </div>
 
         <p className="text-center text-white/40 text-xs mt-6">
-          Tiptoe Sports Hub Admin Panel â€” Authorized Access Only
+          Tiptoe Sports Hub Admin Panel – Authorized Access Only
         </p>
       </div>
     </div>

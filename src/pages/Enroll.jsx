@@ -109,7 +109,7 @@ export default function Enroll() {
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1.5">Student Age *</label>
                   <input
-                    {...register('age', { required: 'Required', min: { value: 3, message: 'Min age 3' }, max: { value: 25, message: 'Max age 25' } })}
+                    {...register('age', { required: 'Required', min: { value: 4, message: 'Min age 4' }, max: { value: 18, message: 'Max age 18' } })}
                     type="number"
                     className={`input-field ${errors.age ? 'border-red-400' : ''}`}
                     placeholder="Age (years)"

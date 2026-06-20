@@ -167,7 +167,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
             className="flex flex-wrap gap-8 mt-16 pt-10 border-t border-white/10"
           >
-            {[['370+', 'Daily Students'], ['4+', 'Years Active'], ['5', 'Sports & Facilities'], ['Thailand', 'Partnership']].map(([v, l]) => (
+            {[['370+', 'Daily Students'], ['4+', 'Years Active'], ['6', 'Sports & Facilities'], ['Thailand', 'Partnership']].map(([v, l]) => (
               <div key={l}>
                 <div className="font-heading font-extrabold text-2xl text-gold">{v}</div>
                 <div className="text-white/40 text-xs font-medium mt-0.5 uppercase tracking-wider">{l}</div>
