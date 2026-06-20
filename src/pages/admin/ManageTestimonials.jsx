@@ -1,11 +1,50 @@
-﻿import { useState, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import toast from 'react-hot-toast'
-import { MdAdd, MdEdit, MdDelete, MdClose, MdStar } from 'react-icons/md'
-import { FaStar } from 'react-icons/fa'
+import { MdAdd, MdEdit, MdDelete, MdClose, MdStar, MdDownload, MdRefresh } from 'react-icons/md'
+import { FaStar, FaGoogle } from 'react-icons/fa'
 import { query, orderBy } from 'firebase/firestore'
 import { testimonialsCol } from '../../firebase/collections'
 import { useCollection, addDocument, updateDocument, deleteDocument } from '../../hooks/useFirestore'
+
+const GOOGLE_API_KEY  = import.meta.env.VITE_GOOGLE_PLACES_API_KEY
+const GOOGLE_PLACE_ID = import.meta.env.VITE_GOOGLE_PLACE_ID
+const canFetchReviews = !!(GOOGLE_API_KEY && GOOGLE_PLACE_ID)
+
+const SEED_TESTIMONIALS = [
+  { name: 'Rajan Shrestha',  role: 'Parent',                    text: 'My son has improved tremendously since joining Tiptoe Sports Hub. The coaches are professional and truly dedicated to each student. I can see the discipline and confidence building every week.',                                                              rating: 5, visible: true, photoURL: '' },
+  { name: 'Priya Tamang',    role: 'Parent of Student (Age 10)', text: 'Excellent training environment for kids. The structured programs helped my daughter build confidence both on and off the field. The coaches make every session fun yet disciplined.',                                                                               rating: 5, visible: true, photoURL: '' },
+  { name: 'Binod Rai',       role: 'Student, Age 16',            text: "Best football academy in Kathmandu. Coach Gaurav's training methods are world-class and the Thailand exchange program was truly life-changing. I got to train with Thai Division clubs!",                                                                          rating: 5, visible: true, photoURL: '' },
+  { name: 'Sunita Gurung',   role: 'Parent',                    text: "Professional staff, great facilities, and real international exposure. Tiptoe Sports Hub is the best investment for my child's future. Highly recommended to every football-loving family.",                                                                         rating: 5, visible: true, photoURL: '' },
+  { name: 'Dipak Lama',      role: 'Parent of Student (Age 14)', text: "The coaches here genuinely care about each student's development. My son went from a complete beginner to playing in local tournaments within 8 months. Outstanding results!",                                                                                    rating: 5, visible: true, photoURL: '' },
+  { name: 'Anita Karki',     role: 'Parent',                    text: "As a parent of a girl footballer, I'm especially grateful for the Girls Football Program. My daughter feels completely supported and empowered. The academy has been transformational.",                                                                            rating: 5, visible: true, photoURL: '' },
+]
+
+async function fetchGoogleReviews() {
+  const res = await fetch(
+    `https://places.googleapis.com/v1/places/${GOOGLE_PLACE_ID}`,
+    {
+      headers: {
+        'X-Goog-Api-Key': GOOGLE_API_KEY,
+        'X-Goog-FieldMask': 'reviews',
+      },
+    }
+  )
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error(err?.error?.message || `Google API error (${res.status})`)
+  }
+  const data = await res.json()
+  return (data.reviews || []).map(r => ({
+    name:     r.authorAttribution?.displayName || 'Anonymous',
+    photoURL: r.authorAttribution?.photoUri    || '',
+    text:     r.text?.text || r.originalText?.text || '',
+    rating:   r.rating || 5,
+    role:     'Google Review',
+    visible:  true,
+    source:   'google',
+  }))
+}
 
 const EMPTY = { name: '', role: '', text: '', rating: 5, photoURL: '', visible: true }
 
@@ -32,7 +71,6 @@ function Modal({ item, onClose, onSave }) {
           <button onClick={onClose}><MdClose size={22} className="text-gray-400" /></button>
         </div>
         <div className="p-6 space-y-4">
-          {/* Photo URL */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">Photo</label>
             <div className="flex items-center gap-4 mb-1">
@@ -48,7 +86,6 @@ function Modal({ item, onClose, onSave }) {
               />
             </div>
           </div>
-
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">Name *</label>
             <input value={form.name} onChange={e => set('name', e.target.value)} className="input-field" placeholder="Full name" />
@@ -90,8 +127,13 @@ function Modal({ item, onClose, onSave }) {
 }
 
 export default function ManageTestimonials() {
-  const [modal, setModal] = useState(null)
-  const [deleteId, setDeleteId] = useState(null)
+  const [modal, setModal]               = useState(null)
+  const [deleteId, setDeleteId]         = useState(null)
+  const [seeding, setSeeding]           = useState(false)
+  const [googleReviews, setGoogleReviews] = useState(null)
+  const [fetchingGoogle, setFetchingGoogle] = useState(false)
+  const [importingId, setImportingId]   = useState(null)
+
   const q = useMemo(() => query(testimonialsCol, orderBy('createdAt', 'desc')), [])
   const { docs: testimonials, loading } = useCollection(q)
 
@@ -116,6 +158,39 @@ export default function ManageTestimonials() {
     await updateDocument('testimonials', t.id, { visible: !t.visible })
   }
 
+  const handleSeedDefaults = async () => {
+    setSeeding(true)
+    try {
+      await Promise.all(SEED_TESTIMONIALS.map(t => addDocument(testimonialsCol, t)))
+      toast.success('6 default testimonials imported!')
+    } catch { toast.error('Failed to import defaults.') }
+    finally { setSeeding(false) }
+  }
+
+  const handleFetchGoogle = async () => {
+    setFetchingGoogle(true)
+    try {
+      const reviews = await fetchGoogleReviews()
+      setGoogleReviews(reviews)
+      if (reviews.length === 0) toast('No reviews returned. Check your Place ID.')
+      else toast.success(`${reviews.length} Google reviews fetched!`)
+    } catch (err) {
+      toast.error(err.message)
+    } finally {
+      setFetchingGoogle(false)
+    }
+  }
+
+  const handleImportGoogleReview = async (review, idx) => {
+    setImportingId(idx)
+    try {
+      await addDocument(testimonialsCol, review)
+      toast.success('Review imported to testimonials!')
+      setGoogleReviews(prev => prev.filter((_, i) => i !== idx))
+    } catch { toast.error('Failed to import.') }
+    finally { setImportingId(null) }
+  }
+
   return (
     <div className="p-4 md:p-6">
       <div className="flex items-center justify-between mb-6">
@@ -126,6 +201,96 @@ export default function ManageTestimonials() {
         <button onClick={() => setModal({})} className="btn-primary text-sm py-2.5"><MdAdd size={18} /> Add Testimonial</button>
       </div>
 
+      {/* Seed defaults banner */}
+      {!loading && testimonials.length === 0 && (
+        <div className="bg-blue-50 border border-blue-200 rounded-2xl p-5 mb-6 flex items-start gap-4">
+          <MdDownload size={24} className="text-blue-500 shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <p className="font-semibold text-blue-800 text-sm">No testimonials yet</p>
+            <p className="text-blue-600 text-xs mt-1">Import the 6 sample testimonials that are currently showing on the public website to manage them here.</p>
+          </div>
+          <button
+            onClick={handleSeedDefaults}
+            disabled={seeding}
+            className="shrink-0 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-colors disabled:opacity-60"
+          >
+            {seeding ? 'Importing...' : 'Import 6 Defaults'}
+          </button>
+        </div>
+      )}
+
+      {/* Google Reviews panel */}
+      <div className="bg-white rounded-2xl shadow-sm p-5 mb-6">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <FaGoogle className="text-[#4285F4]" size={18} />
+            <h2 className="font-bold text-navy">Google Reviews</h2>
+          </div>
+          {canFetchReviews && (
+            <button
+              onClick={handleFetchGoogle}
+              disabled={fetchingGoogle}
+              className="flex items-center gap-2 px-4 py-2 bg-[#4285F4] hover:bg-[#3367d6] text-white text-xs font-bold rounded-xl transition-colors disabled:opacity-60"
+            >
+              <MdRefresh size={16} className={fetchingGoogle ? 'animate-spin' : ''} />
+              {fetchingGoogle ? 'Fetching...' : 'Fetch from Google'}
+            </button>
+          )}
+        </div>
+
+        {!canFetchReviews ? (
+          <div className="text-xs text-gray-500 space-y-2 bg-gray-50 rounded-xl p-4">
+            <p className="font-semibold text-gray-700">Connect Google Reviews in 3 steps:</p>
+            <ol className="list-decimal ml-4 space-y-1 leading-relaxed">
+              <li>Go to <strong>Google Cloud Console</strong> → Enable <strong>"Places API (New)"</strong></li>
+              <li>Create an API key → restrict it to your domain (<code className="bg-gray-200 px-1 rounded">tiptoesportshub.com</code>)</li>
+              <li>Find your <strong>Google Place ID</strong>: search your business on Google Maps → copy the Place ID from the URL</li>
+            </ol>
+            <p className="mt-2">Then add to <code className="bg-gray-200 px-1 rounded">.env.local</code> and Vercel environment settings:</p>
+            <pre className="bg-gray-100 rounded-lg p-3 text-xs overflow-x-auto leading-relaxed">
+{`VITE_GOOGLE_PLACES_API_KEY=your_api_key_here
+VITE_GOOGLE_PLACE_ID=ChIJXXXXXXXXXXXXXXXX`}
+            </pre>
+            <p className="text-gray-400 text-xs">Free tier: $200/month credit from Google = ~11,000 requests free. No cost for a small site.</p>
+          </div>
+        ) : googleReviews === null ? (
+          <p className="text-sm text-gray-400">Click "Fetch from Google" to load your latest Google reviews and import them as testimonials.</p>
+        ) : googleReviews.length === 0 ? (
+          <p className="text-sm text-gray-400">No reviews returned. Make sure your Place ID is correct.</p>
+        ) : (
+          <div className="space-y-3 mt-2">
+            {googleReviews.map((r, i) => (
+              <div key={i} className="flex items-start gap-3 p-3 bg-gray-50 rounded-xl">
+                <div className="w-9 h-9 rounded-full bg-[#4285F4]/10 overflow-hidden shrink-0 flex items-center justify-center">
+                  {r.photoURL
+                    ? <img src={r.photoURL} alt={r.name} className="w-9 h-9 object-cover rounded-full" />
+                    : <span className="text-[#4285F4] font-bold text-sm">{r.name?.[0]}</span>
+                  }
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span className="font-semibold text-navy text-sm">{r.name}</span>
+                    <span className="text-xs bg-[#4285F4]/10 text-[#4285F4] px-2 py-0.5 rounded-full">Google</span>
+                  </div>
+                  <div className="flex gap-0.5 mb-1">
+                    {Array.from({ length: r.rating }).map((_, j) => <FaStar key={j} className="text-gold text-xs" />)}
+                  </div>
+                  <p className="text-gray-600 text-xs line-clamp-2">{r.text}</p>
+                </div>
+                <button
+                  onClick={() => handleImportGoogleReview(r, i)}
+                  disabled={importingId === i}
+                  className="shrink-0 px-3 py-1.5 text-xs font-bold text-white bg-green rounded-lg hover:bg-green/90 transition-colors disabled:opacity-60"
+                >
+                  {importingId === i ? '...' : 'Import'}
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Testimonials table */}
       <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
         {loading ? (
           <div className="p-6 space-y-3">{Array.from({ length: 4 }).map((_, i) => <div key={i} className="h-16 bg-gray-100 rounded animate-pulse" />)}</div>
@@ -151,7 +316,10 @@ export default function ManageTestimonials() {
                           : <div className="w-9 h-9 rounded-full bg-navy flex items-center justify-center text-gold text-sm font-bold">{t.name?.[0]}</div>
                         }
                         <div>
-                          <div className="font-semibold text-navy">{t.name}</div>
+                          <div className="font-semibold text-navy flex items-center gap-1.5">
+                            {t.name}
+                            {t.source === 'google' && <FaGoogle size={10} className="text-[#4285F4]" />}
+                          </div>
                           <div className="text-xs text-gray-400">{t.role}</div>
                         </div>
                       </div>
@@ -181,9 +349,10 @@ export default function ManageTestimonials() {
             </table>
           </div>
         ) : (
-          <div className="py-16 text-center text-gray-400">
+          <div className="py-12 text-center text-gray-400">
             <MdStar size={48} className="mx-auto mb-3 opacity-30" />
             <p className="font-semibold">No testimonials yet.</p>
+            <p className="text-sm mt-1">Use "Import 6 Defaults" above or add one manually.</p>
           </div>
         )}
       </div>

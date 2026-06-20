@@ -3,10 +3,46 @@ import { motion, AnimatePresence } from 'framer-motion'
 import toast from 'react-hot-toast'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
-import { MdAdd, MdEdit, MdDelete, MdClose, MdArticle, MdArrowBack } from 'react-icons/md'
+import { MdAdd, MdEdit, MdDelete, MdClose, MdArticle, MdArrowBack, MdDownload } from 'react-icons/md'
 import { query, orderBy, serverTimestamp } from 'firebase/firestore'
 import { blogCol } from '../../firebase/collections'
 import { useCollection, addDocument, updateDocument, deleteDocument } from '../../hooks/useFirestore'
+
+const SEED_POSTS = [
+  {
+    title: 'Tiptoe Sports Academy Students Complete Thailand Training Camp with Silie Sports Club',
+    slug: 'tiptoe-students-thailand-training-camp-silie-sports-club',
+    category: 'International',
+    excerpt: 'Selected students from Tiptoe Sports Academy traveled to Bangkok for an intensive football training camp with Silie Sports Club, gaining international match experience against Thai Division sides.',
+    content: '<p>Selected students from Tiptoe Sports Academy traveled to Bangkok for an intensive football training camp with Silie Sports Club, gaining international match experience against Thai Division sides.</p><p>This once-in-a-lifetime exchange program gave our students the opportunity to train alongside Thai youth professionals, experience international-level coaching, and represent Nepal abroad.</p>',
+    author: 'Tiptoe Sports Hub',
+    status: 'published',
+    imageURL: '',
+    publishedAt: new Date('2025-03-01'),
+  },
+  {
+    title: "Nepal's #1 Football Academy: How Tiptoe Sports Hub Develops Champions from Age 4",
+    slug: 'nepal-football-academy-tiptoe-sports-hub-develops-champions',
+    category: 'Coaching',
+    excerpt: "Tiptoe Sports Academy's structured age-group programs guide young athletes from their first kick at age 4 all the way to elite-level competition at 18, with professional national-level coaching at every stage.",
+    content: "<p>Tiptoe Sports Academy's structured age-group programs guide young athletes from their first kick at age 4 all the way to elite-level competition at 18, with professional national-level coaching at every stage.</p><p>Our curriculum is designed by Nepal's finest football minds, including Head Coach Gaurav Basnet who served as Nepal National Futsal Head Coach for three consecutive terms.</p>",
+    author: 'Tiptoe Sports Hub',
+    status: 'published',
+    imageURL: '',
+    publishedAt: new Date('2025-01-15'),
+  },
+  {
+    title: 'Meet Gaurav Basnet: The Coach Who Led Nepal to Three Futsal Championships',
+    slug: 'gaurav-basnet-nepal-futsal-coach-tiptoe-sports-academy',
+    category: 'Coaching',
+    excerpt: "Nepal National Futsal Team Head Coach for three consecutive terms, Gaurav Basnet brings world-class expertise to every session at Tiptoe Sports Academy in Tarkeshwar, Kathmandu.",
+    content: "<p>With over 27 years in football, Gaurav Basnet is one of Nepal's most respected football minds. As former Head Coach of the Nepal National Futsal Team for three consecutive terms and former coach of Manang Marshyangdi Club in Nepal's A Division, he has brought international-level expertise to Tiptoe Sports Academy.</p><p>Coach Gaurav co-founded Tiptoe Sports Hub in 2021 with a vision to create a world-class football development environment for Nepali youth.</p>",
+    author: 'Tiptoe Sports Hub',
+    status: 'published',
+    imageURL: '',
+    publishedAt: new Date('2024-11-20'),
+  },
+]
 
 const CATEGORIES = ['News', 'Training', 'Events', 'International', 'Coaching']
 const EMPTY = { title: '', slug: '', category: 'News', content: '', excerpt: '', imageURL: '', status: 'draft', author: '' }
@@ -124,10 +160,20 @@ function BlogEditor({ item, onClose, onSave }) {
 }
 
 export default function ManageBlog() {
-  const [editor, setEditor] = useState(null)
+  const [editor, setEditor]   = useState(null)
   const [deleteId, setDeleteId] = useState(null)
+  const [seeding, setSeeding] = useState(false)
   const q = useMemo(() => query(blogCol, orderBy('createdAt', 'desc')), [])
   const { docs: posts, loading } = useCollection(q)
+
+  const handleSeedDefaults = async () => {
+    setSeeding(true)
+    try {
+      await Promise.all(SEED_POSTS.map(p => addDocument(blogCol, p)))
+      toast.success('3 default posts imported!')
+    } catch { toast.error('Failed to import defaults.') }
+    finally { setSeeding(false) }
+  }
 
   const handleSave = async (form) => {
     if (form.id) {
@@ -168,6 +214,24 @@ export default function ManageBlog() {
           </div>
           <button onClick={() => setEditor({})} className="btn-primary text-sm py-2.5"><MdAdd size={18} /> New Post</button>
         </div>
+
+        {/* Seed defaults banner */}
+        {!loading && posts.length === 0 && (
+          <div className="bg-blue-50 border border-blue-200 rounded-2xl p-5 mb-6 flex items-start gap-4">
+            <MdDownload size={24} className="text-blue-500 shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <p className="font-semibold text-blue-800 text-sm">No blog posts yet</p>
+              <p className="text-blue-600 text-xs mt-1">Import the 3 sample posts that are currently showing on the public website so you can manage and edit them here.</p>
+            </div>
+            <button
+              onClick={handleSeedDefaults}
+              disabled={seeding}
+              className="shrink-0 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-colors disabled:opacity-60"
+            >
+              {seeding ? 'Importing...' : 'Import 3 Defaults'}
+            </button>
+          </div>
+        )}
 
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
           {loading ? (

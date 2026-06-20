@@ -15,19 +15,19 @@ const FALLBACK_BLOG = [
     id: 'b1', status: 'published', category: 'International',
     title: 'Tiptoe Sports Academy Students Complete Thailand Training Camp with Silie Sports Club',
     excerpt: 'Selected students from Tiptoe Sports Academy traveled to Bangkok for an intensive football training camp with Silie Sports Club, gaining international match experience against Thai Division sides.',
-    author: 'Tiptoe Sports Hub', slug: '#', publishedAt: new Date('2025-03-01'),
+    author: 'Tiptoe Sports Hub', slug: 'tiptoe-students-thailand-training-camp-silie-sports-club', publishedAt: new Date('2025-03-01'),
   },
   {
     id: 'b2', status: 'published', category: 'Coaching',
     title: "Nepal's #1 Football Academy: How Tiptoe Sports Hub Develops Champions from Age 4",
     excerpt: "Tiptoe Sports Academy's structured age-group programs guide young athletes from their first kick at age 4 all the way to elite-level competition at 18, with professional national-level coaching at every stage.",
-    author: 'Tiptoe Sports Hub', slug: '#', publishedAt: new Date('2025-01-15'),
+    author: 'Tiptoe Sports Hub', slug: 'nepal-football-academy-tiptoe-sports-hub-develops-champions', publishedAt: new Date('2025-01-15'),
   },
   {
     id: 'b3', status: 'published', category: 'Coaching',
     title: 'Meet Gaurav Basnet: The Coach Who Led Nepal to Three Futsal Championships',
     excerpt: "Nepal National Futsal Team Head Coach for three consecutive terms, Gaurav Basnet brings world-class expertise to every session at Tiptoe Sports Academy in Tarkeshwar, Kathmandu.",
-    author: 'Tiptoe Sports Hub', slug: '#', publishedAt: new Date('2024-11-20'),
+    author: 'Tiptoe Sports Hub', slug: 'gaurav-basnet-nepal-futsal-coach-tiptoe-sports-academy', publishedAt: new Date('2024-11-20'),
   },
 ]
 
