@@ -181,8 +181,8 @@ export default function AdminSettings() {
         <h2 className="font-bold text-navy mb-4">WhatsApp</h2>
         <div className="max-w-sm">
           <label className="block text-sm font-semibold text-gray-700 mb-1.5">WhatsApp Number</label>
-          <input value={form.whatsapp} onChange={e => set('whatsapp', e.target.value)} className="input-field" placeholder="9779800000000" />
-          <p className="text-xs text-gray-400 mt-1">Country code without + (Nepal: 977 then number)</p>
+          <input value={form.whatsapp} onChange={e => set('whatsapp', e.target.value.replace(/\D/g, ''))} className="input-field" placeholder="9779841416893" />
+          <p className="text-xs text-gray-400 mt-1">Digits only, no spaces or dashes. Nepal format: 977 then the 10-digit number (e.g. 9779841416893).</p>
         </div>
       </div>
 

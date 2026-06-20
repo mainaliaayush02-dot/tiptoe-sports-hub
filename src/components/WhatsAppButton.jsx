@@ -6,7 +6,8 @@ const MSG = encodeURIComponent('Hi Tiptoe Sports Hub, I want to know more about 
 
 export default function WhatsAppButton() {
   const { whatsapp } = useSite()
-  const number = whatsapp || import.meta.env.VITE_WHATSAPP_NUMBER || '9779800000000'
+  const raw = whatsapp || import.meta.env.VITE_WHATSAPP_NUMBER || '9779800000000'
+  const number = raw.replace(/\D/g, '')
 
   return (
     <motion.a
