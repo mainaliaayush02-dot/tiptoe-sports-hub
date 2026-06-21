@@ -1,12 +1,145 @@
-﻿import { useState, useMemo } from 'react'
+﻿import { useState, useMemo, useRef, useCallback } from 'react'
+import Cropper from 'react-easy-crop'
 import { motion, AnimatePresence } from 'framer-motion'
 import toast from 'react-hot-toast'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
-import { MdAdd, MdEdit, MdDelete, MdClose, MdArticle, MdArrowBack, MdDownload } from 'react-icons/md'
+import { MdAdd, MdEdit, MdDelete, MdClose, MdArticle, MdArrowBack, MdDownload, MdCrop, MdCloudUpload, MdLink } from 'react-icons/md'
 import { query, orderBy, serverTimestamp } from 'firebase/firestore'
 import { blogCol } from '../../firebase/collections'
 import { useCollection, addDocument, updateDocument, deleteDocument } from '../../hooks/useFirestore'
+
+const CLOUD_NAME   = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+const CLOUD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
+const canUpload    = !!(CLOUD_NAME && CLOUD_PRESET)
+
+function createImage(url) {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.onload = () => resolve(img)
+    img.onerror = reject
+    img.src = url
+  })
+}
+
+async function getCroppedImg(imageSrc, pixelCrop) {
+  const image = await createImage(imageSrc)
+  const canvas = document.createElement('canvas')
+  canvas.width  = pixelCrop.width
+  canvas.height = pixelCrop.height
+  canvas.getContext('2d').drawImage(
+    image,
+    pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height,
+    0, 0, pixelCrop.width, pixelCrop.height
+  )
+  return new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.92))
+}
+
+async function uploadToCloudinary(file, onProgress) {
+  const fd = new FormData()
+  fd.append('file', file)
+  fd.append('upload_preset', CLOUD_PRESET)
+  fd.append('folder', 'blog')
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest()
+    xhr.upload.onprogress = e => {
+      if (e.lengthComputable) onProgress(Math.round(e.loaded / e.total * 100))
+    }
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        resolve(JSON.parse(xhr.responseText).secure_url)
+      } else {
+        try { reject(new Error(JSON.parse(xhr.responseText)?.error?.message || `Upload failed (${xhr.status})`)) }
+        catch { reject(new Error(`Upload failed (${xhr.status})`)) }
+      }
+    }
+    xhr.onerror = () => reject(new Error('Network error'))
+    xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`)
+    xhr.send(fd)
+  })
+}
+
+async function uploadUrlToCloudinary(imageUrl) {
+  const fd = new FormData()
+  fd.append('file', imageUrl)
+  fd.append('upload_preset', CLOUD_PRESET)
+  fd.append('folder', 'blog')
+  const res  = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: fd })
+  const json = await res.json()
+  if (!res.ok) throw new Error(json?.error?.message || `Upload failed (${res.status})`)
+  return json.secure_url
+}
+
+function CropModal({ src, onConfirm, onCancel, uploading, uploadPct }) {
+  const [crop, setCrop] = useState({ x: 0, y: 0 })
+  const [zoom, setZoom] = useState(1)
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
+  const onCropComplete = useCallback((_, pixels) => setCroppedAreaPixels(pixels), [])
+
+  const handleConfirm = async () => {
+    if (!croppedAreaPixels) return
+    onConfirm(await getCroppedImg(src, croppedAreaPixels))
+  }
+
+  return (
+    <div className="fixed inset-0 z-[70] flex flex-col bg-black">
+      <div className="flex items-center justify-between px-4 py-3 shrink-0 bg-black/80 border-b border-white/10">
+        <div className="flex items-center gap-2 text-white">
+          <MdCrop size={20} className="text-gold" />
+          <span className="font-bold text-sm">Crop Featured Image</span>
+          <span className="text-white/40 text-xs ml-1">Landscape crop (16:9) works best for blog posts</span>
+        </div>
+        <button onClick={onCancel} className="text-white/50 hover:text-white">✕</button>
+      </div>
+      <div className="relative flex-1 overflow-hidden">
+        <Cropper
+          image={src}
+          crop={crop}
+          zoom={zoom}
+          aspect={16 / 9}
+          onCropChange={setCrop}
+          onZoomChange={setZoom}
+          onCropComplete={onCropComplete}
+          style={{
+            containerStyle: { background: '#111' },
+            cropAreaStyle: { border: '2px solid #E8B923', borderRadius: '8px' },
+          }}
+        />
+      </div>
+      <div className="shrink-0 bg-black/90 border-t border-white/10 px-4 py-4 space-y-4">
+        <div className="flex items-center gap-3">
+          <span className="text-white/40 text-xs w-10">Zoom</span>
+          <input type="range" min={1} max={3} step={0.01} value={zoom}
+            onChange={e => setZoom(Number(e.target.value))}
+            className="flex-1 accent-gold h-1 cursor-pointer" />
+          <span className="text-white/40 text-xs w-10 text-right">{zoom.toFixed(1)}x</span>
+        </div>
+        {uploading && (
+          <div className="space-y-1">
+            <div className="flex justify-between text-xs text-white/50">
+              <span>Uploading to Cloudinary...</span><span>{uploadPct}%</span>
+            </div>
+            <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+              <div className="h-full bg-gold transition-all duration-200" style={{ width: `${uploadPct}%` }} />
+            </div>
+          </div>
+        )}
+        <div className="flex gap-3">
+          <button type="button" onClick={onCancel} disabled={uploading}
+            className="flex-1 py-3 rounded-xl border border-white/20 text-white text-sm font-semibold hover:bg-white/5 disabled:opacity-40">
+            Cancel
+          </button>
+          <button type="button" onClick={handleConfirm} disabled={uploading || !croppedAreaPixels}
+            className="flex-[2] py-3 rounded-xl bg-gold text-navy text-sm font-bold hover:bg-gold/90 disabled:opacity-40 flex items-center justify-center gap-2">
+            <MdCloudUpload size={18} />
+            {uploading ? `Uploading ${uploadPct}%` : 'Crop & Upload'}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 const SEED_POSTS = [
   {
@@ -62,9 +195,57 @@ function slugify(str) {
 }
 
 function BlogEditor({ item, onClose, onSave }) {
-  const [form, setForm] = useState(item || EMPTY)
-  const [saving, setSaving] = useState(false)
+  const [form, setForm]       = useState(item || EMPTY)
+  const [saving, setSaving]   = useState(false)
+  const [cropSrc, setCropSrc] = useState(null)
+  const [uploading, setUploading] = useState(false)
+  const [uploadPct, setUploadPct] = useState(0)
+  const [importUrl, setImportUrl] = useState('')
+  const [importing, setImporting] = useState(false)
+  const fileRef = useRef(null)
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
+
+  const handleFileSelect = (e) => {
+    const file = e.target.files?.[0]
+    e.target.value = ''
+    if (!file) return
+    if (!file.type.startsWith('image/')) { toast.error('Please select an image file'); return }
+    if (file.size > 20 * 1024 * 1024) { toast.error('Image must be under 20 MB'); return }
+    const reader = new FileReader()
+    reader.onload = () => setCropSrc(reader.result)
+    reader.readAsDataURL(file)
+  }
+
+  const handleCropConfirm = async (blob) => {
+    setUploading(true)
+    setUploadPct(0)
+    try {
+      const url = await uploadToCloudinary(blob, setUploadPct)
+      set('imageURL', url)
+      setCropSrc(null)
+      toast.success('Featured image uploaded!')
+    } catch (err) {
+      toast.error(err.message || 'Upload failed')
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  const handleImportUrl = async () => {
+    const url = importUrl.trim()
+    if (!url) { toast.error('Paste an image URL first.'); return }
+    setImporting(true)
+    try {
+      const cloudUrl = await uploadUrlToCloudinary(url)
+      set('imageURL', cloudUrl)
+      setImportUrl('')
+      toast.success('Image imported to Cloudinary!')
+    } catch (err) {
+      toast.error(err.message || 'Import failed — make sure the URL is a direct image link.')
+    } finally {
+      setImporting(false)
+    }
+  }
 
   const handleSave = async (status) => {
     if (!form.title) { toast.error('Title is required.'); return }
@@ -78,36 +259,115 @@ function BlogEditor({ item, onClose, onSave }) {
   }
 
   return (
+    <>
+      {cropSrc && (
+        <CropModal
+          src={cropSrc}
+          onConfirm={handleCropConfirm}
+          onCancel={() => { setCropSrc(null); setUploading(false) }}
+          uploading={uploading}
+          uploadPct={uploadPct}
+        />
+      )}
+
     <div className="fixed inset-0 bg-gray-50 z-50 overflow-y-auto">
       <div className="sticky top-0 bg-white border-b border-gray-200 px-4 md:px-6 py-3 flex items-center justify-between z-10">
         <div className="flex items-center gap-3">
           <button onClick={onClose} className="p-2 text-gray-400 hover:text-navy rounded-lg transition-colors"><MdArrowBack size={20} /></button>
-          <h2 className="font-bold text-navy">{item?.id ? 'Edit Post' : 'New Post'}</h2>
+          <h2 className="font-bold text-navy">{item?.id ? ‘Edit Post’ : ‘New Post’}</h2>
         </div>
         <div className="flex gap-2">
-          <button onClick={() => handleSave('draft')} disabled={saving} className="px-4 py-2 border border-gray-300 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-60">
+          <button onClick={() => handleSave(‘draft’)} disabled={saving} className="px-4 py-2 border border-gray-300 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-60">
             Save Draft
           </button>
-          <button onClick={() => handleSave('published')} disabled={saving} className="btn-primary text-sm py-2 disabled:opacity-60">
-            {saving ? 'Saving...' : 'Publish'}
+          <button onClick={() => handleSave(‘published’)} disabled={saving} className="btn-primary text-sm py-2 disabled:opacity-60">
+            {saving ? ‘Saving...’ : ‘Publish’}
           </button>
         </div>
       </div>
 
       <div className="max-w-4xl mx-auto p-4 md:p-6 space-y-5">
-        {/* Featured Image URL */}
-        <div className="bg-white rounded-2xl p-5">
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Featured Image</label>
+        {/* Featured Image */}
+        <div className="bg-white rounded-2xl p-5 space-y-3">
+          <label className="block text-sm font-semibold text-gray-700">Featured Image</label>
+
+          {/* Preview */}
           {form.imageURL && (
-            <img src={form.imageURL} alt="" className="w-full h-48 object-cover rounded-xl mb-3" onError={e => e.target.style.display='none'} />
+            <div className="relative">
+              <img src={form.imageURL} alt="" className="w-full h-48 object-cover rounded-xl" onError={e => e.target.style.display=’none’} />
+              <button
+                type="button"
+                onClick={() => set(‘imageURL’, ‘’)}
+                className="absolute top-2 right-2 bg-black/60 hover:bg-red-500 text-white text-xs px-2 py-1 rounded-lg transition-colors"
+              >
+                Remove
+              </button>
+            </div>
           )}
-          <input
-            value={form.imageURL}
-            onChange={e => set('imageURL', e.target.value)}
-            className="input-field text-sm"
-            placeholder="Paste image URL (e.g. https://i.imgur.com/example.jpg)"
-          />
-          <p className="text-xs text-gray-400 mt-1">Upload to <strong>imgur.com</strong> free â†’ right-click image â†’ Copy image address â†’ paste above.</p>
+
+          {/* Upload from device */}
+          <input type="file" accept="image/*" ref={fileRef} onChange={handleFileSelect} className="hidden" />
+          {canUpload ? (
+            <button
+              type="button"
+              onClick={() => fileRef.current?.click()}
+              disabled={uploading || importing}
+              className="btn-primary text-sm py-3 w-full justify-center gap-2 disabled:opacity-60"
+            >
+              <MdCrop size={18} />
+              {uploading ? `Uploading… ${uploadPct}%` : ‘Upload & Crop Photo’}
+            </button>
+          ) : (
+            <div className="text-xs bg-amber-50 border border-amber-200 text-amber-700 rounded-xl p-3">
+              <strong>Setup needed:</strong> Add <code className="bg-amber-100 px-1 rounded">VITE_CLOUDINARY_CLOUD_NAME</code> and <code className="bg-amber-100 px-1 rounded">VITE_CLOUDINARY_UPLOAD_PRESET</code> to Vercel settings.
+            </div>
+          )}
+
+          {uploading && (
+            <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+              <div className="h-full bg-green transition-all duration-200" style={{ width: `${uploadPct}%` }} />
+            </div>
+          )}
+
+          {/* Import from URL */}
+          {canUpload && (
+            <div className="border border-dashed border-gray-200 rounded-xl p-4 space-y-2">
+              <p className="text-xs font-semibold text-gray-500 flex items-center gap-1.5">
+                <MdLink size={14} /> Import from URL (Facebook, Google Photos, WhatsApp…)
+              </p>
+              <div className="flex gap-2">
+                <input
+                  value={importUrl}
+                  onChange={e => setImportUrl(e.target.value)}
+                  className="input-field flex-1 text-sm"
+                  placeholder="Paste direct image URL here…"
+                  onKeyDown={e => e.key === ‘Enter’ && handleImportUrl()}
+                />
+                <button
+                  type="button"
+                  onClick={handleImportUrl}
+                  disabled={importing || !importUrl.trim()}
+                  className="btn-primary text-sm py-2.5 whitespace-nowrap disabled:opacity-60"
+                >
+                  {importing ? ‘Importing…’ : ‘Import’}
+                </button>
+              </div>
+              <p className="text-[11px] text-gray-400 leading-relaxed">
+                <strong>Facebook:</strong> Right-click the photo → <em>"Copy image address"</em> → paste here.
+              </p>
+            </div>
+          )}
+
+          {/* Manual URL fallback */}
+          <div>
+            <input
+              value={form.imageURL}
+              onChange={e => set(‘imageURL’, e.target.value)}
+              className="input-field text-sm"
+              placeholder="Or paste a Cloudinary / direct image URL manually"
+            />
+            <p className="text-xs text-gray-400 mt-1">Tip: 16:9 landscape images (e.g. 1200×675px) look best as blog featured images.</p>
+          </div>
         </div>
 
         {/* Meta */}
@@ -156,6 +416,7 @@ function BlogEditor({ item, onClose, onSave }) {
         </div>
       </div>
     </div>
+    </>
   )
 }
 
@@ -199,7 +460,7 @@ export default function ManageBlog() {
   }
 
   function formatDate(ts) {
-    if (!ts) return 'â€”'
+    if (!ts) return '—'
     const d = ts?.toDate ? ts.toDate() : new Date(ts)
     return d.toLocaleDateString('en-NP', { month: 'short', day: 'numeric', year: 'numeric' })
   }
