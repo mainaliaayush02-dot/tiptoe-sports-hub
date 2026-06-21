@@ -6,9 +6,9 @@ import { query, orderBy } from 'firebase/firestore'
 import { scheduleCol } from '../../firebase/collections'
 import { useCollection, addDocument, updateDocument, deleteDocument } from '../../hooks/useFirestore'
 
-const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 const SPORTS = ['Football', 'Futsal']
-const AGE_GROUPS = ['Age 4â€“10', 'Age 11â€“15', 'Age 16â€“18', 'All Ages', 'Girls']
+const AGE_GROUPS = ['Age 4–10', 'Age 11–15', 'Age 16–18', 'All Ages', 'Girls']
 const EMPTY = { day: 'Monday', startTime: '15:00', endTime: '17:00', sport: 'Football', ageGroup: 'All Ages', venue: '', coachName: '' }
 
 function fmt(t) {
@@ -118,7 +118,7 @@ export default function ManageSchedule() {
 
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {Array.from({ length: 6 }).map((_, i) => <div key={i} className="h-48 bg-gray-100 rounded-2xl animate-pulse" />)}
+          {Array.from({ length: 7 }).map((_, i) => <div key={i} className="h-48 bg-gray-100 rounded-2xl animate-pulse" />)}
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

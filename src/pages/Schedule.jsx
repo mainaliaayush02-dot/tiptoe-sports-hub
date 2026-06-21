@@ -7,7 +7,7 @@ import { scheduleCol } from '../firebase/collections'
 import { useCollection } from '../hooks/useFirestore'
 import SEOHead from '../components/SEOHead'
 
-const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 const SPORTS = ['All', 'Football', 'Futsal']
 const AGE_GROUPS = ['All', 'Age 4–10', 'Age 11–15', 'Age 16–18', 'All Ages']
 
@@ -26,6 +26,8 @@ const FALLBACK_SCHEDULE = [
   { id: 's12', day: 'Saturday', startTime: '06:00', endTime: '08:30', sport: 'Football', ageGroup: 'Age 16–18', venue: 'Tarkeshwar Ground', coachName: 'Gaurav Basnet' },
   { id: 's13', day: 'Saturday', startTime: '09:00', endTime: '11:00', sport: 'Football', ageGroup: 'Age 11–15', venue: 'Tarkeshwar Ground', coachName: 'Gaurav Basnet' },
   { id: 's14', day: 'Saturday', startTime: '11:00', endTime: '13:00', sport: 'Football', ageGroup: 'Age 4–10', venue: 'Tarkeshwar Ground', coachName: 'Gaurav Basnet' },
+  { id: 's15', day: 'Sunday', startTime: '07:00', endTime: '09:00', sport: 'Football', ageGroup: 'Age 4–10', venue: 'Tarkeshwar Ground', coachName: 'Gaurav Basnet' },
+  { id: 's16', day: 'Sunday', startTime: '09:00', endTime: '11:00', sport: 'Football', ageGroup: 'Age 11–15', venue: 'Tarkeshwar Ground', coachName: 'Gaurav Basnet' },
 ]
 
 const SPORT_COLOR = { Football: 'bg-navy text-white', Futsal: 'bg-green text-white' }
@@ -59,7 +61,7 @@ export default function Schedule() {
     <>
       <SEOHead
         title="Football & Futsal Training Schedule in Kathmandu"
-        description="Weekly football and futsal training schedule at Tiptoe Sports Academy, Tarkeshwar Kathmandu. Morning and evening sessions for ages 4–18, Monday through Saturday."
+        description="Weekly football and futsal training schedule at Tiptoe Sports Academy, Tarkeshwar Kathmandu. Morning and evening sessions for ages 4–18, every day of the week."
         path="/schedule"
         breadcrumb
       />
@@ -72,7 +74,7 @@ export default function Schedule() {
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <span className="badge-gold mb-5">Training Schedule</span>
             <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Training Schedule</h1>
-            <p className="text-white/60 max-w-xl mx-auto text-lg">Football and futsal sessions Monday through Saturday. Find the right time for your child in Tarkeshwar, Kathmandu.</p>
+            <p className="text-white/60 max-w-xl mx-auto text-lg">Football and futsal sessions every day of the week. Find the right time for your child in Tarkeshwar, Kathmandu.</p>
           </motion.div>
         </div>
       </section>
