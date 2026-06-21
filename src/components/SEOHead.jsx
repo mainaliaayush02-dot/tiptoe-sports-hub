@@ -21,6 +21,7 @@ export default function SEOHead({
   image = DEFAULT_IMAGE,
   breadcrumb,
   schema,
+  noindex = false,
 }) {
   const fullTitle = title
     ? `${title} | ${SITE_NAME}`
@@ -42,7 +43,7 @@ export default function SEOHead({
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={url} />
-      <meta name="robots" content="index, follow" />
+      <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
 
       {/* Open Graph */}
       <meta property="og:title" content={fullTitle} />
@@ -55,6 +56,7 @@ export default function SEOHead({
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:site" content="@tiptoesportshub" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />

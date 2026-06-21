@@ -14,7 +14,7 @@ import { useSite } from '../contexts/SiteContext'
 const STATS = [
   { value: '370+', label: 'Active Students',      Icon: FaUsers },
   { value: '27+',  label: 'Years Head Coach Exp', Icon: FaTrophy },
-  { value: '5',    label: 'Training Programs',    Icon: MdSportsSoccer },
+  { value: '6',    label: 'Training Programs',    Icon: MdSportsSoccer },
   { value: '2+',   label: "Int'l Destinations",  Icon: FaGlobe },
 ]
 

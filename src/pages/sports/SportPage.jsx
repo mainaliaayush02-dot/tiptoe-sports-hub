@@ -59,7 +59,7 @@ const DEFAULT_SPORTS = {
     schedule: 'Daily: 6AM–8PM | Ground bookings available all week',
     seoTitle: 'Cricket Ground & Coaching in Kathmandu',
     h1: 'Cricket Ground & Coaching in Kathmandu',
-    seoDescription: 'Cricket ground and coaching in Tarkeshwar, Kathmandu. Ground hire, batting nets, bowling machine, and youth academy at Tiptoe Sports Hub.',
+    seoDescription: 'Cricket ground hire Kathmandu — professional pitch, batting nets and bowling machine at Tiptoe Sports Hub, Tarkeshwar. Cricket coaching Nepal for youth and adults. Book by the session or join the monthly academy.',
     color: '#1B5E20',
     badge: 'Cricket',
   },
@@ -139,7 +139,7 @@ const DEFAULT_SPORTS = {
     schedule: 'Mon–Thu: 4PM–11PM | Fri–Sun: 12PM–12AM | Special event hours vary',
     seoTitle: 'Sports Bar in Kathmandu',
     h1: 'Sports Bar in Tarkeshwar, Kathmandu',
-    seoDescription: "Kathmandu's premier sports bar in Tarkeshwar. Live sports on big screens, premium drinks, great food and unforgettable match-day atmospheres.",
+    seoDescription: "Best sports bar in Tarkeshwar, Kathmandu. Live sports screening — football, cricket, NBA and more on big screens. Premium drinks, great food and unforgettable match-day atmosphere at Tiptoe Sports Hub Sports Bar.",
     color: '#8B4A00',
     badge: 'Social Hub',
   },
@@ -200,9 +200,10 @@ export default function SportPage() {
     active:         firestoreData.active !== false,
   } : defaults
 
+  const isSportsBar = slug === 'sports-bar'
   const structuredData = {
     '@context': 'https://schema.org',
-    '@type': 'SportsActivityLocation',
+    '@type': isSportsBar ? ['BarOrPub', 'FoodEstablishment'] : 'SportsActivityLocation',
     name: `Tiptoe Sports Hub – ${sport.name}`,
     description: sport.seoDescription,
     url: `${BASE_URL}/sports/${slug}`,
@@ -214,6 +215,18 @@ export default function SportPage() {
     },
     ...(phone && { telephone: phone }),
     openingHours: sport.schedule,
+    ...(isSportsBar && {
+      servesCuisine: ['Nepali', 'Continental', 'Snacks'],
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Sports Bar Menu & Packages',
+        itemListElement: [
+          { '@type': 'Offer', name: 'Walk-In', description: 'Free entry with minimum drink purchase. Live sports on big screens.' },
+          { '@type': 'Offer', name: 'VIP Table', price: '2000', priceCurrency: 'NPR', description: 'Reserved seating for 4, priority service.' },
+          { '@type': 'Offer', name: 'Private Event', description: 'Up to 50 guests, exclusive venue hire with full catering.' },
+        ],
+      },
+    }),
   }
 
   return (

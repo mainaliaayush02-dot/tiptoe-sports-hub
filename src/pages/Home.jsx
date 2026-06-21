@@ -120,7 +120,7 @@ export default function Home() {
         {/* Ground photo — full bleed, visible on right, fades to dark on left */}
         <img
           src="/ground.jpg"
-          alt=""
+          alt="Tiptoe Sports Hub training ground in Tarkeshwar, Kathmandu"
           className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none"
           style={{ opacity: 0.45 }}
         />

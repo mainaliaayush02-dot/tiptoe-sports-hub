@@ -36,7 +36,7 @@ export default function Enroll() {
   if (submitted) {
     return (
       <>
-        <SEOHead title="Enrollment Submitted" description="Your enrollment inquiry has been received." path="/enroll" />
+        <SEOHead title="Enrollment Submitted" description="Your enrollment inquiry has been received." path="/enroll" noindex />
         <div className="min-h-screen pt-28 flex items-center justify-center px-4 bg-light">
           <motion.div className="card max-w-md w-full p-10 text-center" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
             <FaCheckCircle className="text-6xl text-green mx-auto mb-5" />

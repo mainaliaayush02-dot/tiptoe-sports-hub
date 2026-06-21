@@ -64,6 +64,35 @@ export default function Schedule() {
         description="Weekly football and futsal training schedule at Tiptoe Sports Academy, Tarkeshwar Kathmandu. Morning and evening sessions for ages 4–18, every day of the week."
         path="/schedule"
         breadcrumb
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'SportsActivityLocation',
+          name: 'Tiptoe Sports Academy — Training Schedule',
+          description: 'Weekly football and futsal training sessions for ages 4–18 at Tiptoe Sports Academy, Tarkeshwar, Kathmandu.',
+          url: 'https://tiptoesportshub.com/schedule',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Tarkeshwar',
+            addressLocality: 'Kathmandu',
+            addressCountry: 'NP',
+          },
+          openingHoursSpecification: [
+            { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday'], opens: '05:00', closes: '19:00' },
+            { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Saturday', opens: '06:00', closes: '13:00' },
+            { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Sunday', opens: '07:00', closes: '11:00' },
+          ],
+          hasOfferCatalog: {
+            '@type': 'OfferCatalog',
+            name: 'Training Programs',
+            itemListElement: [
+              { '@type': 'Offer', name: 'Football Academy (Age 4–10)', description: 'Foundation skills — Mon, Wed, Fri 5:00–6:30 PM' },
+              { '@type': 'Offer', name: 'Football Academy (Age 11–15)', description: 'Tactical training — Mon, Wed, Fri 4:00–6:00 PM' },
+              { '@type': 'Offer', name: 'Football Academy (Age 16–18)', description: 'Elite performance — Tue, Thu, Sat 6:00–8:00 AM' },
+              { '@type': 'Offer', name: 'Futsal Academy', description: 'Indoor futsal — Tue, Thu, Sat 4:00–6:00 PM' },
+              { '@type': 'Offer', name: 'Girls Football Program', description: 'Female-focused coaching — Mon, Wed, Fri 3:00–5:00 PM' },
+            ],
+          },
+        }}
       />
 
       {/* Hero */}

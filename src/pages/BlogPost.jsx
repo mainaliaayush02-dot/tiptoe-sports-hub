@@ -62,6 +62,26 @@ export default function BlogPost() {
         description={post.excerpt || `Read "${post.title}" on the Tiptoe Sports Hub blog.`}
         path={`/blog/${post.slug}`}
         image={post.imageURL}
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
+          headline: post.title,
+          description: post.excerpt || '',
+          image: post.imageURL || `${BASE_URL}/logo.jpeg`,
+          url: `${BASE_URL}/blog/${post.slug}`,
+          datePublished: post.publishedAt?.toDate ? post.publishedAt.toDate().toISOString() : new Date(post.publishedAt || Date.now()).toISOString(),
+          author: {
+            '@type': 'Organization',
+            name: post.author || 'Tiptoe Sports Hub',
+            url: BASE_URL,
+          },
+          publisher: {
+            '@type': 'Organization',
+            name: 'Tiptoe Sports Hub',
+            url: BASE_URL,
+            logo: { '@type': 'ImageObject', url: `${BASE_URL}/logo.jpeg` },
+          },
+        }}
       />
 
       {/* Hero */}
