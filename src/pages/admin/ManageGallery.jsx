@@ -2,7 +2,7 @@ import { useState, useMemo, useRef, useCallback } from 'react'
 import Cropper from 'react-easy-crop'
 import { motion, AnimatePresence } from 'framer-motion'
 import toast from 'react-hot-toast'
-import { MdAdd, MdDelete, MdPhotoLibrary, MdCrop, MdCloudUpload } from 'react-icons/md'
+import { MdAdd, MdDelete, MdPhotoLibrary, MdCrop, MdCloudUpload, MdLink } from 'react-icons/md'
 import { query, orderBy } from 'firebase/firestore'
 import { galleryCol } from '../../firebase/collections'
 import { useCollection, addDocument, deleteDocument } from '../../hooks/useFirestore'
@@ -63,6 +63,20 @@ async function uploadToCloudinary(file, onProgress) {
     xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`)
     xhr.send(fd)
   })
+}
+
+async function uploadUrlToCloudinary(imageUrl) {
+  const fd = new FormData()
+  fd.append('file', imageUrl)
+  fd.append('upload_preset', CLOUD_PRESET)
+  fd.append('folder', 'gallery')
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+    method: 'POST',
+    body: fd,
+  })
+  const json = await res.json()
+  if (!res.ok) throw new Error(json?.error?.message || `Upload failed (${res.status})`)
+  return json.secure_url
 }
 
 function CropModal({ src, onConfirm, onCancel, uploading, uploadPct }) {
@@ -173,6 +187,8 @@ export default function ManageGallery() {
   const [uploading, setUploading]   = useState(false)
   const [uploadPct, setUploadPct]   = useState(0)
   const [cropSrc, setCropSrc]       = useState(null)
+  const [importUrl, setImportUrl]   = useState('')
+  const [importing, setImporting]   = useState(false)
   const [deleteId, setDeleteId]     = useState(null)
   const [filterCat, setFilterCat]   = useState('All')
   const fileRef = useRef(null)
@@ -205,6 +221,23 @@ export default function ManageGallery() {
       toast.error(err.message || 'Upload failed')
     } finally {
       setUploading(false)
+    }
+  }
+
+  const handleImportUrl = async () => {
+    const url = importUrl.trim()
+    if (!url) { toast.error('Paste an image URL first.'); return }
+    if (!canUpload) { toast.error('Cloudinary not configured.'); return }
+    setImporting(true)
+    try {
+      const cloudUrl = await uploadUrlToCloudinary(url)
+      setNewUrl(cloudUrl)
+      setImportUrl('')
+      toast.success('Image imported to Cloudinary! Fill in details and click Add Image.')
+    } catch (err) {
+      toast.error(err.message || 'Import failed — make sure the URL is a direct image link.')
+    } finally {
+      setImporting(false)
     }
   }
 
@@ -295,13 +328,42 @@ export default function ManageGallery() {
             </div>
           )}
 
-          {/* URL field (auto-filled after upload, or paste manually) */}
+          {/* Import from URL */}
+          {canUpload && (
+            <div className="border border-dashed border-gray-200 rounded-xl p-4 space-y-2">
+              <p className="text-xs font-semibold text-gray-500 flex items-center gap-1.5">
+                <MdLink size={14} /> Import from URL (Facebook, Google Photos, WhatsApp, etc.)
+              </p>
+              <div className="flex gap-2">
+                <input
+                  value={importUrl}
+                  onChange={e => setImportUrl(e.target.value)}
+                  className="input-field flex-1 text-sm"
+                  placeholder="Paste direct image URL here…"
+                  onKeyDown={e => e.key === 'Enter' && handleImportUrl()}
+                />
+                <button
+                  type="button"
+                  onClick={handleImportUrl}
+                  disabled={importing || !importUrl.trim()}
+                  className="btn-primary text-sm py-2.5 whitespace-nowrap disabled:opacity-60"
+                >
+                  {importing ? 'Importing…' : 'Import'}
+                </button>
+              </div>
+              <p className="text-[11px] text-gray-400 leading-relaxed">
+                <strong>Facebook tip:</strong> Open the photo on Facebook → right-click the actual image → <em>"Copy image address"</em> → paste that URL here. Don't use the facebook.com/photo page link — that won't work.
+              </p>
+            </div>
+          )}
+
+          {/* URL field (auto-filled after upload or import) */}
           <div>
             <input
               value={newUrl}
               onChange={e => setNewUrl(e.target.value)}
               className="input-field w-full"
-              placeholder="Image URL (auto-filled after upload, or paste directly)"
+              placeholder="Image URL (auto-filled after upload or import)"
               onKeyDown={e => e.key === 'Enter' && handleAdd()}
             />
           </div>

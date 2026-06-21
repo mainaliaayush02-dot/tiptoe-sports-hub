@@ -2,7 +2,7 @@ import { useState, useMemo, useRef, useCallback } from 'react'
 import Cropper from 'react-easy-crop'
 import { motion, AnimatePresence } from 'framer-motion'
 import toast from 'react-hot-toast'
-import { MdAdd, MdEdit, MdDelete, MdClose, MdPeople, MdCloudUpload, MdCrop } from 'react-icons/md'
+import { MdAdd, MdEdit, MdDelete, MdClose, MdPeople, MdCloudUpload, MdCrop, MdLink } from 'react-icons/md'
 import { query, orderBy } from 'firebase/firestore'
 import { coachesCol } from '../../firebase/collections'
 import { useCollection, addDocument, updateDocument, deleteDocument } from '../../hooks/useFirestore'
@@ -61,6 +61,20 @@ async function uploadToCloudinary(file, onProgress) {
     xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`)
     xhr.send(fd)
   })
+}
+
+async function uploadUrlToCloudinary(imageUrl) {
+  const fd = new FormData()
+  fd.append('file', imageUrl)
+  fd.append('upload_preset', CLOUD_PRESET)
+  fd.append('folder', 'coaches')
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+    method: 'POST',
+    body: fd,
+  })
+  const json = await res.json()
+  if (!res.ok) throw new Error(json?.error?.message || `Upload failed (${res.status})`)
+  return json.secure_url
 }
 
 const EMPTY = { name: '', role: '', bio: '', experience: '', achievements: '', photoURL: '', order: 99, active: true, featured: false }
@@ -186,7 +200,25 @@ function Modal({ item, onClose, onSave }) {
   const [uploading, setUploading] = useState(false)
   const [uploadPct, setUploadPct] = useState(0)
   const [cropSrc, setCropSrc]     = useState(null)
+  const [importUrl, setImportUrl] = useState('')
+  const [importing, setImporting] = useState(false)
   const fileRef = useRef(null)
+
+  const handleImportUrl = async () => {
+    const url = importUrl.trim()
+    if (!url) { toast.error('Paste an image URL first.'); return }
+    setImporting(true)
+    try {
+      const cloudUrl = await uploadUrlToCloudinary(url)
+      set('photoURL', cloudUrl)
+      setImportUrl('')
+      toast.success('Photo imported to Cloudinary!')
+    } catch (err) {
+      toast.error(err.message || 'Import failed — make sure the URL is a direct image link.')
+    } finally {
+      setImporting(false)
+    }
+  }
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
 
   const handleFileSelect = (e) => {
@@ -317,7 +349,36 @@ function Modal({ item, onClose, onSave }) {
                   </button>
                 )}
               </div>
-              <p className="text-xs text-gray-400 mt-1.5">Upload from your phone or computer — you can crop it to the perfect fit. Or paste a direct image URL.</p>
+
+              {/* Import from URL (Facebook, etc.) */}
+              {canUpload && (
+                <div className="border border-dashed border-gray-200 rounded-xl p-3 space-y-2">
+                  <p className="text-xs font-semibold text-gray-500 flex items-center gap-1.5">
+                    <MdLink size={13} /> Import photo from URL (Facebook, WhatsApp, Google Photos…)
+                  </p>
+                  <div className="flex gap-2">
+                    <input
+                      value={importUrl}
+                      onChange={e => setImportUrl(e.target.value)}
+                      className="input-field text-xs flex-1"
+                      placeholder="Paste direct image URL…"
+                      onKeyDown={e => e.key === 'Enter' && handleImportUrl()}
+                    />
+                    <button
+                      type="button"
+                      onClick={handleImportUrl}
+                      disabled={importing || !importUrl.trim()}
+                      className="btn-primary text-xs py-2 whitespace-nowrap disabled:opacity-60"
+                    >
+                      {importing ? 'Importing…' : 'Import'}
+                    </button>
+                  </div>
+                  <p className="text-[11px] text-gray-400 leading-relaxed">
+                    <strong>Facebook:</strong> Right-click the photo → <em>"Copy image address"</em> → paste here. Don't use the facebook.com/photo page link.
+                  </p>
+                </div>
+              )}
+              <p className="text-xs text-gray-400">Upload from device (with crop), paste a URL, or import from Facebook/social media above.</p>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
