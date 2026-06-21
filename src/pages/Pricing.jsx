@@ -1,6 +1,6 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { FaArrowRight, FaCheckCircle } from 'react-icons/fa'
 import { query, orderBy } from 'firebase/firestore'
 import { pricingCol } from '../firebase/collections'
@@ -65,8 +65,20 @@ const fadeUp = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transi
 
 export default function Pricing() {
   const [tab, setTab] = useState('All')
+  const cardsRef = useRef(null)
   const q = useMemo(() => query(pricingCol, orderBy('order')), [])
   const { docs, loading } = useCollection(q)
+
+  const handleTabChange = (t) => {
+    setTab(t)
+    // Scroll back to the cards section so the filtered result is always visible
+    setTimeout(() => {
+      if (cardsRef.current) {
+        const top = cardsRef.current.getBoundingClientRect().top + window.scrollY - 130
+        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
+      }
+    }, 0)
+  }
 
   const activeDocs = docs.filter(p => p.active !== false)
   const plans = activeDocs.length > 0 ? activeDocs : FALLBACK_PRICING
@@ -115,7 +127,7 @@ export default function Pricing() {
       <section className="py-6 px-4 bg-white border-b border-gray-100 sticky top-16 z-30">
         <div className="max-w-7xl mx-auto flex gap-2 flex-wrap">
           {SPORT_TABS.map(t => (
-            <button key={t} onClick={() => setTab(t)}
+            <button key={t} onClick={() => handleTabChange(t)}
               className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${tab === t ? 'bg-navy text-white shadow-md' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>
               {t}
             </button>
@@ -124,7 +136,7 @@ export default function Pricing() {
       </section>
 
       {/* Cards Grid */}
-      <section className="py-16 px-4 bg-light min-h-[60vh]">
+      <section ref={cardsRef} className="py-16 px-4 bg-light min-h-[60vh]">
         <div className="max-w-7xl mx-auto">
           <ContentLoader loading={loading} count={8} skeleton={
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
@@ -133,16 +145,17 @@ export default function Pricing() {
           }>
             {filtered.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+              <AnimatePresence mode="popLayout">
               {filtered.map((plan, i) => {
                 const color = SPORT_COLORS[plan.sport] || '#06145F'
                 return (
                   <motion.div
                     key={plan.id}
                     className={`bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col ${plan.badge === 'Popular' ? 'ring-2 ring-gold/40' : ''}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: (i % 4) * 0.06 }}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.2, delay: (i % 4) * 0.04 }}
                   >
                     {/* Top color bar */}
                     <div className="h-1.5 w-full" style={{ background: color }} />
@@ -188,6 +201,7 @@ export default function Pricing() {
                   </motion.div>
                 )
               })}
+              </AnimatePresence>
             </div>
           ) : (
               <div className="text-center py-20 text-gray-400">
