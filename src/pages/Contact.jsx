@@ -7,6 +7,7 @@ import { addDocument } from '../hooks/useFirestore'
 import { inquiriesCol } from '../firebase/collections'
 import { useSite } from '../contexts/SiteContext'
 import SEOHead from '../components/SEOHead'
+import { sendContactEmail } from '../utils/emailNotification'
 
 const SPORT_OPTIONS = ['Football', 'Futsal', 'Cricket', 'Basketball', 'Pickleball', 'Snooker', 'Sports Bar', 'Not Sure Yet']
 
@@ -19,6 +20,7 @@ export default function Contact() {
     setSubmitting(true)
     try {
       await addDocument(inquiriesCol, { ...data, sport: data.sport || '', message: data.message || '', status: 'new' })
+      sendContactEmail(data) // fire-and-forget — Firestore is the source of truth
       toast.success("Message sent! We'll get back to you shortly.")
       reset()
     } catch {

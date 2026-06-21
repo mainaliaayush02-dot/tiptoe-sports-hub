@@ -8,6 +8,7 @@ import { GiSoccerBall } from 'react-icons/gi'
 import { addDocument } from '../hooks/useFirestore'
 import { inquiriesCol } from '../firebase/collections'
 import SEOHead from '../components/SEOHead'
+import { sendEnrollmentEmail } from '../utils/emailNotification'
 
 const SPORTS = ['Football', 'Futsal', 'Cricket', 'Basketball', 'Pickleball', 'Snooker', 'Sports Bar', 'Not Sure Yet']
 const AGE_GROUPS = ['Age 4–10', 'Age 11–15', 'Age 16–18', 'All Ages']
@@ -22,6 +23,7 @@ export default function Enroll() {
     setSubmitting(true)
     try {
       await addDocument(inquiriesCol, { ...data, status: 'new' })
+      sendEnrollmentEmail(data) // fire-and-forget — Firestore is the source of truth
       setSubmitted(true)
       toast.success('Enrollment inquiry submitted successfully!')
     } catch (e) {
