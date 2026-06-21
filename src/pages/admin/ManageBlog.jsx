@@ -274,14 +274,14 @@ function BlogEditor({ item, onClose, onSave }) {
       <div className="sticky top-0 bg-white border-b border-gray-200 px-4 md:px-6 py-3 flex items-center justify-between z-10">
         <div className="flex items-center gap-3">
           <button onClick={onClose} className="p-2 text-gray-400 hover:text-navy rounded-lg transition-colors"><MdArrowBack size={20} /></button>
-          <h2 className="font-bold text-navy">{item?.id ? ‘Edit Post’ : ‘New Post’}</h2>
+          <h2 className="font-bold text-navy">{item?.id ? 'Edit Post' : 'New Post'}</h2>
         </div>
         <div className="flex gap-2">
-          <button onClick={() => handleSave(‘draft’)} disabled={saving} className="px-4 py-2 border border-gray-300 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-60">
+          <button onClick={() => handleSave('draft')} disabled={saving} className="px-4 py-2 border border-gray-300 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-60">
             Save Draft
           </button>
-          <button onClick={() => handleSave(‘published’)} disabled={saving} className="btn-primary text-sm py-2 disabled:opacity-60">
-            {saving ? ‘Saving...’ : ‘Publish’}
+          <button onClick={() => handleSave('published')} disabled={saving} className="btn-primary text-sm py-2 disabled:opacity-60">
+            {saving ? 'Saving...' : 'Publish'}
           </button>
         </div>
       </div>
@@ -294,10 +294,10 @@ function BlogEditor({ item, onClose, onSave }) {
           {/* Preview */}
           {form.imageURL && (
             <div className="relative">
-              <img src={form.imageURL} alt="" className="w-full h-48 object-cover rounded-xl" onError={e => e.target.style.display=’none’} />
+              <img src={form.imageURL} alt="" className="w-full h-48 object-cover rounded-xl" onError={e => e.target.style.display='none'} />
               <button
                 type="button"
-                onClick={() => set(‘imageURL’, ‘’)}
+                onClick={() => set('imageURL', '')}
                 className="absolute top-2 right-2 bg-black/60 hover:bg-red-500 text-white text-xs px-2 py-1 rounded-lg transition-colors"
               >
                 Remove
@@ -315,7 +315,7 @@ function BlogEditor({ item, onClose, onSave }) {
               className="btn-primary text-sm py-3 w-full justify-center gap-2 disabled:opacity-60"
             >
               <MdCrop size={18} />
-              {uploading ? `Uploading… ${uploadPct}%` : ‘Upload & Crop Photo’}
+              {uploading ? `Uploading… ${uploadPct}%` : 'Upload & Crop Photo'}
             </button>
           ) : (
             <div className="text-xs bg-amber-50 border border-amber-200 text-amber-700 rounded-xl p-3">
@@ -341,7 +341,7 @@ function BlogEditor({ item, onClose, onSave }) {
                   onChange={e => setImportUrl(e.target.value)}
                   className="input-field flex-1 text-sm"
                   placeholder="Paste direct image URL here…"
-                  onKeyDown={e => e.key === ‘Enter’ && handleImportUrl()}
+                  onKeyDown={e => e.key === 'Enter' && handleImportUrl()}
                 />
                 <button
                   type="button"
@@ -349,7 +349,7 @@ function BlogEditor({ item, onClose, onSave }) {
                   disabled={importing || !importUrl.trim()}
                   className="btn-primary text-sm py-2.5 whitespace-nowrap disabled:opacity-60"
                 >
-                  {importing ? ‘Importing…’ : ‘Import’}
+                  {importing ? 'Importing…' : 'Import'}
                 </button>
               </div>
               <p className="text-[11px] text-gray-400 leading-relaxed">
@@ -362,7 +362,7 @@ function BlogEditor({ item, onClose, onSave }) {
           <div>
             <input
               value={form.imageURL}
-              onChange={e => set(‘imageURL’, e.target.value)}
+              onChange={e => set('imageURL', e.target.value)}
               className="input-field text-sm"
               placeholder="Or paste a Cloudinary / direct image URL manually"
             />
