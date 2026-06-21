@@ -91,7 +91,7 @@ export default function Academy() {
           <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.12 } } }}>
             {academyLogoURL && (
               <motion.div variants={fadeUp} className="flex justify-center mb-6">
-                <div className="w-20 h-20 bg-white rounded-2xl overflow-hidden p-1.5 shadow-xl">
+                <div className="w-20 h-20 bg-white rounded-2xl overflow-hidden p-1.5 ring-2 ring-white/20 shadow-2xl shadow-black/50">
                   <img src={academyLogoURL} alt="Tiptoe Sports Academy" className="w-full h-full object-contain"
                     onError={e => e.target.style.display = 'none'} />
                 </div>

@@ -80,8 +80,12 @@ export default function Coaches() {
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             {academyLogoURL && (
-              <img src={academyLogoURL} alt="Tiptoe Sports Academy" className="w-20 h-20 object-contain mx-auto mb-4 drop-shadow-lg"
-                onError={e => e.target.style.display = 'none'} />
+              <div className="flex justify-center mb-5">
+                <div className="w-20 h-20 bg-white rounded-2xl overflow-hidden p-1.5 ring-2 ring-white/20 shadow-2xl shadow-black/50">
+                  <img src={academyLogoURL} alt="Tiptoe Sports Academy" className="w-full h-full object-contain"
+                    onError={e => e.target.style.display = 'none'} />
+                </div>
+              </div>
             )}
             <span className="badge-gold mb-5">Tiptoe Sports Academy</span>
             <h1 className="font-heading font-extrabold text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Football Coaches in Kathmandu</h1>

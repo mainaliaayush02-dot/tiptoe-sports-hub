@@ -56,7 +56,7 @@ export default function Footer() {
             <div className="flex items-center gap-4 mb-5">
               {/* Hub logo — clicks to Home */}
               <Link to="/" className="flex items-center gap-2.5 group">
-                <div className="w-10 h-10 bg-white rounded-lg overflow-hidden p-1 shrink-0 group-hover:ring-2 group-hover:ring-gold/50 transition-all">
+                <div className="w-10 h-10 bg-white rounded-lg overflow-hidden p-1 shrink-0 ring-1 ring-white/15 group-hover:ring-2 group-hover:ring-gold/50 transition-all">
                   <img src={logoURL} alt="Tiptoe Sports Hub"
                     className="w-full h-full object-contain"
                     onError={e => e.target.style.display = 'none'} />
@@ -70,7 +70,7 @@ export default function Footer() {
               <div className="w-px h-8 bg-white/15 shrink-0" />
               {/* Academy logo — clicks to Academy page */}
               <Link to="/academy" className="flex items-center gap-2.5 group">
-                <div className="w-10 h-10 bg-white rounded-lg overflow-hidden p-0.5 shrink-0 group-hover:ring-2 group-hover:ring-gold/50 transition-all">
+                <div className="w-10 h-10 bg-white rounded-lg overflow-hidden p-1 shrink-0 ring-1 ring-white/15 group-hover:ring-2 group-hover:ring-gold/50 transition-all">
                   <img src={academyLogoURL} alt="Tiptoe Sports Academy"
                     className="w-full h-full object-contain"
                     onError={e => e.target.style.display = 'none'} />
