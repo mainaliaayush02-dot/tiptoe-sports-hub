@@ -107,7 +107,7 @@ export default function BlogPost() {
       </div>
 
       {/* Content */}
-      <article className="py-12 px-4">
+      <article className="py-12 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             {post.excerpt && (
