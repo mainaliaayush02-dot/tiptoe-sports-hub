@@ -55,7 +55,7 @@ const ACHIEVEMENTS = [
 const fadeUp = { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' } } }
 
 export default function Academy() {
-  const { academyLogoURL } = useSite()
+  const { academyLogoURL, tagline } = useSite()
 
   const programsQ = useMemo(() => query(programsCol, orderBy('order')), [])
   const { docs: programDocs, loading: programsLoading } = useCollection(programsQ)
@@ -98,9 +98,14 @@ export default function Academy() {
               </motion.div>
             )}
             <motion.span variants={fadeUp} className="badge-gold mb-6">Tiptoe Sports Academy</motion.span>
-            <motion.h1 variants={fadeUp} className="font-black text-5xl md:text-6xl text-white leading-tight mb-5">
+            <motion.h1 variants={fadeUp} className="font-black text-5xl md:text-6xl text-white leading-tight mb-3">
               Nepal's #1<br /><span className="text-gold">Football Academy</span>
             </motion.h1>
+            {tagline && (
+              <motion.p variants={fadeUp} className="text-gold/80 text-xl font-heading font-semibold tracking-wide mb-5 italic">
+                "{tagline}"
+              </motion.p>
+            )}
             <motion.p variants={fadeUp} className="text-white/60 text-lg max-w-2xl mx-auto leading-relaxed">
               Structured youth football & futsal development for ages 4–18. National-level coaches. International exposure to Thailand. 370+ students training daily in Tarkeshwar, Kathmandu.
             </motion.p>

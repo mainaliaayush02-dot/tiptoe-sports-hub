@@ -142,7 +142,7 @@ export default function Navbar() {
                   <DropdownMenu
                     items={ACADEMY_NAV}
                     header="Tiptoe Sports Academy"
-                    subheader="Football & Futsal development programs"
+                    subheader="A Home for Future Players"
                     ctaLabel="Enroll in Academy"
                     ctaTo="/enroll"
                     onMouseEnter={openAcad}
