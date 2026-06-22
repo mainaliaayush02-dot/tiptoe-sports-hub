@@ -50,10 +50,22 @@ export default function About() {
       />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 px-4 bg-dark relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_#06145F_0%,_#030A2E_60%)]" />
-        <div className="absolute top-0 right-0 w-96 h-96 bg-green/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3" />
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
+      <section className="relative min-h-[60vh] flex items-center bg-dark overflow-hidden">
+        {/* Hub photo — full bleed background */}
+        <img
+          src="/hub.jpg"
+          alt="Tiptoe Sports Hub multi-sport facility in Tarkeshwar, Kathmandu"
+          className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none"
+          style={{ opacity: 0.4 }}
+          loading="eager"
+          fetchPriority="high"
+        />
+        {/* Dark overlay — left side covers text, fades to transparent right */}
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #030A2E 40%, #030A2Ecc 58%, #030A2E66 75%, transparent 100%)' }} />
+        {/* Top & bottom vignette */}
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #030A2Eaa 0%, transparent 35%, transparent 65%, #030A2Ecc 100%)' }} />
+
+        <div className="relative z-10 w-full max-w-4xl mx-auto px-5 md:px-8 pt-36 pb-20 text-center">
           <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.12 } } }}>
             <motion.span variants={fadeUp} className="badge-gold mb-6">Our Story</motion.span>
             <motion.h1 variants={fadeUp} className="font-black text-5xl md:text-6xl text-white leading-tight mb-5">
