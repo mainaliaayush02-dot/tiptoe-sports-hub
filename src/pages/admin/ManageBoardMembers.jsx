@@ -2,7 +2,7 @@ import { useState, useMemo, useRef, useCallback } from 'react'
 import Cropper from 'react-easy-crop'
 import { motion, AnimatePresence } from 'framer-motion'
 import toast from 'react-hot-toast'
-import { MdAdd, MdEdit, MdDelete, MdClose, MdGroups, MdCloudUpload, MdCrop, MdLink } from 'react-icons/md'
+import { MdAdd, MdEdit, MdDelete, MdClose, MdGroups, MdCloudUpload, MdCrop, MdLink, MdDownload } from 'react-icons/md'
 import { query, orderBy } from 'firebase/firestore'
 import { boardMembersCol } from '../../firebase/collections'
 import { useCollection, addDocument, updateDocument, deleteDocument } from '../../hooks/useFirestore'
@@ -338,11 +338,29 @@ function MemberModal({ item, onClose, onSave }) {
   )
 }
 
+const SEED_MEMBERS = [
+  { name: 'Gaurav Basnet',  title: 'President & Co-Founder',         bio: "Co-founder of Tiptoe Sports Hub. Nepal National Futsal Head Coach for three consecutive terms and one of Nepal's most respected football minds.", photoURL: '', order: 1, active: true },
+  { name: 'Hari Khadka',    title: 'Brand Ambassador',               bio: "Nepal's all-time highest international goal scorer and former captain of the Nepal National Football Team. Technical advisor to the Hub.", photoURL: '', order: 2, active: true },
+  { name: 'Board Member',   title: 'Director – Operations',          bio: 'Oversees day-to-day operations, facilities management, and staff development across all six sports verticals at Tiptoe Sports Hub.', photoURL: '', order: 3, active: true },
+  { name: 'Board Member',   title: 'Director – Finance',             bio: 'Responsible for financial planning, budgeting, and sustainable growth strategy for Tiptoe Sports Hub in Tarkeshwar, Kathmandu.', photoURL: '', order: 4, active: true },
+  { name: 'Board Member',   title: 'Director – Community Relations', bio: 'Drives community engagement, partnerships, and outreach programmes that connect the Hub with schools, clubs, and sports organisations across Kathmandu.', photoURL: '', order: 5, active: true },
+]
+
 export default function ManageBoardMembers() {
   const [modal, setModal]     = useState(null)
   const [deleteId, setDeleteId] = useState(null)
+  const [seeding, setSeeding]   = useState(false)
   const q = useMemo(() => query(boardMembersCol, orderBy('order')), [])
   const { docs: members, loading } = useCollection(q)
+
+  const handleSeedDefaults = async () => {
+    setSeeding(true)
+    try {
+      await Promise.all(SEED_MEMBERS.map(m => addDocument(boardMembersCol, m)))
+      toast.success('5 default board members imported!')
+    } catch { toast.error('Failed to import defaults.') }
+    finally { setSeeding(false) }
+  }
 
   const handleSave = async (form) => {
     if (form.id) {
@@ -378,6 +396,21 @@ export default function ManageBoardMembers() {
             <MdAdd size={18} /> Add Member
           </button>
         </div>
+
+        {/* Seed banner — shown when Firestore is empty */}
+        {!loading && members.length === 0 && (
+          <div className="bg-blue-50 border border-blue-200 rounded-2xl p-5 mb-6 flex items-start gap-4">
+            <MdDownload size={24} className="text-blue-500 shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <p className="font-semibold text-blue-800 text-sm">No board members yet</p>
+              <p className="text-blue-600 text-xs mt-1">Import 5 default members to get started. You can edit names, photos and bios after importing.</p>
+            </div>
+            <button onClick={handleSeedDefaults} disabled={seeding}
+              className="shrink-0 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-colors disabled:opacity-60">
+              {seeding ? 'Importing...' : 'Import 5 Defaults'}
+            </button>
+          </div>
+        )}
 
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
           {loading ? (

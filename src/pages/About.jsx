@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { FaArrowRight, FaTrophy, FaUsers, FaCalendarAlt, FaCheckCircle } from 'react-icons/fa'
+import { FaArrowRight, FaTrophy, FaUsers, FaCalendarAlt } from 'react-icons/fa'
 import { MdSportsScore } from 'react-icons/md'
 import { GiSoccerBall } from 'react-icons/gi'
 import SEOHead, { BASE_URL } from '../components/SEOHead'
@@ -130,7 +130,7 @@ export default function About() {
               </div>
               <h3 className="font-black text-xl mb-4 text-gold">Our Mission</h3>
               <p className="text-white/70 leading-relaxed text-sm">
-                To nurture Nepal's next generation of football and futsal champions through world-class coaching, structured training, and international exposure opportunities.
+                To be Kathmandu's most accessible and complete multi-sport destination — a place where everyone, from casual players to serious athletes, feels welcome and can play the sport they love.
               </p>
             </motion.div>
             <motion.div className="bg-green text-white rounded-2xl p-8" initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
@@ -139,7 +139,7 @@ export default function About() {
               </div>
               <h3 className="font-black text-xl mb-4 text-gold">Our Vision</h3>
               <p className="text-white/70 leading-relaxed text-sm">
-                To be Nepal's leading sports institution producing internationally competitive athletes while promoting grassroots development across the entire country.
+                To build the finest sports community in Nepal — bringing together players, families, and sports fans of every level under one roof in Tarkeshwar, Kathmandu.
               </p>
             </motion.div>
           </div>
@@ -182,50 +182,20 @@ export default function About() {
         </div>
       </section>
 
-      {/* International Partnership */}
-      <section className="section-padding bg-green">
-        <div className="container-max">
-          <div className="text-center mb-10">
-            <span className="inline-flex items-center gap-1.5 bg-white/15 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-5">
-              <FaGlobe size={11} /> International Partnership
-            </span>
-            <h2 className="font-black text-3xl md:text-4xl text-white mt-2">Nepal × Thailand</h2>
-            <p className="text-white/70 text-base mt-4 max-w-2xl mx-auto leading-relaxed">
-              Official partnership with <strong className="text-white">Silie Sports Club, Thailand</strong>, presided by <strong className="text-white">Daisuke Tada</strong>, a former Japanese Olympian goalkeeper. Real international doors for our students.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-            {[
-              ['Training Camps in Bangkok', 'Training'],
-              ['Asian Championship Participation', 'Championships'],
-              ['Trials with Thai Division Clubs', 'Trials'],
-              ['Equipment Support', 'Support'],
-            ].map(([label]) => (
-              <motion.div key={label} className="bg-white/10 border border-white/20 rounded-2xl p-5 text-center" initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                <p className="font-semibold text-white text-sm leading-snug">{label}</p>
-              </motion.div>
-            ))}
-          </div>
-          <div className="text-center">
-            <Link to="/programs" className="btn-primary text-sm">
-              Explore International Programs <FaArrowRight size={12} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* Internal Links */}
       <section className="py-12 px-4 bg-white">
         <div className="max-w-5xl mx-auto">
           <h2 className="font-heading font-bold text-navy text-center text-lg mb-6">Explore Tiptoe Sports Hub</h2>
           <div className="flex flex-wrap justify-center gap-3">
             {[
-              { to: '/academy',   label: 'About the Academy',       emoji: '🏟️' },
-              { to: '/coaches',   label: 'Meet Our Coaches',        emoji: '🧑‍🏫' },
-              { to: '/programs',  label: 'Training Programs',       emoji: '📋' },
-              { to: '/pricing',   label: 'Membership & Pricing',    emoji: '💰' },
-              { to: '/contact',   label: 'Contact Us',              emoji: '📞' },
-              { to: '/enroll',    label: 'Enroll Now',              emoji: '🎯' },
+              { to: '/sports/football-futsal', label: 'Football & Futsal',   emoji: '⚽' },
+              { to: '/sports/cricket',          label: 'Cricket',            emoji: '🏏' },
+              { to: '/sports/basketball',       label: 'Basketball',         emoji: '🏀' },
+              { to: '/sports/pickleball',       label: 'Pickleball',         emoji: '🎾' },
+              { to: '/sports/snooker',          label: 'Snooker',            emoji: '🎱' },
+              { to: '/sports/sports-lounge',    label: 'Sports Lounge',      emoji: '📺' },
+              { to: '/pricing',                 label: 'Membership & Pricing', emoji: '💰' },
+              { to: '/contact',                 label: 'Contact Us',         emoji: '📞' },
             ].map(({ to, label, emoji }) => (
               <Link key={to} to={to}
                 className="flex items-center gap-2 bg-light hover:bg-navy hover:text-white border border-gray-200 hover:border-navy text-gray-700 rounded-xl px-5 py-3 text-sm font-medium transition-all duration-200 shadow-sm">

@@ -23,14 +23,6 @@ const HUB_STATS = [
   { end: 7,    suffix: '',   label: 'Days Open Per Week',  Icon: FaDoorOpen },
 ]
 
-const SPORTS_SHOWCASE = [
-  { to: '/sports/football-futsal', emoji: '⚽', name: 'Football & Futsal',  desc: 'Facilities & open play' },
-  { to: '/sports/cricket',         emoji: '🏏', name: 'Cricket',            desc: 'Ground hire & coaching' },
-  { to: '/sports/basketball',      emoji: '🏀', name: 'Basketball',         desc: 'Courts & coaching' },
-  { to: '/sports/pickleball',      emoji: '🎾', name: 'Pickleball',         desc: "Nepal's premier courts" },
-  { to: '/sports/snooker',         emoji: '🎱', name: 'Snooker',            desc: 'Premium club & tables' },
-  { to: '/sports/sports-lounge',   emoji: '📺', name: 'Sports Lounge',      desc: 'Live sports & great vibes' },
-]
 
 const FALLBACK_BOARD = [
   { id: 'b1', name: 'Gaurav Basnet',   title: 'President & Co-Founder',         bio: 'Co-founder of Tiptoe Sports Hub. Nepal National Futsal Head Coach for three consecutive terms and one of Nepal\'s most respected football minds.',      photoURL: '' },
@@ -177,60 +169,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SPORTS & FACILITIES SHOWCASE */}
-      <section id="sports-section" className="section-padding bg-dark overflow-hidden">
-        <div className="container-max">
-          <motion.div className="text-center mb-12" initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}>
-            <motion.span variants={fadeUp} className="section-label mb-2">Multi-Sport Destination</motion.span>
-            <motion.h2 variants={fadeUp} className="section-title-white">All Sports. One Hub.</motion.h2>
-            <motion.div variants={fadeUp} className="gold-divider mx-auto mt-4" />
-            <motion.p variants={fadeUp} className="text-white/45 mt-4 max-w-lg mx-auto text-sm leading-relaxed">
-              Kathmandu's only destination for Football, Cricket, Basketball, Pickleball, Snooker and a Sports Lounge — all under one premium roof in Tarkeshwar.
-            </motion.p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-            {/* Football — featured wide card */}
-            <motion.div
-              className="lg:col-span-2 relative rounded-2xl overflow-hidden bg-gradient-to-br from-navy to-dark border border-white/10 hover:border-gold/30 transition-all duration-300 group min-h-[280px] flex flex-col justify-end p-7"
-              initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-            >
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_#06145F88_0%,_transparent_70%)]" />
-              <span className="absolute top-5 right-5 text-7xl opacity-10">⚽</span>
-              <div className="relative z-10">
-                <span className="badge-gold text-[9px] mb-3">Primary Sport</span>
-                <div className="text-5xl mb-3">⚽</div>
-                <h3 className="font-heading font-extrabold text-white text-2xl mb-1">Football &amp; Futsal</h3>
-                <p className="text-white/50 text-sm mb-5">Ground hire, open play &amp; Academy programs</p>
-                <Link to="/sports/football-futsal"
-                  className="inline-flex items-center gap-2 bg-gold text-navy font-heading font-bold text-xs px-5 py-2.5 rounded-xl hover:bg-yellow-400 transition-all">
-                  Explore <FaArrowRight size={10} />
-                </Link>
-              </div>
-            </motion.div>
-
-            {/* Other 5 sports */}
-            <div className="lg:col-span-3 grid grid-cols-2 gap-4">
-              {SPORTS_SHOWCASE.slice(1).map(({ to, emoji, name, desc }, i) => (
-                <motion.div key={to}
-                  className="card p-5 group hover:border-gold/20 hover:shadow-card-hover flex flex-col gap-3"
-                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                  transition={{ delay: i * 0.08 }}>
-                  <div className="text-3xl">{emoji}</div>
-                  <div>
-                    <h3 className="font-heading font-bold text-navy text-base leading-tight mb-1">{name}</h3>
-                    <p className="text-gray-400 text-xs leading-relaxed">{desc}</p>
-                  </div>
-                  <Link to={to} className="mt-auto inline-flex items-center gap-1.5 text-navy font-heading font-semibold text-xs group-hover:text-gold transition-colors">
-                    Explore <FaArrowRight size={9} />
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* BOARD OF DIRECTORS */}
       <section className="section-padding bg-white">
         <div className="container-max">
@@ -319,23 +257,25 @@ export default function Home() {
               </motion.div>
             </motion.div>
 
-            {/* Hub facility highlights */}
+            {/* Hub facility highlights — each links to its sport page */}
             <div className="grid grid-cols-2 gap-4">
               {[
-                { emoji: '⚽', label: 'Football Ground', sub: 'Full-size & futsal' },
-                { emoji: '🏏', label: 'Cricket Nets', sub: 'Batting & bowling' },
-                { emoji: '🏀', label: 'Basketball Courts', sub: 'Indoor & outdoor' },
-                { emoji: '🎾', label: 'Pickleball Courts', sub: "Nepal's finest" },
-                { emoji: '🎱', label: 'Snooker Tables', sub: 'Pro-grade tables' },
-                { emoji: '📺', label: 'Sports Lounge', sub: 'Live screenings' },
-              ].map(({ emoji, label, sub }, i) => (
+                { to: '/sports/football-futsal', emoji: '⚽', label: 'Football Ground',   sub: 'Full-size & futsal' },
+                { to: '/sports/cricket',          emoji: '🏏', label: 'Cricket Nets',      sub: 'Batting & bowling' },
+                { to: '/sports/basketball',       emoji: '🏀', label: 'Basketball Courts', sub: 'Indoor & outdoor' },
+                { to: '/sports/pickleball',       emoji: '🎾', label: 'Pickleball Courts', sub: "Nepal's finest" },
+                { to: '/sports/snooker',          emoji: '🎱', label: 'Snooker Tables',    sub: 'Pro-grade tables' },
+                { to: '/sports/sports-lounge',    emoji: '📺', label: 'Sports Lounge',     sub: 'Live screenings' },
+              ].map(({ to, emoji, label, sub }, i) => (
                 <motion.div key={label}
-                  className="bg-white/5 border border-white/10 hover:border-gold/25 rounded-xl p-4 text-center transition-all duration-300"
                   initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
-                  <div className="text-3xl mb-2">{emoji}</div>
-                  <div className="text-white font-heading font-semibold text-sm">{label}</div>
-                  <div className="text-white/35 text-xs mt-0.5">{sub}</div>
+                  <Link to={to}
+                    className="block bg-white/5 border border-white/10 hover:border-gold/40 hover:bg-white/10 rounded-xl p-4 text-center transition-all duration-300 group">
+                    <div className="text-3xl mb-2">{emoji}</div>
+                    <div className="text-white font-heading font-semibold text-sm group-hover:text-gold transition-colors">{label}</div>
+                    <div className="text-white/35 text-xs mt-0.5">{sub}</div>
+                  </Link>
                 </motion.div>
               ))}
             </div>
