@@ -194,7 +194,7 @@ export default function SportPage() {
                         })
                       : defaults.pricing,
     schedule:       firestoreData.schedule     || defaults.schedule,
-    imageURL:       firestoreData.imageURL     || null,
+    imageURL:       firestoreData.imageURL     || defaults.imageURL || null,
     color:          firestoreData.color        || defaults.color,
     seoTitle:       firestoreData.seoTitle     || defaults.seoTitle,
     seoDescription: firestoreData.seoDescription || defaults.seoDescription,
