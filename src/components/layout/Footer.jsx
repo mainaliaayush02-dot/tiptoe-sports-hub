@@ -16,14 +16,15 @@ const SPORTS_LINKS = [
 ]
 
 const QUICK_LINKS = [
-  { to: '/',         label: 'Home' },
-  { to: '/about',    label: 'About Us' },
-  { to: '/academy',  label: 'Academy' },
-  { to: '/programs', label: 'Programs' },
-  { to: '/coaches',  label: 'Coaches' },
-  { to: '/pricing',  label: 'Pricing' },
-  { to: '/faq',      label: 'FAQ' },
-  { to: '/contact',  label: 'Contact' },
+  { to: '/',          label: 'Home' },
+  { to: '/about',     label: 'About Us' },
+  { to: '/academy',   label: 'Academy' },
+  { to: '/programs',  label: 'Programs' },
+  { to: '/schedule',  label: 'Schedule' },
+  { to: '/coaches',   label: 'Coaches' },
+  { to: '/pricing',   label: 'Pricing' },
+  { to: '/faq',       label: 'FAQ' },
+  { to: '/contact',   label: 'Contact' },
 ]
 
 export default function Footer() {

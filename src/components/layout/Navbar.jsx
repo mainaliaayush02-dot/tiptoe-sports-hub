@@ -10,6 +10,7 @@ const ACADEMY_NAV = [
   { to: '/sports/football-futsal', emoji: '⚽', label: 'Football & Futsal Academy', desc: 'Programs for ages 4–18 · Thailand exposure' },
   { to: '/coaches',                emoji: '🧑‍🏫', label: 'Our Coaches',              desc: 'National-level coaching staff' },
   { to: '/programs',               emoji: '📋', label: 'Training Programs',         desc: 'All programs & enrollment info' },
+  { to: '/schedule',               emoji: '🗓️', label: 'Training Schedule',         desc: 'Session times for every age group' },
 ]
 
 const HUB_NAV = [
@@ -253,6 +254,7 @@ export default function Navbar() {
                   items={HUB_NAV}
                 />
 
+                <MobileNavLink to="/schedule"     label="Schedule" />
                 <MobileNavLink to="/pricing"      label="Pricing" />
                 <MobileNavLink to="/gallery"      label="Gallery" />
                 <MobileNavLink to="/events"       label="Events" />
