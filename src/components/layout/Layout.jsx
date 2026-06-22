@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import WhatsAppButton from '../WhatsAppButton'
@@ -11,16 +11,14 @@ export default function Layout() {
     <div className="flex flex-col min-h-screen">
       <ScrollToTop />
       <Navbar />
-      <AnimatePresence mode="sync">
-        <motion.main
-          key={location.pathname}
-          className="flex-1"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { duration: 0.25, ease: 'easeOut' } }}
-        >
-          <Outlet />
-        </motion.main>
-      </AnimatePresence>
+      <motion.main
+        key={location.pathname}
+        className="flex-1"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { duration: 0.25, ease: 'easeOut' } }}
+      >
+        <Outlet />
+      </motion.main>
       <Footer />
       <WhatsAppButton />
     </div>
