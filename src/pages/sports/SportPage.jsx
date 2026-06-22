@@ -123,23 +123,23 @@ const DEFAULT_SPORTS = {
     color: '#2D7D46',
     badge: 'Members Club',
   },
-  'sports-bar': {
-    name: 'Sports Bar',
-    emoji: '🍹',
-    tagline: 'Live Sports, Premium Drinks & Great Vibes',
-    description: "The ultimate sports viewing and social experience at Tiptoe Sports Hub. Our Sports Bar features multiple large HD screens broadcasting live international and local sports events, a premium drinks menu, great food, and a vibrant atmosphere that brings the community together. Whether you're watching the Champions League, the World Cup, or the Nepal Super League, there's no better place to be.",
-    features: ['Multiple large HD projection screens', 'Live broadcasting of major sports events', 'Full premium drinks & cocktail menu', 'Food & snacks menu available', 'Private event & match-day bookings', 'Open during all major sports seasons'],
-    facilities: ['Large HD projection screens', 'Full bar service', 'Indoor lounge seating', 'Outdoor terrace area', 'Private event space (up to 50 guests)', 'Live sports satellite subscription'],
+  'sports-lounge': {
+    name: 'Sports Lounge',
+    emoji: '📺',
+    tagline: 'Live Sports Screening, Great Food & Relaxed Social Vibes',
+    description: "The ultimate sports viewing and social experience at Tiptoe Sports Hub. Our Sports Lounge features multiple large HD screens broadcasting live international and local sports events, great food and beverages, and a relaxed atmosphere that brings families, friends, and the community together. Whether you're watching the Champions League, the World Cup, or the Nepal Super League, there's no better place in Kathmandu to catch the action.",
+    features: ['Multiple large HD projection screens', 'Live screening of major sports events', 'Food & beverage menu', 'Relaxed lounge seating & great atmosphere', 'Private event & match-day bookings', 'Family and group-friendly environment'],
+    facilities: ['Large HD projection screens', 'Comfortable lounge seating', 'Indoor air-conditioned space', 'Outdoor terrace area', 'Private event space (up to 50 guests)', 'Live sports satellite subscription'],
     pricing: [
-      { plan: 'Walk-In',          age: 'All guests', price: 'Free entry',          desc: 'With minimum drink purchase' },
-      { plan: 'VIP Table (4 pax)', age: 'Groups',    price: 'NPR 2,000 min spend', desc: 'Reserved seating, priority service' },
-      { plan: 'Private Event',    age: 'Groups',     price: 'Contact for quote',   desc: 'Exclusive venue hire with catering' },
-      { plan: 'Match Day Package', age: 'Groups',    price: 'NPR 5,000 / 10 pax', price2: 'Food + drinks + reserved seating' },
+      { plan: 'Walk-In',           age: 'All guests', price: 'Free entry',          desc: 'Enjoy the game with food and beverages' },
+      { plan: 'VIP Table (4 pax)', age: 'Groups',     price: 'NPR 2,000 min spend', desc: 'Reserved seating, priority service' },
+      { plan: 'Private Event',     age: 'Groups',     price: 'Contact for quote',   desc: 'Exclusive venue hire with full catering' },
+      { plan: 'Match Day Package', age: 'Groups',     price: 'NPR 5,000 / 10 pax', desc: 'Food + beverages + reserved seating' },
     ],
     schedule: 'Mon–Thu: 4PM–11PM | Fri–Sun: 12PM–12AM | Special event hours vary',
-    seoTitle: 'Sports Bar in Kathmandu',
-    h1: 'Sports Bar in Tarkeshwar, Kathmandu',
-    seoDescription: "Best sports bar in Tarkeshwar, Kathmandu. Live sports screening — football, cricket, NBA and more on big screens. Premium drinks, great food and unforgettable match-day atmosphere at Tiptoe Sports Hub Sports Bar.",
+    seoTitle: 'Sports Lounge in Kathmandu – Live Match Screening',
+    h1: 'Sports Lounge in Tarkeshwar, Kathmandu',
+    seoDescription: "Best sports lounge in Tarkeshwar, Kathmandu. Live sports screening — football, cricket, NBA and more on big screens. Great food, relaxed atmosphere and unforgettable match-day experience at Tiptoe Sports Hub.",
     color: '#8B4A00',
     badge: 'Social Hub',
   },
@@ -200,10 +200,10 @@ export default function SportPage() {
     active:         firestoreData.active !== false,
   } : defaults
 
-  const isSportsBar = slug === 'sports-bar'
+  const isSportsLounge = slug === 'sports-lounge'
   const structuredData = {
     '@context': 'https://schema.org',
-    '@type': isSportsBar ? ['BarOrPub', 'FoodEstablishment'] : 'SportsActivityLocation',
+    '@type': isSportsLounge ? ['CafeOrCoffeeShop', 'FoodEstablishment'] : 'SportsActivityLocation',
     name: `Tiptoe Sports Hub – ${sport.name}`,
     description: sport.seoDescription,
     url: `${BASE_URL}/sports/${slug}`,
@@ -215,13 +215,13 @@ export default function SportPage() {
     },
     ...(phone && { telephone: phone }),
     openingHours: sport.schedule,
-    ...(isSportsBar && {
+    ...(isSportsLounge && {
       servesCuisine: ['Nepali', 'Continental', 'Snacks'],
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
-        name: 'Sports Bar Menu & Packages',
+        name: 'Sports Lounge Menu & Packages',
         itemListElement: [
-          { '@type': 'Offer', name: 'Walk-In', description: 'Free entry with minimum drink purchase. Live sports on big screens.' },
+          { '@type': 'Offer', name: 'Walk-In', description: 'Free entry. Enjoy live sports screening with food and beverages.' },
           { '@type': 'Offer', name: 'VIP Table', price: '2000', priceCurrency: 'NPR', description: 'Reserved seating for 4, priority service.' },
           { '@type': 'Offer', name: 'Private Event', description: 'Up to 50 guests, exclusive venue hire with full catering.' },
         ],

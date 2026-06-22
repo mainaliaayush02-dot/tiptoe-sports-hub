@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef } from 'react'
+﻿import { useState, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaArrowRight, FaCheckCircle } from 'react-icons/fa'
@@ -8,7 +8,7 @@ import { useCollection } from '../hooks/useFirestore'
 import SEOHead, { BASE_URL } from '../components/SEOHead'
 import ContentLoader from '../components/ContentLoader'
 
-const SPORT_TABS = ['All', 'Football', 'Cricket', 'Basketball', 'Pickleball', 'Snooker', 'Sports Bar']
+const SPORT_TABS = ['All', 'Football', 'Cricket', 'Basketball', 'Pickleball', 'Snooker', 'Sports Lounge']
 
 const SPORT_COLORS = {
   Football:     '#06145F',
@@ -16,7 +16,7 @@ const SPORT_COLORS = {
   Basketball:   '#B85A00',
   Pickleball:   '#1B7F5E',
   Snooker:      '#2D7D46',
-  'Sports Bar': '#8B4A00',
+  'Sports Lounge': '#8B4A00',
   General:      '#06145F',
 }
 
@@ -47,10 +47,10 @@ const FALLBACK_PRICING = [
   { id: 's2', sport: 'Snooker', title: 'Monthly Member', price: 'NPR 3,000', period: '/month', badge: 'Popular', features: ['Unlimited play', 'Priority booking', 'Club atmosphere', 'Lounge access'] },
   { id: 's3', sport: 'Snooker', title: 'VIP Membership', price: 'NPR 5,000', period: '/month', badge: 'Best Value', features: ['Priority booking', 'Lounge access', 'Exclusive events', 'Guest passes'] },
   { id: 's4', sport: 'Snooker', title: 'Day Pass', price: 'NPR 400', period: '/day', badge: '', features: ['Full day access', 'Equipment included', 'Walk-in friendly'] },
-  // Sports Bar
-  { id: 'sb1', sport: 'Sports Bar', title: 'Walk-In', price: 'Free entry', period: '', badge: '', features: ['With minimum drink purchase', 'Live sports on big screens', 'Full drinks & food menu'] },
-  { id: 'sb2', sport: 'Sports Bar', title: 'VIP Table', price: 'NPR 2,000', period: 'min spend', badge: 'Popular', features: ['Reserved seating for 4', 'Priority service', 'All major sports events', 'Dedicated server'] },
-  { id: 'sb3', sport: 'Sports Bar', title: 'Private Event', price: 'Contact us', period: '', badge: '', features: ['Up to 50 guests', 'Exclusive venue hire', 'Full catering available', 'Live sports screen'] },
+  // Sports Lounge
+  { id: 'sb1', sport: 'Sports Lounge', title: 'Walk-In', price: 'Free entry', period: '', badge: '', features: ['With minimum drink purchase', 'Live sports on big screens', 'Full drinks & food menu'] },
+  { id: 'sb2', sport: 'Sports Lounge', title: 'VIP Table', price: 'NPR 2,000', period: 'min spend', badge: 'Popular', features: ['Reserved seating for 4', 'Priority service', 'All major sports events', 'Dedicated server'] },
+  { id: 'sb3', sport: 'Sports Lounge', title: 'Private Event', price: 'Contact us', period: '', badge: '', features: ['Up to 50 guests', 'Exclusive venue hire', 'Full catering available', 'Live sports screen'] },
 ]
 
 const RELATED_LINKS = [
@@ -88,7 +88,7 @@ export default function Pricing() {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'Tiptoe Sports Hub Membership & Pricing',
-    description: 'Pricing plans for Football, Cricket, Basketball, Pickleball, Snooker, and Sports Bar at Tiptoe Sports Hub, Kathmandu',
+    description: 'Pricing plans for Football, Cricket, Basketball, Pickleball, Snooker, and Sports Lounge at Tiptoe Sports Hub, Kathmandu',
     url: `${BASE_URL}/pricing`,
     itemListElement: FALLBACK_PRICING.map((p, i) => ({
       '@type': 'ListItem',
@@ -102,7 +102,7 @@ export default function Pricing() {
     <>
       <SEOHead
         title="Sports Membership & Pricing in Kathmandu"
-        description="Transparent pricing for Football, Cricket, Basketball, Pickleball, Snooker and Sports Bar at Tiptoe Sports Hub in Kathmandu. NPR pricing, no hidden fees."
+        description="Transparent pricing for Football, Cricket, Basketball, Pickleball, Snooker and Sports Lounge at Tiptoe Sports Hub in Kathmandu. NPR pricing, no hidden fees."
         path="/pricing"
         breadcrumb
         schema={pricingSchema}

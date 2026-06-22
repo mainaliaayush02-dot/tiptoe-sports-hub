@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+﻿import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import toast from 'react-hot-toast'
 import { MdAdd, MdEdit, MdDelete, MdClose, MdSportsTennis } from 'react-icons/md'
@@ -29,7 +29,7 @@ const SLUG_SUGGESTIONS = [
   { slug: 'basketball',      emoji: '🏀', name: 'Basketball' },
   { slug: 'pickleball',      emoji: '🎾', name: 'Pickleball' },
   { slug: 'snooker',         emoji: '🎱', name: 'Snooker' },
-  { slug: 'sports-bar',      emoji: '🍹', name: 'Sports Bar' },
+  { slug: 'sports-lounge',      emoji: '🍹', name: 'Sports Lounge' },
 ]
 
 function toSlug(str) {
@@ -227,7 +227,7 @@ export default function ManageSports() {
       {!loading && sports.length === 0 && (
         <div className="bg-gold/10 border border-gold/30 rounded-xl p-5 mb-5">
           <p className="text-sm font-semibold text-navy mb-1">No sports added yet.</p>
-          <p className="text-sm text-gray-600 mb-3">Add your 5 core sports: Football/Futsal, Basketball, Pickleball, Snooker, and Sports Bar. Use the quick-fill buttons in the form.</p>
+          <p className="text-sm text-gray-600 mb-3">Add your 5 core sports: Football/Futsal, Basketball, Pickleball, Snooker, and Sports Lounge. Use the quick-fill buttons in the form.</p>
           <button onClick={() => setModal({})} className="btn-primary text-xs py-2">
             <MdAdd size={14} /> Add First Sport
           </button>

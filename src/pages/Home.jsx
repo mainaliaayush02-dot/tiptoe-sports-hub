@@ -1,62 +1,50 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useInView } from 'framer-motion'
-import { FaArrowRight, FaUsers, FaCalendarAlt, FaTrophy, FaStar, FaChevronDown, FaQuoteLeft, FaGlobe } from 'react-icons/fa'
+import { FaArrowRight, FaCalendarAlt, FaChevronDown, FaQuoteLeft, FaUsers, FaDoorOpen, FaStar } from 'react-icons/fa'
+import { MdSportsScore, MdGroups } from 'react-icons/md'
 import { GiSoccerBall } from 'react-icons/gi'
-import { MdSportsScore } from 'react-icons/md'
 import { query, orderBy, limit } from 'firebase/firestore'
-import { eventsCol, galleryCol, testimonialsCol, programsCol, coachesCol } from '../firebase/collections'
+import { eventsCol, galleryCol, testimonialsCol, boardMembersCol } from '../firebase/collections'
 import { useCollection } from '../hooks/useFirestore'
 import { useSite } from '../contexts/SiteContext'
 import SEOHead from '../components/SEOHead'
 
-const eventsPreviewQ   = query(eventsCol, orderBy('date'))
-const galleryPreviewQ  = query(galleryCol, orderBy('createdAt', 'desc'), limit(6))
-const testimonialsQ    = query(testimonialsCol, orderBy('createdAt', 'desc'))
-const programsPreviewQ = query(programsCol, orderBy('order'))
-const coachesPreviewQ  = query(coachesCol, orderBy('order'), limit(2))
+const eventsPreviewQ      = query(eventsCol, orderBy('date'))
+const galleryPreviewQ     = query(galleryCol, orderBy('createdAt', 'desc'), limit(6))
+const testimonialsQ       = query(testimonialsCol, orderBy('createdAt', 'desc'))
+const boardMembersQ       = query(boardMembersCol, orderBy('order'))
 
-const STATS = [
-  { end: 370, suffix: '+', label: 'Students Daily',  Icon: FaUsers },
-  { end: 4,   suffix: '+', label: 'Years Active',     Icon: FaCalendarAlt },
-  { end: 6,   suffix: '',  label: 'Programs Offered', Icon: MdSportsScore },
-  { end: 2,   suffix: '',  label: "Int'l Coaches",    Icon: FaStar },
+// Hub-relevant stats — not academy numbers
+const HUB_STATS = [
+  { end: 6,    suffix: '',   label: 'Sports & Facilities', Icon: MdSportsScore },
+  { end: 4,    suffix: '+',  label: 'Years Active',        Icon: FaCalendarAlt },
+  { end: 1000, suffix: '+',  label: 'Monthly Visitors',    Icon: FaUsers },
+  { end: 7,    suffix: '',   label: 'Days Open Per Week',  Icon: FaDoorOpen },
 ]
 
 const SPORTS_SHOWCASE = [
-  { to: '/sports/football-futsal', emoji: '⚽', name: 'Football & Futsal', desc: 'Academy programs for ages 4–18', primary: true },
-  { to: '/sports/cricket',         emoji: '🏏', name: 'Cricket',           desc: 'Ground hire & coaching' },
-  { to: '/sports/basketball',      emoji: '🏀', name: 'Basketball',        desc: 'Courts & coaching' },
-  { to: '/sports/pickleball',      emoji: '🎾', name: 'Pickleball',        desc: "Nepal's premier courts" },
-  { to: '/sports/snooker',         emoji: '🎱', name: 'Snooker',           desc: 'Premium club & tables' },
-  { to: '/sports/sports-bar',      emoji: '🍹', name: 'Sports Bar',        desc: 'Live sports & great vibes' },
+  { to: '/sports/football-futsal', emoji: '⚽', name: 'Football & Futsal',  desc: 'Facilities & open play' },
+  { to: '/sports/cricket',         emoji: '🏏', name: 'Cricket',            desc: 'Ground hire & coaching' },
+  { to: '/sports/basketball',      emoji: '🏀', name: 'Basketball',         desc: 'Courts & coaching' },
+  { to: '/sports/pickleball',      emoji: '🎾', name: 'Pickleball',         desc: "Nepal's premier courts" },
+  { to: '/sports/snooker',         emoji: '🎱', name: 'Snooker',            desc: 'Premium club & tables' },
+  { to: '/sports/sports-lounge',   emoji: '📺', name: 'Sports Lounge',      desc: 'Live sports & great vibes' },
 ]
 
-const FALLBACK_PROGRAMS = [
-  { name: 'Football Foundation', ageGroup: 'Age 4–10',  description: 'Building love for the game. Technical fundamentals, coordination, and fun-first training.', emoji: '⚽' },
-  { name: 'Youth Development',   ageGroup: 'Age 11–15', description: 'Tactical awareness, team dynamics, and competitive preparation for future players.', emoji: '⚽' },
-  { name: 'Elite Performance',   ageGroup: 'Age 16–18', description: 'High-intensity program for serious athletes targeting professional or national-level play.', emoji: '🏆' },
-  { name: 'Futsal Academy',      ageGroup: 'All Ages',  description: 'Fast-paced indoor futsal mastering quick decisions, technical skills, and court vision.', emoji: '🥅' },
-  { name: 'Girls Football',      ageGroup: 'Age 8–18',  description: 'Dedicated environment empowering girls with professional coaching and safe development.', emoji: '⭐' },
-  { name: 'International Camps', ageGroup: 'Selected',  description: 'Thailand training camps, trials and international exposure for top performing students.', emoji: '🌏' },
-]
-
-const FALLBACK_COACHES = [
-  {
-    name: 'Gaurav Basnet', role: 'President & Head Coach',
-    achievements: ['Nepal National Futsal Head Coach – 3 terms', 'Former Manang Marshyangdi Club Coach', 'Led Nepal in Iran, Kyrgyzstan & Mongolia'],
-  },
-  {
-    name: 'Hari Khadka', role: 'Brand Ambassador & Technical Advisor',
-    achievements: ["Nepal's All-Time Highest International Goal Scorer", 'Former Captain, Nepal National Football Team', 'Former Acting Technical Director, ANFA'],
-  },
+const FALLBACK_BOARD = [
+  { id: 'b1', name: 'Gaurav Basnet',   title: 'President & Co-Founder',         bio: 'Co-founder of Tiptoe Sports Hub. Nepal National Futsal Head Coach for three consecutive terms and one of Nepal\'s most respected football minds.',      photoURL: '' },
+  { id: 'b2', name: 'Hari Khadka',     title: 'Brand Ambassador',               bio: "Nepal's all-time highest international goal scorer and former captain of the Nepal National Football Team. Technical advisor to the Hub.",                  photoURL: '' },
+  { id: 'b3', name: 'Board Member',    title: 'Director – Operations',          bio: 'Oversees day-to-day operations, facilities management, and staff development across all six sports verticals at Tiptoe Sports Hub.',                       photoURL: '' },
+  { id: 'b4', name: 'Board Member',    title: 'Director – Finance',             bio: 'Responsible for financial planning, budgeting, and sustainable growth strategy for Tiptoe Sports Hub in Tarkeshwar, Kathmandu.',                           photoURL: '' },
+  { id: 'b5', name: 'Board Member',    title: 'Director – Community Relations', bio: 'Drives community engagement, partnerships, and outreach programmes that connect the Hub with schools, clubs, and sports organisations across Kathmandu.',   photoURL: '' },
 ]
 
 const FALLBACK_TESTIMONIALS = [
-  { name: 'Rajan Shrestha',  role: 'Parent',           text: 'My son has improved tremendously. The coaches are professional and truly dedicated to every student.' },
-  { name: 'Priya Tamang',    role: 'Parent of Student', text: 'The structured programs helped my daughter build confidence both on and off the field. Excellent environment!' },
-  { name: 'Binod Rai',       role: 'Student, Age 16',   text: "Best football academy in Kathmandu. Coach Gaurav's training is world-class and the Thailand camp was life-changing." },
-  { name: 'Sunita Gurung',   role: 'Parent',            text: "Professional staff, great facilities, real international exposure. Best investment for my child's future." },
+  { name: 'Rajan Shrestha',  role: 'Member',           text: 'The facilities at Tiptoe are world-class. Basketball court, snooker tables, and the lounge — everything is premium quality.' },
+  { name: 'Priya Tamang',    role: 'Visitor',           text: 'Brought my family for the pickleball courts and stayed for the Sports Lounge. Amazing atmosphere and friendly staff!' },
+  { name: 'Binod Rai',       role: 'Cricket Member',    text: 'Best cricket ground in Kathmandu. The pitch quality and net practice facilities are excellent. Highly recommend.' },
+  { name: 'Sunita Gurung',   role: 'Member',            text: 'Love the variety here — basketball in the morning, snooker in the evening, and live match screening at night. One hub does it all.' },
 ]
 
 function Counter({ end, suffix, inView }) {
@@ -84,22 +72,16 @@ export default function Home() {
   const statsRef = useRef(null)
   const statsInView = useInView(statsRef, { once: true, margin: '-80px' })
 
-  const { docs: allEvents }      = useCollection(eventsPreviewQ)
-  const { docs: gallery }        = useCollection(galleryPreviewQ)
-  const { docs: tDocs }          = useCollection(testimonialsQ)
-  const { docs: firestoreProgs } = useCollection(programsPreviewQ)
-  const { docs: firestoreCoaches } = useCollection(coachesPreviewQ)
-
-  const activeCoaches = firestoreCoaches.filter(c => c.active !== false)
-  const coaches = activeCoaches.length > 0 ? activeCoaches : FALLBACK_COACHES
+  const { docs: allEvents }  = useCollection(eventsPreviewQ)
+  const { docs: gallery }    = useCollection(galleryPreviewQ)
+  const { docs: tDocs }      = useCollection(testimonialsQ)
+  const { docs: boardDocs, loading: boardLoading } = useCollection(boardMembersQ)
 
   const events = allEvents.filter(e => e.isUpcoming === true).slice(0, 3)
   const activeTestimonials = tDocs.filter(t => t.visible !== false)
   const testimonials = tDocs.length > 0 ? activeTestimonials : FALLBACK_TESTIMONIALS
-  const activeProgs = firestoreProgs.filter(p => p.active !== false).slice(0, 6)
-  const programs = firestoreProgs.length > 0
-    ? activeProgs.map(p => ({ ...p, emoji: p.emoji || '⚽' }))
-    : FALLBACK_PROGRAMS
+  const activeBoard = boardDocs.filter(m => m.active !== false)
+  const boardMembers = activeBoard.length > 0 ? activeBoard : FALLBACK_BOARD
 
   useEffect(() => {
     const t = setInterval(() => setTIdx(i => (i + 1) % testimonials.length), 5000)
@@ -109,28 +91,24 @@ export default function Home() {
   return (
     <>
       <SEOHead
-        title="Nepal's #1 Football Academy & Multi-Sport Hub in Kathmandu"
-        description="Football, Cricket, Basketball, Pickleball, Snooker and Sports Bar at Tiptoe Sports Hub in Tarkeshwar, Kathmandu. 370+ students with professional coaching for ages 4 to 18."
+        title="Multi-Sport Hub & Facilities in Tarkeshwar, Kathmandu"
+        description="Tiptoe Sports Hub — Kathmandu's premier multi-sport destination in Tarkeshwar. Football, Cricket, Basketball, Pickleball, Snooker and Sports Lounge. Book your slot today."
         path="/"
       />
 
       {/* HERO */}
       <section className="relative min-h-screen flex items-center bg-dark overflow-hidden">
 
-        {/* Ground photo — full bleed, visible on right, fades to dark on left */}
         <img
           src="/ground.jpg"
-          alt="Tiptoe Sports Hub training ground in Tarkeshwar, Kathmandu"
+          alt="Tiptoe Sports Hub multi-sport facility in Tarkeshwar, Kathmandu"
           className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none"
           style={{ opacity: 0.45 }}
           loading="eager"
           fetchPriority="high"
         />
-        {/* Strong dark gradient left side (covers text area) fading to transparent right */}
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #030A2E 38%, #030A2Ecc 55%, #030A2E55 75%, transparent 100%)' }} />
-        {/* Top & bottom vignette */}
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #030A2Eaa 0%, transparent 30%, transparent 70%, #030A2Ecc 100%)' }} />
-
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gold/5 rounded-full blur-[80px] translate-y-1/3 -translate-x-1/4 pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 pt-28 pb-16 w-full">
@@ -138,38 +116,38 @@ export default function Home() {
             <motion.div initial="hidden" animate="show" variants={stagger}>
               <motion.div variants={fadeUp}>
                 <span className="badge-gold mb-6">
-                  <GiSoccerBall size={12} /> Est. 2021 &middot; Nepal's Premier Multi-Sport Hub
+                  <GiSoccerBall size={12} /> Est. 2021 · Tarkeshwar, Kathmandu
                 </span>
               </motion.div>
 
               <motion.h1 variants={fadeUp} className="font-heading font-extrabold text-5xl sm:text-6xl md:text-7xl text-white leading-[1.05] tracking-tight mb-6">
-                <span className="sr-only">Football Academy and Multi-Sport Hub in Tarkeshwar, Kathmandu. </span>
+                <span className="sr-only">Multi-Sport Hub in Tarkeshwar, Kathmandu. </span>
                 One Hub.<br />
                 <span className="text-gold">All Sports.</span>{' '}
                 <span className="text-green">One Family.</span>
               </motion.h1>
 
               <motion.p variants={fadeUp} className="text-white/55 text-lg md:text-xl leading-relaxed mb-10 max-w-xl font-light">
-                Football, Basketball, Pickleball, Snooker and Sports Bar, all under one roof in Tarkeshwar, Kathmandu. Professional coaching for ages 4 to 18 with international exposure.
+                Football, Cricket, Basketball, Pickleball, Snooker and Sports Lounge — all under one roof in Tarkeshwar, Kathmandu. Open every day. All skill levels welcome.
               </motion.p>
 
               <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4">
-                <Link to="/enroll" className="btn-primary py-4 px-8">
-                  Start Training <FaArrowRight size={13} />
+                <Link to="/contact" className="btn-primary py-4 px-8">
+                  Book Your Slot <FaArrowRight size={13} />
                 </Link>
-                <Link to="/programs" className="btn-outline py-4 px-8">
-                  Explore Programs
+                <Link to="/sports/football-futsal" className="btn-outline py-4 px-8">
+                  Explore Facilities
                 </Link>
               </motion.div>
             </motion.div>
           </div>
 
-          {/* Quick stats row */}
+          {/* Quick stats row — Hub stats only */}
           <motion.div
             initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
             className="flex flex-wrap gap-8 mt-16 pt-10 border-t border-white/10"
           >
-            {[['370+', 'Daily Students'], ['4+', 'Years Active'], ['6', 'Sports & Facilities'], ['Thailand', 'Partnership']].map(([v, l]) => (
+            {[['6', 'Sports & Facilities'], ['4+', 'Years Active'], ['7 Days', 'Open Per Week'], ['Tarkeshwar', 'Kathmandu']].map(([v, l]) => (
               <div key={l}>
                 <div className="font-heading font-extrabold text-2xl text-gold">{v}</div>
                 <div className="text-white/40 text-xs font-medium mt-0.5 uppercase tracking-wider">{l}</div>
@@ -187,7 +165,7 @@ export default function Home() {
       {/* STATS BAR */}
       <section ref={statsRef} className="py-14 bg-navy">
         <div className="max-w-7xl mx-auto px-5 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-8">
-          {STATS.map(({ end, suffix, label, Icon }) => (
+          {HUB_STATS.map(({ end, suffix, label, Icon }) => (
             <motion.div key={label} className="text-center" initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <Icon className="text-gold text-xl mx-auto mb-3 opacity-70" />
               <div className="font-heading font-extrabold text-4xl text-white mb-1">
@@ -207,12 +185,12 @@ export default function Home() {
             <motion.h2 variants={fadeUp} className="section-title-white">All Sports. One Hub.</motion.h2>
             <motion.div variants={fadeUp} className="gold-divider mx-auto mt-4" />
             <motion.p variants={fadeUp} className="text-white/45 mt-4 max-w-lg mx-auto text-sm leading-relaxed">
-              Kathmandu's only destination for Football, Basketball, Pickleball, Snooker, and a Sports Bar, all under one premium roof.
+              Kathmandu's only destination for Football, Cricket, Basketball, Pickleball, Snooker and a Sports Lounge — all under one premium roof in Tarkeshwar.
             </motion.p>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-            {/* Football – featured wide card */}
+            {/* Football — featured wide card */}
             <motion.div
               className="lg:col-span-2 relative rounded-2xl overflow-hidden bg-gradient-to-br from-navy to-dark border border-white/10 hover:border-gold/30 transition-all duration-300 group min-h-[280px] flex flex-col justify-end p-7"
               initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
@@ -223,15 +201,15 @@ export default function Home() {
                 <span className="badge-gold text-[9px] mb-3">Primary Sport</span>
                 <div className="text-5xl mb-3">⚽</div>
                 <h3 className="font-heading font-extrabold text-white text-2xl mb-1">Football &amp; Futsal</h3>
-                <p className="text-white/50 text-sm mb-5">Nepal's #1 academy &middot; Ages 4–18 &middot; Thailand camps</p>
+                <p className="text-white/50 text-sm mb-5">Ground hire, open play &amp; Academy programs</p>
                 <Link to="/sports/football-futsal"
                   className="inline-flex items-center gap-2 bg-gold text-navy font-heading font-bold text-xs px-5 py-2.5 rounded-xl hover:bg-yellow-400 transition-all">
-                  Explore Academy <FaArrowRight size={10} />
+                  Explore <FaArrowRight size={10} />
                 </Link>
               </div>
             </motion.div>
 
-            {/* Other 4 sports */}
+            {/* Other 5 sports */}
             <div className="lg:col-span-3 grid grid-cols-2 gap-4">
               {SPORTS_SHOWCASE.slice(1).map(({ to, emoji, name, desc }, i) => (
                 <motion.div key={to}
@@ -253,53 +231,76 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTBALL PROGRAMS */}
-      <section className="section-padding bg-light">
+      {/* BOARD OF DIRECTORS */}
+      <section className="section-padding bg-white">
         <div className="container-max">
-          <motion.div className="text-center mb-14" initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}>
-            <motion.span variants={fadeUp} className="section-label mb-2">Football Academy</motion.span>
-            <motion.h2 variants={fadeUp} className="section-title">Training Programs</motion.h2>
+          <motion.div className="text-center mb-12" initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}>
+            <motion.span variants={fadeUp} className="section-label mb-2">Leadership</motion.span>
+            <motion.h2 variants={fadeUp} className="section-title">Board of Directors</motion.h2>
             <motion.div variants={fadeUp} className="gold-divider mx-auto mt-4" />
+            <motion.p variants={fadeUp} className="text-gray-500 mt-4 max-w-xl mx-auto text-sm leading-relaxed">
+              The people behind Tiptoe Sports Hub — guiding our mission to build Kathmandu's finest multi-sport destination in Tarkeshwar.
+            </motion.p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {programs.map((prog, i) => (
-              <motion.div key={prog.id || prog.name} className="card p-7 group"
-                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.07, duration: 0.5 }}>
-                <div className="text-2xl mb-4">{prog.emoji || '⚽'}</div>
-                {prog.ageGroup && <span className="badge-green text-[10px] mb-3">{prog.ageGroup}</span>}
-                <h3 className="font-heading font-semibold text-navy text-lg mt-2 mb-2">{prog.name}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{prog.description}</p>
-                {prog.fee && <p className="text-green font-heading font-semibold text-sm mt-3">{prog.fee}</p>}
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="text-center mt-10">
-            <Link to="/programs" className="btn-outline-navy py-3">
-              View All Programs <FaArrowRight size={12} />
-            </Link>
-          </div>
+          {boardLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="bg-gray-100 rounded-2xl h-72 animate-pulse" />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {boardMembers.map((member, i) => {
+                const initials = (member.name || '').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()
+                return (
+                  <motion.div key={member.id || member.name}
+                    className="bg-white border border-gray-100 rounded-2xl p-7 shadow-sm hover:shadow-md transition-all duration-300 group"
+                    initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
+                    <div className="flex items-center gap-4 mb-5">
+                      {member.photoURL
+                        ? <img
+                            src={member.photoURL}
+                            alt={`${member.name} – ${member.title} at Tiptoe Sports Hub Kathmandu`}
+                            className="w-16 h-16 rounded-full object-cover ring-2 ring-gold/20 shrink-0"
+                            loading="lazy"
+                            onError={e => { e.target.style.display = 'none' }}
+                          />
+                        : <div className="w-16 h-16 rounded-full bg-navy flex items-center justify-center font-heading font-extrabold text-gold text-xl shrink-0">
+                            {initials || '?'}
+                          </div>
+                      }
+                      <div>
+                        <div className="font-heading font-bold text-navy text-base leading-tight">{member.name}</div>
+                        <div className="text-gold text-xs font-semibold uppercase tracking-wider mt-0.5">{member.title}</div>
+                      </div>
+                    </div>
+                    <p className="text-gray-500 text-sm leading-relaxed">{member.bio}</p>
+                  </motion.div>
+                )
+              })}
+            </div>
+          )}
         </div>
       </section>
 
-      {/* WHY US */}
+      {/* WHY TIPTOE — Hub-focused reasons */}
       <section className="section-padding bg-navy">
         <div className="container-max">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}>
               <motion.span variants={fadeUp} className="section-label mb-3">Why Tiptoe</motion.span>
               <motion.h2 variants={fadeUp} className="section-title-white mb-5">
-                Where Nepal's Best<br />Players Are Made
+                Kathmandu's Home<br />For Every Sport
               </motion.h2>
               <motion.div variants={fadeUp} className="gold-divider mb-8" />
               <motion.div variants={stagger} className="space-y-5">
                 {[
-                  { title: 'Professional Coaching Staff',  desc: "Led by Nepal's National Futsal Head Coach and all-time highest international goal scorer." },
-                  { title: 'Based in Kathmandu',          desc: "Conveniently located in Tarkeshwar, the heart of Nepal's sports community." },
-                  { title: 'International Exposure',      desc: 'Annual Thailand training camps, cross-border tournaments, and foreign club trials.' },
-                  { title: 'Multi-Sport Destination',     desc: 'Football, Basketball, Pickleball, Snooker and Sports Bar, everything in one premium hub.' },
+                  { title: '6 Sports Under One Roof',      desc: 'Football, Cricket, Basketball, Pickleball, Snooker and a Sports Lounge — the most complete multi-sport facility in Kathmandu.' },
+                  { title: 'Conveniently in Tarkeshwar',   desc: 'Located in Tarkeshwar, Kathmandu — easily accessible from Ring Road with on-site parking for all visitors.' },
+                  { title: 'Open Every Day',               desc: 'We are open 7 days a week so you can play on your schedule, not ours. Morning to evening across all sports.' },
+                  { title: 'Premium Facilities',           desc: 'Professional-grade courts, tables, pitches and equipment maintained to the highest standard for the best experience.' },
                 ].map(({ title, desc }) => (
                   <motion.div key={title} variants={fadeUp} className="flex gap-4">
                     <div className="w-1.5 h-1.5 rounded-full bg-gold mt-2.5 shrink-0" />
@@ -318,42 +319,25 @@ export default function Home() {
               </motion.div>
             </motion.div>
 
-            {/* Featured Coaches — live from Firestore, falls back to defaults */}
-            <div className="space-y-5">
-              {coaches.map((coach, i) => {
-                const parts = (coach.name || '').split(' ')
-                const initials = (parts[0]?.[0] || '') + (parts[1]?.[0] || '')
-                const points = Array.isArray(coach.achievements) ? coach.achievements.slice(0, 3) : []
-                return (
-                <motion.div key={coach.id || coach.name}
-                  className="bg-white/5 border border-white/10 hover:border-gold/25 rounded-xl p-6 transition-all duration-300"
-                  initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }} transition={{ delay: i * 0.15 }}>
-                  <div className="flex items-start gap-4">
-                    {coach.photoURL
-                      ? <img src={coach.photoURL} alt={coach.name} className="w-12 h-12 rounded-lg object-cover shrink-0" onError={e => { e.target.style.display='none' }} />
-                      : <div className="w-12 h-12 rounded-lg bg-gold flex items-center justify-center font-heading font-extrabold text-navy text-lg shrink-0">{initials.toUpperCase() || 'C'}</div>
-                    }
-                    <div>
-                      <div className="text-white font-heading font-semibold text-base">{coach.name}</div>
-                      <div className="text-gold text-xs font-medium uppercase tracking-wider mt-0.5 mb-3">{coach.role}</div>
-                      <ul className="space-y-1.5">
-                        {points.map(p => (
-                          <li key={p} className="flex items-start gap-2 text-white/45 text-xs leading-relaxed">
-                            <span className="text-gold shrink-0 mt-0.5">–</span> {p}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
+            {/* Hub facility highlights */}
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { emoji: '⚽', label: 'Football Ground', sub: 'Full-size & futsal' },
+                { emoji: '🏏', label: 'Cricket Nets', sub: 'Batting & bowling' },
+                { emoji: '🏀', label: 'Basketball Courts', sub: 'Indoor & outdoor' },
+                { emoji: '🎾', label: 'Pickleball Courts', sub: "Nepal's finest" },
+                { emoji: '🎱', label: 'Snooker Tables', sub: 'Pro-grade tables' },
+                { emoji: '📺', label: 'Sports Lounge', sub: 'Live screenings' },
+              ].map(({ emoji, label, sub }, i) => (
+                <motion.div key={label}
+                  className="bg-white/5 border border-white/10 hover:border-gold/25 rounded-xl p-4 text-center transition-all duration-300"
+                  initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
+                  <div className="text-3xl mb-2">{emoji}</div>
+                  <div className="text-white font-heading font-semibold text-sm">{label}</div>
+                  <div className="text-white/35 text-xs mt-0.5">{sub}</div>
                 </motion.div>
-                )
-              })}
-              <div className="text-center pt-2">
-                <Link to="/coaches" className="text-gold hover:text-yellow-300 text-sm font-semibold transition-colors inline-flex items-center gap-1.5">
-                  Meet all coaches <FaArrowRight size={11} />
-                </Link>
-              </div>
+              ))}
             </div>
           </div>
         </div>
@@ -377,7 +361,7 @@ export default function Home() {
                 <motion.div key={ev.id} className="card overflow-hidden group"
                   initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
                   {ev.bannerURL
-                    ? <img src={ev.bannerURL} alt={ev.title} className="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500" />
+                    ? <img src={ev.bannerURL} alt={ev.title} className="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                     : <div className="w-full h-44 bg-navy flex items-center justify-center"><GiSoccerBall className="text-gold text-5xl opacity-20" /></div>
                   }
                   <div className="p-5">
@@ -398,7 +382,7 @@ export default function Home() {
           <div className="container-max">
             <div className="flex items-end justify-between mb-10">
               <div>
-                <span className="section-label mb-1.5">Academy Life</span>
+                <span className="section-label mb-1.5">At Tiptoe Sports Hub</span>
                 <h2 className="section-title">Our Gallery</h2>
               </div>
               <Link to="/gallery" className="text-navy text-sm font-semibold hover:text-gold transition-colors inline-flex items-center gap-1.5">
@@ -409,7 +393,7 @@ export default function Home() {
               {gallery.slice(0, 6).map((img, i) => (
                 <motion.div key={img.id} className="aspect-square rounded-xl overflow-hidden bg-gray-100"
                   initial={{ opacity: 0, scale: 0.96 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
-                  <img src={img.url} alt={img.caption || img.category || 'Gallery'} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+                  <img src={img.url} alt={img.alt || img.caption || 'Tiptoe Sports Hub Kathmandu'} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
                 </motion.div>
               ))}
             </div>
@@ -421,8 +405,8 @@ export default function Home() {
       <section className="section-padding bg-dark overflow-hidden">
         <div className="container-max">
           <div className="text-center mb-12">
-            <span className="section-label mb-2">What Families Say</span>
-            <h2 className="section-title-white">Trusted by 370+ Students</h2>
+            <span className="section-label mb-2">Member Stories</span>
+            <h2 className="section-title-white">Trusted by Kathmandu</h2>
             <div className="gold-divider mx-auto mt-4" />
           </div>
 
@@ -438,7 +422,7 @@ export default function Home() {
 
           <div className="text-center mt-10">
             <Link to="/testimonials" className="text-gold hover:text-yellow-300 text-sm font-semibold transition-colors inline-flex items-center gap-2">
-              Read all testimonials <FaArrowRight size={11} />
+              Read all reviews <FaArrowRight size={11} />
             </Link>
           </div>
         </div>
@@ -452,11 +436,11 @@ export default function Home() {
               Ready to Join<br />Kathmandu's Best Sports Hub?
             </motion.h2>
             <motion.p variants={fadeUp} className="text-white/70 text-lg max-w-xl mx-auto mb-10">
-              Football, Basketball, Pickleball, Snooker and Sports Bar, all at Tarkeshwar, Kathmandu. Ages 4 to 18, all skill levels welcome.
+              Six sports, premium facilities, open every day at Tarkeshwar, Kathmandu. Walk in or book your slot today.
             </motion.p>
             <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/enroll" className="btn-primary py-4 px-10">Enroll Now <FaArrowRight size={13} /></Link>
-              <Link to="/contact" className="btn-outline py-4 px-10">Get in Touch</Link>
+              <Link to="/contact" className="btn-primary py-4 px-10">Book Your Slot <FaArrowRight size={13} /></Link>
+              <Link to="/pricing"  className="btn-outline py-4 px-10">View Pricing</Link>
             </motion.div>
           </motion.div>
         </div>
@@ -478,7 +462,7 @@ function AnimatedTestimonial({ testimonial }) {
       <p className="text-white/75 text-lg md:text-xl leading-relaxed font-light mb-8 italic">"{testimonial.text}"</p>
       <div className="flex items-center justify-center gap-3">
         {testimonial.photoURL
-          ? <img src={testimonial.photoURL} alt={testimonial.name} className="w-10 h-10 rounded-full object-cover ring-2 ring-gold/30" />
+          ? <img src={testimonial.photoURL} alt={testimonial.name} className="w-10 h-10 rounded-full object-cover ring-2 ring-gold/30" loading="lazy" />
           : <div className="w-10 h-10 rounded-full bg-navy border-2 border-gold/30 flex items-center justify-center text-gold font-heading font-bold text-sm">{testimonial.name?.[0]}</div>
         }
         <div className="text-left">

@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/layout/Layout'
 import ProtectedRoute from './components/layout/ProtectedRoute'
 import AdminLayout from './pages/admin/AdminLayout'
@@ -35,6 +35,7 @@ import ManageInquiries from './pages/admin/ManageInquiries'
 import AdminSettings from './pages/admin/AdminSettings'
 import ManagePricing from './pages/admin/ManagePricing'
 import ManageFAQ from './pages/admin/ManageFAQ'
+import ManageBoardMembers from './pages/admin/ManageBoardMembers'
 
 export default function App() {
   return (
@@ -54,6 +55,8 @@ export default function App() {
         <Route path="contact" element={<Contact />} />
         <Route path="enroll" element={<Enroll />} />
         <Route path="sports/:slug" element={<SportPage />} />
+        {/* Redirect old sports-bar slug to new sports-lounge */}
+        <Route path="sports/sports-bar" element={<Navigate to="/sports/sports-lounge" replace />} />
         <Route path="pricing" element={<Pricing />} />
         <Route path="faq" element={<FAQ />} />
       </Route>
@@ -74,6 +77,7 @@ export default function App() {
           <Route path="inquiries" element={<ManageInquiries />} />
           <Route path="pricing" element={<ManagePricing />} />
           <Route path="faq" element={<ManageFAQ />} />
+          <Route path="board-members" element={<ManageBoardMembers />} />
           <Route path="settings" element={<AdminSettings />} />
         </Route>
       </Route>

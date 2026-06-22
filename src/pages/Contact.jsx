@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -9,7 +9,7 @@ import { useSite } from '../contexts/SiteContext'
 import SEOHead from '../components/SEOHead'
 import { sendContactEmail } from '../utils/emailNotification'
 
-const SPORT_OPTIONS = ['Football', 'Futsal', 'Cricket', 'Basketball', 'Pickleball', 'Snooker', 'Sports Bar', 'Not Sure Yet']
+const SPORT_OPTIONS = ['Football', 'Futsal', 'Cricket', 'Basketball', 'Pickleball', 'Snooker', 'Sports Lounge', 'Not Sure Yet']
 
 export default function Contact() {
   const { phone, email, address, mapsLink, mapsEmbedURL, socialLinks } = useSite()

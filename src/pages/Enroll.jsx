@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
@@ -10,7 +10,7 @@ import { inquiriesCol } from '../firebase/collections'
 import SEOHead from '../components/SEOHead'
 import { sendEnrollmentEmail } from '../utils/emailNotification'
 
-const SPORTS = ['Football', 'Futsal', 'Cricket', 'Basketball', 'Pickleball', 'Snooker', 'Sports Bar', 'Not Sure Yet']
+const SPORTS = ['Football', 'Futsal', 'Cricket', 'Basketball', 'Pickleball', 'Snooker', 'Sports Lounge', 'Not Sure Yet']
 const AGE_GROUPS = ['Age 4–10', 'Age 11–15', 'Age 16–18', 'All Ages']
 const SCHEDULES = ['Morning (5:00–7:00 AM)', 'Afternoon (3:00–5:00 PM)', 'Evening (5:00–7:00 PM)', 'Weekend Only']
 

@@ -18,7 +18,7 @@ const HUB_NAV = [
   { to: '/sports/basketball',      emoji: '🏀', label: 'Basketball',        desc: 'Courts & professional coaching' },
   { to: '/sports/pickleball',      emoji: '🎾', label: 'Pickleball',        desc: "Nepal's premier pickleball courts" },
   { to: '/sports/snooker',         emoji: '🎱', label: 'Snooker',           desc: 'Premium club & professional tables' },
-  { to: '/sports/sports-bar',      emoji: '🍹', label: 'Sports Bar',        desc: 'Live sports, drinks & great vibes' },
+  { to: '/sports/sports-lounge',   emoji: '📺', label: 'Sports Lounge',     desc: 'Live sports, food & great vibes' },
 ]
 
 function DropdownMenu({ items, header, subheader, ctaLabel, ctaTo, onMouseEnter, onMouseLeave, wide }) {

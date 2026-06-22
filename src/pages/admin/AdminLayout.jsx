@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   MdDashboard, MdSportsScore, MdEventNote, MdSettings, MdLogout, MdMenu, MdClose,
   MdPeople, MdSchedule, MdPhotoLibrary, MdArticle, MdStar, MdInbox, MdSportsTennis,
-  MdAttachMoney, MdQuestionAnswer,
+  MdAttachMoney, MdQuestionAnswer, MdGroups,
 } from 'react-icons/md'
 import { useAuth } from '../../contexts/AuthContext'
 import toast from 'react-hot-toast'
@@ -22,6 +22,7 @@ const NAV_ITEMS = [
   { to: '/admin/inquiries', label: 'Inquiries', Icon: MdInbox },
   { to: '/admin/pricing', label: 'Pricing', Icon: MdAttachMoney },
   { to: '/admin/faq', label: 'FAQ', Icon: MdQuestionAnswer },
+  { to: '/admin/board-members', label: 'Board of Directors', Icon: MdGroups },
   { to: '/admin/settings', label: 'Settings', Icon: MdSettings },
 ]
 

@@ -1,20 +1,21 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { FaArrowRight, FaStar, FaTrophy, FaUsers, FaGlobe, FaCheckCircle } from 'react-icons/fa'
+import { FaArrowRight, FaTrophy, FaUsers, FaCalendarAlt, FaCheckCircle } from 'react-icons/fa'
+import { MdSportsScore } from 'react-icons/md'
 import { GiSoccerBall } from 'react-icons/gi'
 import SEOHead, { BASE_URL } from '../components/SEOHead'
 
 const MILESTONES = [
-  { year: '2021', title: 'Founded', desc: "Tiptoe Sports Hub was established in Tarkeshwar, Kathmandu with a vision to nurture Nepal's football talent from the grassroots up." },
-  { year: '2023', title: 'National Recognition', desc: 'Rapid enrollment growth to 370+ daily students, establishing Tiptoe as the country\'s most trusted and recognized football academy.' },
-  { year: '2025', title: 'Thailand Partnership', desc: 'We forged an official partnership with Silie Sports Club, Thailand, opening real international doors and pathways for our top students.' },
+  { year: '2021', title: 'Founded', desc: 'Tiptoe Sports Hub was established in Tarkeshwar, Kathmandu with a vision to build a world-class multi-sport destination accessible to everyone in the city.' },
+  { year: '2023', title: 'Full Multi-Sport Launch', desc: 'Expanded to six sports — Football, Cricket, Basketball, Pickleball, Snooker, and a Sports Lounge — becoming Kathmandu\'s most complete sports facility.' },
+  { year: '2025', title: 'Community Milestone', desc: 'Reached over 1,000 monthly visitors across all sports, cementing our position as the go-to sports and leisure destination in Tarkeshwar, Kathmandu.' },
 ]
 
 const STATS = [
-  { value: '370+', label: 'Students Daily',  Icon: FaUsers },
-  { value: '6+',   label: 'Programs',          Icon: FaGlobe },
-  { value: '4+',   label: 'Years Active',     Icon: FaTrophy },
-  { value: '2',    label: "Int'l Coaches",    Icon: FaStar },
+  { value: '6',    label: 'Sports & Facilities', Icon: MdSportsScore },
+  { value: '4+',   label: 'Years Active',        Icon: FaTrophy },
+  { value: '7',    label: 'Days Open Per Week',  Icon: FaCalendarAlt },
+  { value: '1000+',label: 'Monthly Visitors',    Icon: FaUsers },
 ]
 
 const fadeUp = { hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } } }
@@ -34,7 +35,7 @@ export default function About() {
           url: BASE_URL,
           logo: `${BASE_URL}/logo.jpeg`,
           foundingDate: '2021',
-          description: "Nepal's premier multi-sport destination in Tarkeshwar, Kathmandu. Football, Cricket, Basketball, Pickleball, Snooker and Sports Bar. Home of Tiptoe Sports Academy.",
+          description: "Nepal's premier multi-sport destination in Tarkeshwar, Kathmandu. Football, Cricket, Basketball, Pickleball, Snooker and Sports Lounge. Home of Tiptoe Sports Academy.",
           address: {
             '@type': 'PostalAddress',
             streetAddress: 'Tarkeshwar',
@@ -59,7 +60,7 @@ export default function About() {
               About Tiptoe<br /><span className="text-gold">Sports Hub</span>
             </motion.h1>
             <motion.p variants={fadeUp} className="text-white/60 text-lg max-w-2xl mx-auto">
-              Kathmandu's premier multi-sport destination. Football, Cricket, Basketball, Pickleball, Snooker and Sports Bar. Home of Tiptoe Sports Academy.
+              Kathmandu's premier multi-sport destination in Tarkeshwar. Football, Cricket, Basketball, Pickleball, Snooker and a Sports Lounge — all under one roof. Open 7 days a week.
             </motion.p>
           </motion.div>
         </div>
@@ -86,13 +87,13 @@ export default function About() {
             <h2 className="section-title mb-2">Welcome to Tiptoe Sports Hub</h2>
             <div className="gold-divider mb-7" />
             <div className="space-y-4 text-gray-500 text-sm leading-relaxed">
-              <p><strong className="text-navy">Tiptoe Sports Hub</strong> is Kathmandu's premier multi-sport destination, located in Tarkeshwar. We are a complete sports community offering Football, Cricket, Basketball, Pickleball, Snooker, and a Sports Bar all under one roof.</p>
-              <p>Within the Hub operates <strong className="text-navy">Tiptoe Sports Academy</strong>, Nepal's #1 private Football &amp; Futsal Academy with 370+ students training daily. The Academy focuses exclusively on youth football and futsal development, with structured programs from ages 4 to 18 and international exposure through Thailand training camps.</p>
-              <p>Whether you are a young athlete joining the Academy, a weekend cricketer booking a ground, or a sports fan catching the big game at our Sports Bar, Tiptoe Sports Hub is your home for sports in Kathmandu.</p>
+              <p><strong className="text-navy">Tiptoe Sports Hub</strong> is Kathmandu's premier multi-sport destination, located in Tarkeshwar. We are a complete sports community offering Football, Cricket, Basketball, Pickleball, Snooker, and a Sports Lounge — all under one roof, open seven days a week.</p>
+              <p>Our six facilities cater to every kind of visitor: the competitive athlete seeking elite coaching, the casual player booking a court for the evening, the family looking for a fun weekend out, and the sports fan catching a live match in our Sports Lounge.</p>
+              <p>Tiptoe Sports Hub is also home to <strong className="text-navy">Tiptoe Sports Academy</strong> — an elite youth football and futsal development programme. <Link to="/academy" className="text-navy font-semibold hover:text-gold transition-colors">Learn more about the Academy →</Link></p>
             </div>
             <div className="flex flex-wrap gap-3 mt-8">
-              <Link to="/enroll" className="btn-primary text-sm">
-                Join the Academy <FaArrowRight size={12} />
+              <Link to="/contact" className="btn-primary text-sm">
+                Book Your Slot <FaArrowRight size={12} />
               </Link>
               <Link to="/sports/football-futsal" className="btn-outline text-sm">
                 Explore All Sports <FaArrowRight size={12} />

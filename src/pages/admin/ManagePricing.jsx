@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+﻿import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import toast from 'react-hot-toast'
 import { MdAdd, MdEdit, MdDelete, MdClose, MdAttachMoney } from 'react-icons/md'
@@ -6,7 +6,7 @@ import { query, orderBy } from 'firebase/firestore'
 import { pricingCol } from '../../firebase/collections'
 import { useCollection, addDocument, updateDocument, deleteDocument } from '../../hooks/useFirestore'
 
-const SPORTS = ['Football', 'Cricket', 'Basketball', 'Pickleball', 'Snooker', 'Sports Bar', 'General']
+const SPORTS = ['Football', 'Cricket', 'Basketball', 'Pickleball', 'Snooker', 'Sports Lounge', 'General']
 const PERIODS = ['/month', '/session', '/hour', '/week', '/day', 'Custom']
 const BADGES = ['', 'Popular', 'Best Value', 'Trending', 'New', 'Members Only']
 
@@ -109,7 +109,7 @@ const SPORT_COLORS = {
   Basketball: 'bg-orange-100 text-orange-700',
   Pickleball: 'bg-emerald-100 text-emerald-700',
   Snooker: 'bg-purple-100 text-purple-700',
-  'Sports Bar': 'bg-amber-100 text-amber-700',
+  'Sports Lounge': 'bg-amber-100 text-amber-700',
   General: 'bg-gray-100 text-gray-600',
 }
 
