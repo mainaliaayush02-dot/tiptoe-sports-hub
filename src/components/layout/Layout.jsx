@@ -11,7 +11,7 @@ export default function Layout() {
     <div className="flex flex-col min-h-screen">
       <ScrollToTop />
       <Navbar />
-      <AnimatePresence mode="popLayout">
+      <AnimatePresence mode="sync">
         <motion.main
           key={location.pathname}
           className="flex-1"

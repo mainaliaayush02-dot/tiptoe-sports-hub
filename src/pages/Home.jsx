@@ -148,10 +148,13 @@ export default function Home() {
           </motion.div>
         </div>
 
-        <motion.a href="#sports-section" className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer"
-          animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}>
+        <motion.button
+          onClick={() => document.getElementById('board-section')?.scrollIntoView({ behavior: 'smooth' })}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer"
+          animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}
+          aria-label="Scroll down">
           <FaChevronDown className="text-white/25 text-lg" />
-        </motion.a>
+        </motion.button>
       </section>
 
       {/* STATS BAR */}
@@ -170,7 +173,7 @@ export default function Home() {
       </section>
 
       {/* BOARD OF DIRECTORS */}
-      <section className="section-padding bg-white">
+      <section id="board-section" className="section-padding bg-white">
         <div className="container-max">
           <motion.div className="text-center mb-12" initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger}>
             <motion.span variants={fadeUp} className="section-label mb-2">Leadership</motion.span>
