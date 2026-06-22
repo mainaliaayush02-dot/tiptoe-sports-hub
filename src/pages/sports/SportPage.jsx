@@ -28,6 +28,7 @@ const DEFAULT_SPORTS = {
     seoDescription: "Nepal's #1 football and futsal academy in Tarkeshwar, Kathmandu. Programs for ages 4–18, professional coaches, and international Thailand training camps.",
     color: '#06145F',
     badge: 'Primary Sport',
+    imageURL: '/tip.jpg',
   },
   'cricket': {
     name: 'Cricket',
@@ -241,10 +242,23 @@ export default function SportPage() {
 
       {/* HERO */}
       <section className="relative min-h-[60vh] flex items-end bg-dark overflow-hidden">
-        <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at top right, ${sport.color}cc 0%, #030A2E 65%)` }} />
-        {sport.imageURL && (
-          <img src={sport.imageURL} alt={sport.name}
-            className="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-luminosity" />
+        {sport.imageURL ? (
+          <>
+            {/* Full-bleed photo when an image is available */}
+            <img
+              src={sport.imageURL}
+              alt={`${sport.name} at Tiptoe Sports Hub, Tarkeshwar Kathmandu`}
+              className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none"
+              style={{ opacity: 0.42 }}
+              loading="eager"
+              fetchPriority="high"
+            />
+            <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #030A2E 38%, #030A2Ecc 55%, #030A2E55 75%, transparent 100%)' }} />
+            <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #030A2Eaa 0%, transparent 35%, transparent 65%, #030A2Ecc 100%)' }} />
+          </>
+        ) : (
+          /* Colour gradient when no image */
+          <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at top right, ${sport.color}cc 0%, #030A2E 65%)` }} />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent" />
 
