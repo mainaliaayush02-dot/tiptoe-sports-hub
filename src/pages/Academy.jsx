@@ -111,6 +111,12 @@ export default function Academy() {
               <Link to="/programs" className="btn-outline border-white/20 text-white hover:bg-white/10">
                 View Programs <FaArrowRight size={12} />
               </Link>
+              <Link to="/coaches" className="btn-outline border-white/20 text-white hover:bg-white/10">
+                Meet Coaches <FaArrowRight size={12} />
+              </Link>
+              <Link to="/schedule" className="btn-outline border-white/20 text-white hover:bg-white/10">
+                See Schedule <FaArrowRight size={12} />
+              </Link>
             </motion.div>
           </motion.div>
         </div>
@@ -338,9 +344,26 @@ export default function Academy() {
               <Link to="/enroll" className="btn-primary">
                 Enroll Now <FaArrowRight size={12} />
               </Link>
+              <Link to="/pricing" className="btn-outline border-white/20 text-white hover:bg-white/10">
+                View Pricing <FaArrowRight size={12} />
+              </Link>
               <Link to="/contact" className="btn-outline border-white/20 text-white hover:bg-white/10">
                 Contact Us <FaArrowRight size={12} />
               </Link>
+            </div>
+
+            {/* Internal link cluster for SEO */}
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-8">
+              {[
+                { to: '/coaches',  label: 'Meet Our Coaches' },
+                { to: '/schedule', label: 'Training Schedule' },
+                { to: '/programs', label: 'All Programs' },
+                { to: '/faq',      label: 'FAQs' },
+              ].map(({ to, label }) => (
+                <Link key={to} to={to} className="text-white/40 hover:text-gold text-sm transition-colors underline underline-offset-2">
+                  {label}
+                </Link>
+              ))}
             </div>
           </motion.div>
         </div>

@@ -123,6 +123,8 @@ export default function Home() {
           alt="Tiptoe Sports Hub training ground in Tarkeshwar, Kathmandu"
           className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none"
           style={{ opacity: 0.45 }}
+          loading="eager"
+          fetchPriority="high"
         />
         {/* Strong dark gradient left side (covers text area) fading to transparent right */}
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #030A2E 38%, #030A2Ecc 55%, #030A2E55 75%, transparent 100%)' }} />

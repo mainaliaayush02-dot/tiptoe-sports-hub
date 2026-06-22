@@ -80,7 +80,7 @@ export default function Blog() {
                 {posts.map((post, i) => (
                   <motion.article key={post.id} className="card overflow-hidden flex flex-col" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }}>
                     {post.imageURL
-                      ? <img src={post.imageURL} alt={post.title} className="w-full h-48 object-cover" />
+                      ? <img src={post.imageURL} alt={`${post.title} – Tiptoe Sports Hub Kathmandu`} className="w-full h-48 object-cover" loading="lazy" />
                       : <div className="w-full h-48 bg-gradient-to-br from-navy to-green flex items-center justify-center"><GiSoccerBall className="text-7xl text-white/20" /></div>
                     }
                     <div className="p-6 flex flex-col flex-1">

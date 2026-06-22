@@ -162,8 +162,9 @@ export default function Coaches() {
                       {coach.photoURL && (
                         <img
                           src={coach.photoURL}
-                          alt={coach.name}
+                          alt={`${coach.name}${coach.role ? ` – ${coach.role}` : ''} at Tiptoe Sports Academy, Kathmandu Nepal`}
                           className="absolute inset-0 w-full h-full object-cover"
+                          loading="lazy"
                           onError={e => e.target.style.display = 'none'}
                         />
                       )}
@@ -228,8 +229,9 @@ export default function Coaches() {
                       {coach.photoURL && (
                         <img
                           src={coach.photoURL}
-                          alt={coach.name}
+                          alt={`${coach.name}${coach.role ? ` – ${coach.role}` : ''} at Tiptoe Sports Academy, Kathmandu Nepal`}
                           className="absolute inset-0 w-24 h-24 rounded-full object-cover ring-4 ring-gold/30"
+                          loading="lazy"
                           onError={e => e.target.style.display = 'none'}
                         />
                       )}
