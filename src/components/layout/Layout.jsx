@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import WhatsAppButton from '../WhatsAppButton'
@@ -23,6 +24,7 @@ export default function Layout() {
       <Footer />
       <WhatsAppButton />
       <Analytics />
+      <SpeedInsights />
     </div>
   )
 }
