@@ -1,5 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { Analytics } from '@vercel/analytics/react'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import WhatsAppButton from '../WhatsAppButton'
@@ -21,6 +22,7 @@ export default function Layout() {
       </motion.main>
       <Footer />
       <WhatsAppButton />
+      <Analytics />
     </div>
   )
 }
