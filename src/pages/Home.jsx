@@ -84,7 +84,7 @@ export default function Home() {
     <>
       <SEOHead
         title="Multi-Sport Hub & Facilities in Kathmandu"
-        description="Kathmandu's premier sports facility in Tarkeshwar. Football, Cricket, Basketball, Pickleball, Snooker and Sports Lounge. Nepal's #1 football academy. Open 7 days."
+        description="Six sports in Tarkeshwar, Kathmandu. Football, Cricket, Basketball, Pickleball, Snooker & Sports Lounge. Nepal's #1 football academy. Open daily."
         path="/"
       />
 
@@ -119,8 +119,11 @@ export default function Home() {
                 <span className="text-green">One Family.</span>
               </motion.h1>
 
-              <motion.p variants={fadeUp} className="text-white/55 text-lg md:text-xl leading-relaxed mb-10 max-w-xl font-light">
-                Football, Cricket, Basketball, Pickleball, Snooker and Sports Lounge — all under one roof in Tarkeshwar, Kathmandu. Open every day. All skill levels welcome.
+              <motion.p variants={fadeUp} className="text-white/55 text-lg md:text-xl leading-relaxed mb-6 max-w-xl font-light">
+                Tiptoe Sports Hub brings Football, Cricket, Basketball, Pickleball, Snooker and a Sports Lounge together under one roof in Tarkeshwar, Kathmandu. Open seven days a week for players and families of all skill levels.
+              </motion.p>
+              <motion.p variants={fadeUp} className="text-white/40 text-base leading-relaxed mb-10 max-w-xl font-light">
+                Whether you are booking a football ground, a cricket net, a basketball court or a pickleball session — or simply joining friends in the Sports Lounge for a live match — Tiptoe Sports Hub is Kathmandu's home for sport.
               </motion.p>
 
               <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4">
@@ -169,6 +172,46 @@ export default function Home() {
               <div className="text-white/45 text-xs font-medium uppercase tracking-widest">{label}</div>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      {/* SIX SPORTS — static content section, always visible to crawlers */}
+      <section className="section-padding bg-white">
+        <div className="container-max">
+          <div className="text-center mb-10">
+            <span className="section-label mb-2">Our Facilities</span>
+            <h2 className="section-title">Six Sports. One Hub in Tarkeshwar.</h2>
+            <div className="gold-divider mx-auto mt-4" />
+            <p className="text-gray-500 mt-4 max-w-2xl mx-auto text-sm leading-relaxed">
+              Tiptoe Sports Hub is Kathmandu's most complete multi-sport destination. All six of our facilities are at a single address in Tarakeshwar, 44600 Kathmandu — so you can switch between sports, bring the whole family, or simply enjoy a day out at the hub.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { emoji: '⚽', name: 'Football & Futsal', to: '/sports/football-futsal',
+                desc: 'A full-size outdoor football ground and an indoor futsal court, operated by Tiptoe Sports Academy — Nepal\'s #1 youth football programme. Professional national-level coaching for ages 4 to 18, with structured age-group sessions, morning and afternoon slots, and annual Thailand international training camps. Ground hire available for private matches and tournaments.' },
+              { emoji: '🏏', name: 'Cricket Ground', to: '/sports/cricket',
+                desc: 'A professional-grade cricket ground with four batting net lanes, a bowling machine, and full changing room facilities. Available for ground hire by the session, net practice by the hour, or monthly coaching programmes for youth and adults. One of the best cricket facilities in Tarkeshwar, Kathmandu, open daily from 6 AM.' },
+              { emoji: '🏀', name: 'Basketball Courts', to: '/sports/basketball',
+                desc: 'Full-size basketball courts with a scoreboard, spectator seating, and locker rooms. Open for casual walk-in play, monthly memberships with unlimited access, and structured coached sessions three times a week. Team packages available for clubs and corporate groups looking for regular court time in Kathmandu.' },
+              { emoji: '🎾', name: 'Pickleball Courts', to: '/sports/pickleball',
+                desc: 'Nepal\'s premier dedicated pickleball courts, with professional lighting, equipment rental and beginner-friendly coaching sessions every week. Pickleball is the fastest-growing racket sport in the world and Tiptoe Sports Hub is one of the only venues offering dedicated courts and regular tournaments in Kathmandu.' },
+              { emoji: '🎱', name: 'Snooker Club', to: '/sports/snooker',
+                desc: 'A premium snooker club with professional-grade tables, tournament-standard lighting, a relaxed lounge area and full cue and chalk service. Available for table hire by the hour, monthly memberships with unlimited play, and VIP memberships with priority booking and exclusive event access. Open daily until 11 PM.' },
+              { emoji: '📺', name: 'Sports Lounge', to: '/sports/sports-lounge',
+                desc: 'The hub\'s social heart — a comfortable sports lounge with multiple large HD screens broadcasting live international sports: football, cricket, NBA, and more. Great food and beverages, comfortable seating, and a match-day atmosphere that brings the community together. Walk-in, VIP tables, and private event hire available for groups up to 50.' },
+            ].map(({ emoji, name, to, desc }) => (
+              <motion.div key={name} className="bg-light rounded-2xl p-6 flex flex-col"
+                initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+                <div className="text-3xl mb-3">{emoji}</div>
+                <h3 className="font-heading font-bold text-navy text-lg mb-2">{name}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed flex-1 mb-4">{desc}</p>
+                <Link to={to} className="text-navy font-semibold text-sm hover:text-gold transition-colors inline-flex items-center gap-1.5">
+                  Learn more <FaArrowRight size={10} />
+                </Link>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -368,6 +411,30 @@ export default function Home() {
               Read all reviews <FaArrowRight size={11} />
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* VISIT US */}
+      <section className="section-padding bg-light">
+        <div className="container-max max-w-3xl mx-auto text-center">
+          <span className="section-label mb-2">Find Us</span>
+          <h2 className="section-title mb-4">Visit Tiptoe Sports Hub</h2>
+          <div className="gold-divider mx-auto mb-6" />
+          <p className="text-gray-500 text-base leading-relaxed mb-4">
+            Tiptoe Sports Hub is located in <strong className="text-navy">Tarakeshwar, Kathmandu 44600, Nepal</strong>. We are open <strong className="text-navy">every day from 6 AM to 9 PM</strong> — including weekends and public holidays. Our facility is easily accessible from Ring Road with on-site parking for two-wheelers and four-wheelers.
+          </p>
+          <p className="text-gray-500 text-base leading-relaxed mb-6">
+            To book a court, reserve a ground slot, enroll in the football academy, or simply ask a question, call us on <a href="tel:+977-984-1416893" className="text-navy font-semibold hover:text-gold transition-colors">+977-984-1416893</a> or <a href="tel:+977-970-7079773" className="text-navy font-semibold hover:text-gold transition-colors">+977-970-7079773</a>. You can also reach us by WhatsApp or use the contact form on our <Link to="/contact" className="text-navy font-semibold hover:text-gold transition-colors">Contact page</Link>.
+          </p>
+          <address className="not-italic text-gray-400 text-sm mb-6">
+            Tiptoe Sports Hub &nbsp;·&nbsp; Tarakeshwar, Kathmandu 44600, Nepal<br />
+            Phone: +977-984-1416893 &nbsp;·&nbsp; +977-970-7079773<br />
+            Email: tiptoesportshub@gmail.com
+          </address>
+          <a href="https://maps.app.goo.gl/GXdjUV3qQX4Rm61o7" target="_blank" rel="noopener noreferrer"
+            className="btn-primary inline-flex">
+            Get Directions <FaArrowRight size={12} />
+          </a>
         </div>
       </section>
 
