@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
-import { FaArrowRight, FaCheckCircle, FaFutbol } from 'react-icons/fa'
+import { FaArrowRight, FaCheckCircle } from 'react-icons/fa'
 import { GiSoccerBall } from 'react-icons/gi'
 import { addDocument } from '../hooks/useFirestore'
 import { inquiriesCol } from '../firebase/collections'
@@ -51,7 +51,7 @@ export default function Enroll() {
                 <li>✓ Complete enrollment &amp; start training!</li>
               </ul>
             </div>
-            <a href="/" className="btn-primary justify-center">Back to Home <FaArrowRight /></a>
+            <Link to="/" className="btn-primary justify-center">Back to Home <FaArrowRight /></Link>
           </motion.div>
         </div>
       </>
