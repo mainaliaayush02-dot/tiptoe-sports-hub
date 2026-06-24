@@ -177,46 +177,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SIX SPORTS — static content section, always visible to crawlers */}
-      <section className="section-padding bg-white">
-        <div className="container-max">
-          <div className="text-center mb-10">
-            <span className="section-label mb-2">Our Facilities</span>
-            <h2 className="section-title">Six Sports. One Hub in Tarakeshwar.</h2>
-            <div className="gold-divider mx-auto mt-4" />
-            <p className="text-gray-500 mt-4 max-w-2xl mx-auto text-sm leading-relaxed">
-              Tiptoe Sports Hub is Kathmandu's most complete multi-sport destination. All six of our facilities are at a single address in Tarakeshwar, 44600 Kathmandu — so you can switch between sports, bring the whole family, or simply enjoy a day out at the hub.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { emoji: '⚽', name: 'Football & Futsal', to: '/sports/football-futsal',
-                desc: 'A full-size outdoor football ground and an indoor futsal court, operated by Tiptoe Sports Academy — Nepal\'s #1 youth football programme. Professional national-level coaching for ages 4 to 18, with structured age-group sessions, morning and afternoon slots, and annual Thailand international training camps. Ground hire available for private matches and tournaments.' },
-              { emoji: '🏏', name: 'Cricket Ground', to: '/sports/cricket',
-                desc: 'A professional-grade cricket ground with four batting net lanes, a bowling machine, and full changing room facilities. Available for ground hire by the session, net practice by the hour, or monthly coaching programmes for youth and adults. One of the best cricket facilities in Tarakeshwar, Kathmandu, open daily from 6 AM.' },
-              { emoji: '🏀', name: 'Basketball Courts', to: '/sports/basketball',
-                desc: 'Full-size basketball courts with a scoreboard, spectator seating, and locker rooms. Open for casual walk-in play, monthly memberships with unlimited access, and structured coached sessions three times a week. Team packages available for clubs and corporate groups looking for regular court time in Kathmandu.' },
-              { emoji: '🎾', name: 'Pickleball Courts', to: '/sports/pickleball',
-                desc: 'Nepal\'s premier dedicated pickleball courts, with professional lighting, equipment rental and beginner-friendly coaching sessions every week. Pickleball is the fastest-growing racket sport in the world and Tiptoe Sports Hub is one of the only venues offering dedicated courts and regular tournaments in Kathmandu.' },
-              { emoji: '🎱', name: 'Snooker Club', to: '/sports/snooker',
-                desc: 'A premium snooker club with professional-grade tables, tournament-standard lighting, a relaxed lounge area and full cue and chalk service. Available for table hire by the hour, monthly memberships with unlimited play, and VIP memberships with priority booking and exclusive event access. Open daily until 11 PM.' },
-              { emoji: '📺', name: 'Sports Lounge', to: '/sports/sports-lounge',
-                desc: 'The hub\'s social heart — a comfortable sports lounge with multiple large HD screens broadcasting live international sports: football, cricket, NBA, and more. Great food and beverages, comfortable seating, and a match-day atmosphere that brings the community together. Walk-in, VIP tables, and private event hire available for groups up to 50.' },
-            ].map(({ emoji, name, to, desc }) => (
-              <motion.div key={name} className="bg-light rounded-2xl p-6 flex flex-col"
-                initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                <div className="text-3xl mb-3">{emoji}</div>
-                <h3 className="font-heading font-bold text-navy text-lg mb-2">{name}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed flex-1 mb-4">{desc}</p>
-                <Link to={to} className="text-navy font-semibold text-sm hover:text-gold transition-colors inline-flex items-center gap-1.5">
-                  Learn more <FaArrowRight size={10} />
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* BOARD OF DIRECTORS */}
       <section id="board-section" className="section-padding bg-white">
         <div className="container-max">
