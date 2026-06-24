@@ -58,7 +58,7 @@ export default function About() {
           className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none"
           style={{ opacity: 0.4 }}
           loading="eager"
-          fetchPriority="high"
+          fetchpriority="high"
         />
         {/* Dark overlay — left side covers text, fades to transparent right */}
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #030A2E 40%, #030A2Ecc 58%, #030A2E66 75%, transparent 100%)' }} />
@@ -220,3 +220,4 @@ export default function About() {
     </>
   )
 }
+

@@ -251,7 +251,7 @@ export default function SportPage() {
               className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none"
               style={{ opacity: 0.42 }}
               loading="eager"
-              fetchPriority="high"
+              fetchpriority="high"
             />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, #030A2E 38%, #030A2Ecc 55%, #030A2E55 75%, transparent 100%)' }} />
             <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #030A2Eaa 0%, transparent 35%, transparent 65%, #030A2Ecc 100%)' }} />
@@ -449,3 +449,4 @@ export default function SportPage() {
     </>
   )
 }
+

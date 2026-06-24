@@ -1,58 +1,23 @@
-import { defineConfig }  from 'vite'
-import react             from '@vitejs/plugin-react'
-import { createRequire } from 'module'
-import path              from 'path'
-import { fileURLToPath } from 'url'
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
-const require   = createRequire(import.meta.url)
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
+export default defineConfig(({ isSsrBuild }) => ({
+  plugins: [react()],
 
-// Load CJS builds to avoid the `require is not defined` bug in their .mjs files
-const vitePrerender     = require('vite-plugin-prerender')
-const PuppeteerRenderer = require('@prerenderer/renderer-puppeteer')
-
-const ROUTES = [
-  '/',
-  '/about',
-  '/academy',
-  '/programs',
-  '/coaches',
-  '/schedule',
-  '/events',
-  '/gallery',
-  '/blog',
-  '/testimonials',
-  '/contact',
-  '/enroll',
-  '/pricing',
-  '/faq',
-  '/sports/football-futsal',
-  '/sports/cricket',
-  '/sports/basketball',
-  '/sports/pickleball',
-  '/sports/snooker',
-  '/sports/sports-lounge',
-]
-
-export default defineConfig({
-  plugins: [
-    react(),
-    vitePrerender({
-      staticDir: path.join(__dirname, 'dist'),
-      routes: ROUTES,
-      renderer: new PuppeteerRenderer({
-        renderAfterElementExists: '#root > *',
-        renderAfterTime: 2000,
-        headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      }),
-    }),
-  ],
   resolve: {
     alias: { '@': '/src' },
   },
+
+  ssr: {
+    // Bundle react-helmet-async into the SSR output.
+    // It's a CJS module; leaving it external causes a named-export error
+    // in Node.js ESM context. Vite's bundler handles the CJS interop correctly.
+    noExternal: ['react-helmet-async'],
+  },
+
   build: {
-    rollupOptions: {
+    outDir: isSsrBuild ? 'dist-server' : 'dist',
+    rollupOptions: isSsrBuild ? {} : {
       output: {
         manualChunks: {
           'vendor-react':    ['react', 'react-dom', 'react-router-dom'],
@@ -63,4 +28,4 @@ export default defineConfig({
       },
     },
   },
-})
+}))
