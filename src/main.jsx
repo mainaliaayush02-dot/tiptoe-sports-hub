@@ -40,10 +40,7 @@ const app = (
   </React.StrictMode>
 )
 
-// Use hydrateRoot when the server has injected pre-rendered HTML (SSG),
-// createRoot otherwise (dev server / routes without pre-rendered files)
-if (rootEl.hasChildNodes()) {
-  ReactDOM.hydrateRoot(rootEl, app)
-} else {
-  ReactDOM.createRoot(rootEl).render(app)
-}
+// Always use createRoot. The prerendered HTML in each dist/{route}/index.html
+// exists for SEO crawlers. Browsers get a fresh React mount — AuthContext
+// starts loading:true which would mismatch SSR's loading:false and wipe the page.
+ReactDOM.createRoot(rootEl).render(app)
