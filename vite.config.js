@@ -1,14 +1,14 @@
 import { defineConfig }  from 'vite'
 import react             from '@vitejs/plugin-react'
-import vitePrerender     from 'vite-plugin-prerender'
 import { createRequire } from 'module'
 import path              from 'path'
 import { fileURLToPath } from 'url'
 
-const require    = createRequire(import.meta.url)
-const __dirname  = path.dirname(fileURLToPath(import.meta.url))
+const require   = createRequire(import.meta.url)
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-// Puppeteer renderer lives in @prerenderer/renderer-puppeteer (installed with the plugin)
+// Load CJS builds to avoid the `require is not defined` bug in their .mjs files
+const vitePrerender     = require('vite-plugin-prerender')
 const PuppeteerRenderer = require('@prerenderer/renderer-puppeteer')
 
 const ROUTES = [
@@ -41,9 +41,7 @@ export default defineConfig({
       staticDir: path.join(__dirname, 'dist'),
       routes: ROUTES,
       renderer: new PuppeteerRenderer({
-        // Wait until the React app has mounted (root div has children)
         renderAfterElementExists: '#root > *',
-        // Extra safety buffer for Firestore to load
         renderAfterTime: 2000,
         headless: true,
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
@@ -51,9 +49,7 @@ export default defineConfig({
     }),
   ],
   resolve: {
-    alias: {
-      '@': '/src',
-    },
+    alias: { '@': '/src' },
   },
   build: {
     rollupOptions: {
