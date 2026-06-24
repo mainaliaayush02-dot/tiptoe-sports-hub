@@ -43,7 +43,7 @@ export default function Footer() {
             </h3>
           </div>
           <Link to="/enroll" className="btn-primary shrink-0">
-            Enroll Now <FaArrowRight size={12} />
+            Join the Academy <FaArrowRight size={12} />
           </Link>
         </div>
       </div>

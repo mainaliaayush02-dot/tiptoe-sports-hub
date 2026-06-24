@@ -406,7 +406,7 @@ export default function Home() {
           </address>
           <a href="https://maps.app.goo.gl/GXdjUV3qQX4Rm61o7" target="_blank" rel="noopener noreferrer"
             className="btn-primary inline-flex">
-            Get Directions <FaArrowRight size={12} />
+            Open in Google Maps <FaArrowRight size={12} />
           </a>
         </div>
       </section>
@@ -422,7 +422,7 @@ export default function Home() {
               Six sports, premium facilities, open every day at Tarakeshwar, Kathmandu. Walk in or book your slot today.
             </motion.p>
             <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/contact" className="btn-primary py-4 px-10">Book Your Slot <FaArrowRight size={13} /></Link>
+              <Link to="/contact" className="btn-primary py-4 px-10">Get in Touch <FaArrowRight size={13} /></Link>
               <Link to="/pricing"  className="btn-outline py-4 px-10">View Pricing</Link>
             </motion.div>
           </motion.div>
