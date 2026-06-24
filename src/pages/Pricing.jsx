@@ -102,7 +102,7 @@ export default function Pricing() {
     <>
       <SEOHead
         title="Sports Membership & Pricing in Kathmandu"
-        description="Transparent pricing for Football, Cricket, Basketball, Pickleball, Snooker and Sports Lounge at Tiptoe Sports Hub in Kathmandu. NPR pricing, no hidden fees."
+        description="Pricing for Football, Cricket, Basketball, Pickleball, Snooker and Sports Lounge at Tiptoe Sports Hub, Kathmandu. NPR rates, no hidden fees."
         path="/pricing"
         breadcrumb
         schema={pricingSchema}

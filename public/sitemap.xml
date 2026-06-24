@@ -1,132 +1,145 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- Core pages -->
+  <!-- Core hub pages -->
   <url>
     <loc>https://tiptoesportshub.com/</loc>
-    <lastmod>2025-06-21</lastmod>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://tiptoesportshub.com/about</loc>
-    <lastmod>2025-06-21</lastmod>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://tiptoesportshub.com/contact</loc>
-    <lastmod>2025-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://tiptoesportshub.com/enroll</loc>
-    <lastmod>2025-06-21</lastmod>
+    <loc>https://tiptoesportshub.com/pricing</loc>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://tiptoesportshub.com/faq</loc>
-    <lastmod>2025-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Academy pages -->
-  <url>
-    <loc>https://tiptoesportshub.com/academy</loc>
-    <lastmod>2025-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://tiptoesportshub.com/programs</loc>
-    <lastmod>2025-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://tiptoesportshub.com/coaches</loc>
-    <lastmod>2025-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://tiptoesportshub.com/schedule</loc>
-    <lastmod>2025-06-21</lastmod>
+    <loc>https://tiptoesportshub.com/gallery</loc>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
 
-  <!-- Sports hub pages -->
   <url>
-    <loc>https://tiptoesportshub.com/sports/football-futsal</loc>
-    <lastmod>2025-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://tiptoesportshub.com/sports/cricket</loc>
-    <lastmod>2025-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://tiptoesportshub.com/sports/basketball</loc>
-    <lastmod>2025-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://tiptoesportshub.com/sports/pickleball</loc>
-    <lastmod>2025-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://tiptoesportshub.com/sports/snooker</loc>
-    <lastmod>2025-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://tiptoesportshub.com/sports/sports-lounge</loc>
-    <lastmod>2025-06-21</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Content pages -->
-  <url>
-    <loc>https://tiptoesportshub.com/gallery</loc>
-    <lastmod>2025-06-21</lastmod>
+    <loc>https://tiptoesportshub.com/events</loc>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://tiptoesportshub.com/blog</loc>
-    <lastmod>2025-06-21</lastmod>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://tiptoesportshub.com/pricing</loc>
-    <lastmod>2025-06-21</lastmod>
+    <loc>https://tiptoesportshub.com/faq</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tiptoesportshub.com/testimonials</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://tiptoesportshub.com/contact</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Sports Hub facility pages -->
+  <url>
+    <loc>https://tiptoesportshub.com/sports/football-futsal</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://tiptoesportshub.com/sports/cricket</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tiptoesportshub.com/sports/basketball</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tiptoesportshub.com/sports/pickleball</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tiptoesportshub.com/sports/snooker</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tiptoesportshub.com/sports/sports-lounge</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Academy section -->
+  <url>
+    <loc>https://tiptoesportshub.com/academy</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://tiptoesportshub.com/programs</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://tiptoesportshub.com/coaches</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tiptoesportshub.com/schedule</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tiptoesportshub.com/enroll</loc>
+    <lastmod>2025-06-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>

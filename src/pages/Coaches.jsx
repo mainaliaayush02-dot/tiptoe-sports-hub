@@ -41,7 +41,7 @@ export default function Coaches() {
     <>
       <SEOHead
         title="Football Coaches in Kathmandu"
-        description="Meet the best football coaches in Nepal. Gaurav Basnet — certified futsal coach Kathmandu, Nepal National Futsal Head Coach for 3 terms. Hari Khadka — Nepal's all-time top international goal scorer and Technical Advisor at Tiptoe Sports Academy."
+        description="Nepal's finest football and futsal coaches at Tiptoe Academy, Kathmandu. Gaurav Basnet, National Futsal Head Coach, and Hari Khadka, Nepal's top goal scorer."
         path="/coaches"
         breadcrumb
         schema={{

@@ -62,7 +62,7 @@ export default function Enroll() {
     <>
       <SEOHead
         title="Enroll at Tiptoe Sports Academy in Kathmandu"
-        description="Enroll your child at Tiptoe Sports Academy in Tarkeshwar, Kathmandu. Nepal's #1 football and futsal academy. Fill in the form and we'll contact you within 24 hours."
+        description="Enroll at Tiptoe Sports Academy, Kathmandu. Football and futsal programs for ages 4-18. Fill in the form and our team will contact you within 24 hours."
         path="/enroll"
         breadcrumb
       />

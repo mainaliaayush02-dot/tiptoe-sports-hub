@@ -43,7 +43,7 @@ export default function Programs() {
     <>
       <SEOHead
         title="Football & Futsal Training Programs in Kathmandu"
-        description="Football classes for kids and adults in Kathmandu. Tiptoe Sports Academy offers football and futsal training programs for ages 4–18 in Tarkeshwar — including girls football Nepal, elite performance, holiday camps and Thailand international camps."
+        description="Football and futsal programs for ages 4-18 at Tiptoe Sports Academy, Kathmandu. Girls football, holiday camps, elite performance and Thailand international camps."
         path="/programs"
         breadcrumb
       />

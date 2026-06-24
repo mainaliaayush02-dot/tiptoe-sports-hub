@@ -103,8 +103,8 @@ export default function FAQ() {
   return (
     <>
       <SEOHead
-        title="Frequently Asked Questions"
-        description="Common questions about Tiptoe Sports Hub and Academy in Kathmandu, covering programs, pricing, enrollment, age groups, facilities, and international exposure."
+        title="FAQ - Tiptoe Sports Hub Kathmandu"
+        description="Answers to common questions about Tiptoe Sports Hub, Kathmandu. Programs, pricing, facilities, enrollment, age groups and more."
         path="/faq"
         breadcrumb
         schema={faqSchema}

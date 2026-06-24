@@ -40,17 +40,24 @@ async function main() {
       // Inject rendered app HTML
       let html = template.replace('<!--app-html-->', appHtml)
 
-      // Inject Helmet head tags (title, meta description, canonical, OG tags)
+      // Inject Helmet head tags
       if (helmet) {
-        html = html.replace(
-          '</head>',
-          [
-            helmet.title?.toString()  ?? '',
-            helmet.meta?.toString()   ?? '',
-            helmet.link?.toString()   ?? '',
-            helmet.script?.toString() ?? '',
-          ].filter(Boolean).join('\n') + '\n</head>'
-        )
+        // REPLACE the stale static <title> with the per-page Helmet title
+        const helmetTitle = helmet.title?.toString()
+        if (helmetTitle) {
+          html = html.replace(/<title[^>]*>.*?<\/title>/s, helmetTitle)
+        }
+
+        // APPEND other Helmet tags (meta, link, script) before </head>
+        const otherTags = [
+          helmet.meta?.toString()   ?? '',
+          helmet.link?.toString()   ?? '',
+          helmet.script?.toString() ?? '',
+        ].filter(s => s && s.trim()).join('\n')
+
+        if (otherTags) {
+          html = html.replace('</head>', otherTags + '\n</head>')
+        }
       }
 
       const outDir = route === '/'

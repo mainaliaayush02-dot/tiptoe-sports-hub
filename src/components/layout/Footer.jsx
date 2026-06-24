@@ -161,26 +161,28 @@ export default function Footer() {
               Find Us
             </h4>
             <ul className="space-y-4">
-              {/* Address */}
+              {/* Address with postal code */}
               <li className="flex items-start gap-3">
                 <FaMapMarkerAlt className="text-gold mt-0.5 shrink-0" size={13} />
-                <a href={mapsLink} target="_blank" rel="noopener noreferrer"
+                <a href="https://maps.app.goo.gl/GXdjUV3qQX4Rm61o7" target="_blank" rel="noopener noreferrer"
                   className="text-white/45 hover:text-gold text-sm leading-relaxed transition-colors flex items-start gap-1.5 group">
-                  {address}
+                  <span>Tarakeshwar, Kathmandu 44600, Nepal</span>
                   <FaExternalLinkAlt size={9} className="mt-1 opacity-0 group-hover:opacity-100 shrink-0 transition-opacity" />
                 </a>
               </li>
 
-              {/* Phone */}
-              {phone && (
-                <li className="flex items-center gap-3">
-                  <FaPhoneAlt className="text-gold shrink-0" size={12} />
-                  <a href={`tel:${phone}`}
-                    className="text-white/45 hover:text-gold text-sm transition-colors">
-                    {phone}
+              {/* Primary phone */}
+              <li className="flex items-center gap-3">
+                <FaPhoneAlt className="text-gold shrink-0" size={12} />
+                <div className="space-y-0.5">
+                  <a href="tel:+977-984-1416893" className="text-white/45 hover:text-gold text-sm transition-colors block">
+                    +977-984-1416893
                   </a>
-                </li>
-              )}
+                  <a href="tel:+977-970-7079773" className="text-white/45 hover:text-gold text-sm transition-colors block">
+                    +977-970-7079773
+                  </a>
+                </div>
+              </li>
 
               {/* Email */}
               {email && (

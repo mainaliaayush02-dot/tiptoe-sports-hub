@@ -61,7 +61,7 @@ export default function Schedule() {
     <>
       <SEOHead
         title="Football & Futsal Training Schedule in Kathmandu"
-        description="Weekly football and futsal training schedule at Tiptoe Sports Academy, Tarkeshwar Kathmandu. Morning and evening sessions for ages 4–18, every day of the week."
+        description="Football and futsal training schedule at Tiptoe Academy, Tarakeshwar Kathmandu. Morning and afternoon sessions for ages 4-18, every day of the week."
         path="/schedule"
         breadcrumb
         schema={{

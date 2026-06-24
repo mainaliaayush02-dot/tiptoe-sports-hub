@@ -83,8 +83,8 @@ export default function Home() {
   return (
     <>
       <SEOHead
-        title="Multi-Sport Hub & Facilities in Tarkeshwar, Kathmandu"
-        description="Tiptoe Sports Hub — Kathmandu's premier multi-sport destination in Tarkeshwar. Football, Cricket, Basketball, Pickleball, Snooker and Sports Lounge. Book your slot today."
+        title="Multi-Sport Hub & Facilities in Kathmandu"
+        description="Kathmandu's premier sports facility in Tarkeshwar. Football, Cricket, Basketball, Pickleball, Snooker and Sports Lounge. Nepal's #1 football academy. Open 7 days."
         path="/"
       />
 

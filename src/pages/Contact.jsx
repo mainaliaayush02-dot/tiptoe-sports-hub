@@ -33,8 +33,8 @@ export default function Contact() {
   return (
     <>
       <SEOHead
-        title="Contact Tiptoe Sports Hub in Tarkeshwar, Kathmandu"
-        description="Contact Tiptoe Sports Hub in Tarkeshwar, Kathmandu. Ask about football academy enrollment, sports facility bookings, or partnership opportunities. Call or WhatsApp us today."
+        title="Contact Tiptoe Sports Hub, Kathmandu"
+        description="Contact Tiptoe Sports Hub in Tarakeshwar, Kathmandu. Call 984-1416893 or 970-7079773. Book courts, ask about programs or get directions to our facility."
         path="/contact"
         breadcrumb
       />
@@ -98,18 +98,26 @@ export default function Contact() {
           {/* Map + Info */}
           <motion.div initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-5">
             {/* Map */}
-            <div className="rounded-2xl overflow-hidden shadow-card border border-gray-100">
+            <div className="rounded-2xl overflow-hidden shadow-card border border-gray-100" style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
               <iframe
-                title="Tiptoe Sports Hub Location in Tarkeshwar, Kathmandu"
-                src={mapsEmbedURL}
-                width="100%"
-                height="300"
-                style={{ border: 0 }}
+                title="Tiptoe Sports Hub location map - Tarakeshwar, Kathmandu"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.0824918697235!2d85.2996584113474!3d27.745601523703204!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19001f6e5691%3A0x5b88aea185c7918a!2sTipToe%20Sports%20Hub!5e0!3m2!1sen!2snp!4v1782289068362!5m2!1sen!2snp"
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
                 allowFullScreen
                 loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
+                referrerPolicy="strict-origin-when-cross-origin"
               />
             </div>
+
+            {/* Get Directions */}
+            <a
+              href="https://maps.app.goo.gl/GXdjUV3qQX4Rm61o7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-navy text-white text-sm font-semibold hover:bg-dark transition-colors"
+            >
+              <FaMapMarkerAlt size={14} /> Get Directions to Tiptoe Sports Hub
+            </a>
 
             {/* Contact Info */}
             <div className="bg-white rounded-2xl shadow-card p-6">
@@ -127,17 +135,16 @@ export default function Contact() {
                     </a>
                   </div>
                 </li>
-                {phone && (
-                  <li className="flex items-start gap-3">
+                <li className="flex items-start gap-3">
                     <div className="w-9 h-9 bg-navy/5 rounded-lg flex items-center justify-center shrink-0">
                       <FaPhoneAlt className="text-navy" size={13} />
                     </div>
                     <div>
                       <div className="font-medium text-gray-800 text-sm">Phone</div>
-                      <a href={`tel:${phone}`} className="text-gray-500 text-sm hover:text-navy transition-colors mt-0.5 block">{phone}</a>
+                      <a href="tel:+977-984-1416893" className="text-gray-500 text-sm hover:text-navy transition-colors mt-0.5 block">+977-984-1416893</a>
+                      <a href="tel:+977-970-7079773" className="text-gray-500 text-sm hover:text-navy transition-colors mt-0.5 block">+977-970-7079773</a>
                     </div>
                   </li>
-                )}
                 {email && (
                   <li className="flex items-start gap-3">
                     <div className="w-9 h-9 bg-navy/5 rounded-lg flex items-center justify-center shrink-0">

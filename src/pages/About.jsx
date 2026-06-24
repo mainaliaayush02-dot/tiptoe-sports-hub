@@ -25,7 +25,7 @@ export default function About() {
     <>
       <SEOHead
         title="About Tiptoe Sports Hub in Kathmandu"
-        description="Learn about Tiptoe Sports Hub, Kathmandu's multi-sport destination and home of Tiptoe Sports Academy, Nepal's #1 football and futsal academy in Tarkeshwar."
+        description="Six sports under one roof in Tarakeshwar, Kathmandu. Football, Cricket, Basketball, Pickleball, Snooker and Sports Lounge. Home of Tiptoe Sports Academy."
         path="/about"
         breadcrumb
         schema={{

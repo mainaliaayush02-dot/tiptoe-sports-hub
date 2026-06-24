@@ -26,8 +26,8 @@ export default function Testimonials() {
   return (
     <>
       <SEOHead
-        title="Parent and Student Reviews at Tiptoe Sports Hub"
-        description="What parents and students say about Tiptoe Sports Hub, Nepal's #1 football and futsal academy in Tarkeshwar, Kathmandu. 370+ happy students, 5-star reviews."
+        title="Reviews at Tiptoe Sports Hub Kathmandu"
+        description="What members and parents say about Tiptoe Sports Hub, Kathmandu. 4.6-star rated sports facility in Tarakeshwar. Real reviews from our community."
         path="/testimonials"
         breadcrumb
         schema={{

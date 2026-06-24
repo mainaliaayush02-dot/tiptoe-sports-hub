@@ -23,8 +23,8 @@ export default function Events() {
   return (
     <>
       <SEOHead
-        title="Football Academy Events and Tournaments in Kathmandu"
-        description="Upcoming and past events at Tiptoe Sports Hub. Football tournaments, international training camps in Thailand, youth competitions, and special programs in Kathmandu."
+        title="Sports Events & Tournaments at Tiptoe Sports Hub"
+        description="Upcoming and past events at Tiptoe Sports Hub, Kathmandu. Football tournaments, Thailand training camps, youth competitions and community sports programs."
         path="/events"
         breadcrumb
       />
@@ -39,6 +39,22 @@ export default function Events() {
             <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Events and Tournaments</h1>
             <p className="text-white/60 max-w-xl mx-auto text-lg">Football tournaments, Thailand training camps, and special programs from Tiptoe Sports Academy in Kathmandu.</p>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Static intro — always visible to crawlers */}
+      <section className="py-12 px-4 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="font-heading font-bold text-2xl text-navy mb-4">Events at Tiptoe Sports Hub</h2>
+          <p className="text-gray-500 text-base leading-relaxed mb-4">
+            Tiptoe Sports Hub in Tarakeshwar, Kathmandu hosts a regular calendar of sports events, tournaments, competitions and community programmes throughout the year. From inter-school football tournaments to snooker club nights, basketball open days and special match-screening evenings at our Sports Lounge, there is always something happening at the hub.
+          </p>
+          <p className="text-gray-500 text-base leading-relaxed mb-4">
+            Our flagship annual event is the Thailand Training Camp — an international exposure programme where selected students from Tiptoe Sports Academy travel to Bangkok to train with Silie Sports Club. This programme gives young Nepali players the rare opportunity to train alongside Thai Division academy athletes, experience world-class facilities, and represent Nepal in cross-border friendly matches.
+          </p>
+          <p className="text-gray-500 text-base leading-relaxed">
+            Other regular events include the Tiptoe Cup (our annual inter-academy football tournament), seasonal cricket tournaments on our professional ground, monthly pickleball club competitions, and special match-day events at our Sports Lounge for major international fixtures. To register for an upcoming event or to host a private sports event at our Tarakeshwar facility, contact us on +977-984-1416893 or +977-970-7079773.
+          </p>
         </div>
       </section>
 

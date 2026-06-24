@@ -39,7 +39,7 @@ export default function Gallery() {
     <>
       <SEOHead
         title="Photo Gallery at Tiptoe Sports Hub, Kathmandu"
-        description="Photos from Tiptoe Sports Hub. Football training sessions, tournaments, Thailand international camps, and memorable moments from Nepal's #1 football academy in Kathmandu."
+        description="Photos from Tiptoe Sports Hub in Tarakeshwar, Kathmandu. Football training, cricket, basketball, tournaments, Thailand camps and memorable moments from the hub."
         path="/gallery"
         breadcrumb
       />
@@ -54,6 +54,22 @@ export default function Gallery() {
             <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Tiptoe Sports Hub Gallery</h1>
             <p className="text-white/60 max-w-xl mx-auto text-lg">Training sessions, tournaments, Thailand camps and more. Moments from Nepal's #1 football academy in Kathmandu.</p>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Static intro — always visible to crawlers */}
+      <section className="py-12 px-4 bg-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="font-heading font-bold text-2xl text-navy mb-4">Life at Tiptoe Sports Hub</h2>
+          <p className="text-gray-500 text-base leading-relaxed mb-6">
+            Explore life at Tiptoe Sports Hub in Tarakeshwar, Kathmandu — Nepal's premier multi-sport destination. Our gallery captures training sessions across six sports: Football, Cricket, Basketball, Pickleball, Snooker and our Sports Lounge. From early-morning fitness sessions to tournament finals, every image tells the story of a community built around sport.
+          </p>
+          <p className="text-gray-500 text-base leading-relaxed mb-6">
+            Tiptoe Sports Academy's international exposure programme brings some of our most memorable moments. Students who travel to Thailand for training camps with Silie Sports Club return with new skills, new friends, and a new perspective on what football can mean. These Thailand camp photos are some of the most viewed in our gallery.
+          </p>
+          <p className="text-gray-500 text-base leading-relaxed">
+            Browse by category below — Training, Events, Tournaments or International — to find specific moments. All photos are shot on-site at our Tarakeshwar facility, 44600 Kathmandu. If you would like to visit, we are open seven days a week. Call us on +977-984-1416893 or +977-970-7079773 to book a court, schedule a trial, or simply come and watch a session.
+          </p>
         </div>
       </section>
 
