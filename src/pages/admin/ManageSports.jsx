@@ -1,8 +1,9 @@
 ﻿import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import toast from 'react-hot-toast'
-import { MdAdd, MdEdit, MdDelete, MdClose, MdSportsTennis } from 'react-icons/md'
-import { query, orderBy } from 'firebase/firestore'
+import { MdAdd, MdEdit, MdDelete, MdClose, MdSportsTennis, MdAutoFixHigh } from 'react-icons/md'
+import { query, orderBy, doc, deleteDoc, updateDoc } from 'firebase/firestore'
+import { db } from '../../firebase/config'
 import { sportsCol } from '../../firebase/collections'
 import { useCollection, addDocument, updateDocument, deleteDocument } from '../../hooks/useFirestore'
 
@@ -29,7 +30,7 @@ const SLUG_SUGGESTIONS = [
   { slug: 'basketball',      emoji: '🏀', name: 'Basketball' },
   { slug: 'pickleball',      emoji: '🎾', name: 'Pickleball' },
   { slug: 'snooker',         emoji: '🎱', name: 'Snooker' },
-  { slug: 'sports-lounge',      emoji: '🍹', name: 'Sports Lounge' },
+  { slug: 'sports-lounge',      emoji: '📺', name: 'Sports Lounge' },
 ]
 
 function toSlug(str) {
@@ -184,11 +185,61 @@ function Modal({ item, onClose, onSave }) {
   )
 }
 
+const LOUNGE_DEFAULTS = {
+  name: 'Sports Lounge', slug: 'sports-lounge', emoji: '📺',
+  tagline: 'Live Sports Screening, Great Food & Relaxed Social Vibes',
+  description: 'The ultimate sports viewing and social experience at Tiptoe Sports Hub. Multiple large HD screens, live sports, great food and beverages, relaxed family-friendly atmosphere.',
+  facilities: 'Multiple large HD projection screens\nComfortable lounge seating\nIndoor air-conditioned space\nOutdoor terrace area\nPrivate event space (up to 50 guests)',
+  pricing: 'Walk-In - Free entry with food or beverage order\nVIP Table (4 pax) - NPR 2,000 minimum spend\nMatch Day Package - NPR 5,000 for 10 pax\nPrivate Event - Contact for quote',
+  schedule: 'Mon–Thu: 4PM–11PM | Fri–Sun: 12PM–12AM',
+  seoTitle: 'Sports Lounge in Kathmandu | Tiptoe Sports Hub',
+  seoDescription: 'Best sports lounge in Tarkeshwar, Kathmandu. Live sports screening on big screens, great food and a relaxed atmosphere at Tiptoe Sports Hub.',
+  color: '#8B4A00', active: true, order: 6,
+}
+
 export default function ManageSports() {
   const [modal, setModal] = useState(null)
   const [deleteId, setDeleteId] = useState(null)
+  const [migrating, setMigrating] = useState(false)
   const q = useMemo(() => query(sportsCol, orderBy('order')), [])
   const { docs: sports, loading } = useCollection(q)
+
+  // Detect stale legacy documents
+  const legacyDocs = sports.filter(s =>
+    s.slug === 'sports-bar' ||
+    s.name?.toLowerCase().includes('sports bar') ||
+    s.slug === 'coffeeshop' ||
+    s.name?.toLowerCase().includes('coffeeshop') ||
+    s.name?.toLowerCase().includes('cafe')
+  )
+  const hasLegacy = legacyDocs.length > 0
+
+  const runMigration = async () => {
+    setMigrating(true)
+    try {
+      for (const legacy of legacyDocs) {
+        if (legacy.slug === 'sports-bar' || legacy.name?.toLowerCase().includes('sports bar')) {
+          // Rename this document to Sports Lounge
+          await updateDoc(doc(db, 'sports', legacy.id), { ...LOUNGE_DEFAULTS })
+          toast.success('Sports Bar → Sports Lounge updated!')
+        } else {
+          // Delete any other stale entry (coffeeshop, cafe, etc.)
+          await deleteDoc(doc(db, 'sports', legacy.id))
+          toast.success(`Removed stale entry: ${legacy.name}`)
+        }
+      }
+      // If no sports-bar was found but sports-lounge doesn't exist yet, create it
+      const hasLounge = sports.some(s => s.slug === 'sports-lounge')
+      if (!hasLounge) {
+        await addDocument(sportsCol, LOUNGE_DEFAULTS)
+        toast.success('Sports Lounge created!')
+      }
+    } catch (e) {
+      toast.error('Migration failed: ' + e.message)
+    } finally {
+      setMigrating(false)
+    }
+  }
 
   const handleSave = async (form) => {
     if (form.id) {
@@ -222,6 +273,26 @@ export default function ManageSports() {
           <MdAdd size={18} /> Add Sport
         </button>
       </div>
+
+      {/* Migration banner — shown when stale Sports Bar / Coffeeshop entries exist */}
+      {!loading && hasLegacy && (
+        <div className="bg-red-50 border border-red-200 rounded-2xl p-5 mb-5 flex items-start gap-4">
+          <MdAutoFixHigh size={24} className="text-red-500 shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <p className="font-bold text-red-800 text-sm">Legacy data found: {legacyDocs.map(d => d.name).join(', ')}</p>
+            <p className="text-red-600 text-xs mt-1">
+              These old entries are from before the rename. Click Fix Now to rename "Sports Bar" → "Sports Lounge" and remove any stale entries automatically.
+            </p>
+          </div>
+          <button
+            onClick={runMigration}
+            disabled={migrating}
+            className="shrink-0 px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-xl transition-colors disabled:opacity-60 whitespace-nowrap"
+          >
+            {migrating ? 'Fixing...' : 'Fix Now'}
+          </button>
+        </div>
+      )}
 
       {/* Seed prompt if empty */}
       {!loading && sports.length === 0 && (
