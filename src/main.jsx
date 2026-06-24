@@ -8,7 +8,8 @@ import { AuthProvider } from './contexts/AuthContext'
 import { SiteProvider } from './contexts/SiteContext'
 import './index.css'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const rootEl = document.getElementById('root')
+const app = (
   <React.StrictMode>
     <HelmetProvider>
       <BrowserRouter>
@@ -38,3 +39,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </HelmetProvider>
   </React.StrictMode>
 )
+
+// Use hydrateRoot when the server has injected pre-rendered HTML (SSG),
+// createRoot otherwise (dev server / routes without pre-rendered files)
+if (rootEl.hasChildNodes()) {
+  ReactDOM.hydrateRoot(rootEl, app)
+} else {
+  ReactDOM.createRoot(rootEl).render(app)
+}

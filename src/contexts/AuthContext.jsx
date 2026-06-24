@@ -8,9 +8,12 @@ import { auth } from '../firebase/config'
 
 const AuthContext = createContext(null)
 
+const isSSR = typeof window === 'undefined'
+
 export function AuthProvider({ children }) {
+  // In SSR context loading stays false so children always render (useEffect never fires)
   const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(!isSSR)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -27,7 +30,7 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={{ user, loading, login, logout }}>
-      {!loading && children}
+      {(isSSR || !loading) && children}
     </AuthContext.Provider>
   )
 }

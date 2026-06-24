@@ -5,9 +5,12 @@ import {
 } from 'firebase/firestore'
 import { db } from '../firebase/config'
 
+const isSSR = typeof window === 'undefined'
+
 export function useCollection(queryOrRef) {
   const [docs, setDocs] = useState([])
-  const [loading, setLoading] = useState(true)
+  // In SSR, start as not-loading so components render fallback content immediately
+  const [loading, setLoading] = useState(!isSSR)
   const [error, setError] = useState(null)
 
   useEffect(() => {

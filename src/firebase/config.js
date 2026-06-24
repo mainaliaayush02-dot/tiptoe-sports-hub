@@ -13,6 +13,14 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 
-export const auth = getAuth(app)
+// getAuth() accesses window.localStorage — guard for Node.js SSR context
+let _auth
+try {
+  _auth = typeof window !== 'undefined' ? getAuth(app) : {}
+} catch {
+  _auth = {}
+}
+export const auth = _auth
+
 export const db = getFirestore(app)
 export default app
