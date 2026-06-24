@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+﻿import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { FaArrowRight, FaCalendarAlt, FaTag } from 'react-icons/fa'
 import { GiSoccerBall } from 'react-icons/gi'
@@ -26,7 +26,7 @@ const FALLBACK_BLOG = [
   {
     id: 'b3', status: 'published', category: 'Coaching',
     title: 'Meet Gaurav Basnet: The Coach Who Led Nepal to Three Futsal Championships',
-    excerpt: "Nepal National Futsal Team Head Coach for three consecutive terms, Gaurav Basnet brings world-class expertise to every session at Tiptoe Sports Academy in Tarkeshwar, Kathmandu.",
+    excerpt: "Nepal National Futsal Team Head Coach for three consecutive terms, Gaurav Basnet brings world-class expertise to every session at Tiptoe Sports Academy in Tarakeshwar, Kathmandu.",
     author: 'Tiptoe Sports Hub', slug: 'gaurav-basnet-nepal-futsal-coach-tiptoe-sports-academy', publishedAt: new Date('2024-11-20'),
   },
 ]
@@ -53,7 +53,7 @@ export default function Blog() {
     <>
       <SEOHead
         title="News & Stories from Tiptoe Sports Hub"
-        description="Latest news, training tips, and stories from Tiptoe Sports Hub, Nepal's #1 football and futsal academy in Tarkeshwar, Kathmandu."
+        description="Latest news, training tips, and stories from Tiptoe Sports Hub, Nepal's #1 football and futsal academy in Tarakeshwar, Kathmandu."
         path="/blog"
         breadcrumb
       />

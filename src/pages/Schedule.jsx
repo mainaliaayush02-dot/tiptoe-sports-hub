@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { FaArrowRight, FaFilter } from 'react-icons/fa'
@@ -12,22 +12,22 @@ const SPORTS = ['All', 'Football', 'Futsal']
 const AGE_GROUPS = ['All', 'Age 4–10', 'Age 11–15', 'Age 16–18', 'All Ages']
 
 const FALLBACK_SCHEDULE = [
-  { id: 's1', day: 'Monday', startTime: '05:00', endTime: '06:30', sport: 'Football', ageGroup: 'Age 16–18', venue: 'Tarkeshwar Ground', coachName: 'Gaurav Basnet' },
-  { id: 's2', day: 'Monday', startTime: '15:00', endTime: '17:00', sport: 'Football', ageGroup: 'Age 4–10', venue: 'Tarkeshwar Ground', coachName: 'Gaurav Basnet' },
+  { id: 's1', day: 'Monday', startTime: '05:00', endTime: '06:30', sport: 'Football', ageGroup: 'Age 16–18', venue: 'Tarakeshwar Ground', coachName: 'Gaurav Basnet' },
+  { id: 's2', day: 'Monday', startTime: '15:00', endTime: '17:00', sport: 'Football', ageGroup: 'Age 4–10', venue: 'Tarakeshwar Ground', coachName: 'Gaurav Basnet' },
   { id: 's3', day: 'Monday', startTime: '17:00', endTime: '19:00', sport: 'Futsal', ageGroup: 'All Ages', venue: 'Futsal Arena', coachName: 'Gaurav Basnet' },
-  { id: 's4', day: 'Tuesday', startTime: '05:00', endTime: '07:00', sport: 'Football', ageGroup: 'Age 16–18', venue: 'Tarkeshwar Ground', coachName: 'Gaurav Basnet' },
-  { id: 's5', day: 'Tuesday', startTime: '15:00', endTime: '17:00', sport: 'Football', ageGroup: 'Age 11–15', venue: 'Tarkeshwar Ground', coachName: 'Gaurav Basnet' },
-  { id: 's6', day: 'Wednesday', startTime: '05:00', endTime: '06:30', sport: 'Football', ageGroup: 'Age 16–18', venue: 'Tarkeshwar Ground', coachName: 'Gaurav Basnet' },
-  { id: 's7', day: 'Wednesday', startTime: '15:00', endTime: '17:00', sport: 'Football', ageGroup: 'Age 4–10', venue: 'Tarkeshwar Ground', coachName: 'Gaurav Basnet' },
-  { id: 's8', day: 'Thursday', startTime: '05:00', endTime: '07:00', sport: 'Football', ageGroup: 'Age 16–18', venue: 'Tarkeshwar Ground', coachName: 'Gaurav Basnet' },
+  { id: 's4', day: 'Tuesday', startTime: '05:00', endTime: '07:00', sport: 'Football', ageGroup: 'Age 16–18', venue: 'Tarakeshwar Ground', coachName: 'Gaurav Basnet' },
+  { id: 's5', day: 'Tuesday', startTime: '15:00', endTime: '17:00', sport: 'Football', ageGroup: 'Age 11–15', venue: 'Tarakeshwar Ground', coachName: 'Gaurav Basnet' },
+  { id: 's6', day: 'Wednesday', startTime: '05:00', endTime: '06:30', sport: 'Football', ageGroup: 'Age 16–18', venue: 'Tarakeshwar Ground', coachName: 'Gaurav Basnet' },
+  { id: 's7', day: 'Wednesday', startTime: '15:00', endTime: '17:00', sport: 'Football', ageGroup: 'Age 4–10', venue: 'Tarakeshwar Ground', coachName: 'Gaurav Basnet' },
+  { id: 's8', day: 'Thursday', startTime: '05:00', endTime: '07:00', sport: 'Football', ageGroup: 'Age 16–18', venue: 'Tarakeshwar Ground', coachName: 'Gaurav Basnet' },
   { id: 's9', day: 'Thursday', startTime: '15:00', endTime: '17:00', sport: 'Futsal', ageGroup: 'All Ages', venue: 'Futsal Arena', coachName: 'Gaurav Basnet' },
-  { id: 's10', day: 'Friday', startTime: '05:00', endTime: '06:30', sport: 'Football', ageGroup: 'Age 16–18', venue: 'Tarkeshwar Ground', coachName: 'Gaurav Basnet' },
-  { id: 's11', day: 'Friday', startTime: '15:00', endTime: '17:00', sport: 'Football', ageGroup: 'Age 11–15', venue: 'Tarkeshwar Ground', coachName: 'Gaurav Basnet' },
-  { id: 's12', day: 'Saturday', startTime: '06:00', endTime: '08:30', sport: 'Football', ageGroup: 'Age 16–18', venue: 'Tarkeshwar Ground', coachName: 'Gaurav Basnet' },
-  { id: 's13', day: 'Saturday', startTime: '09:00', endTime: '11:00', sport: 'Football', ageGroup: 'Age 11–15', venue: 'Tarkeshwar Ground', coachName: 'Gaurav Basnet' },
-  { id: 's14', day: 'Saturday', startTime: '11:00', endTime: '13:00', sport: 'Football', ageGroup: 'Age 4–10', venue: 'Tarkeshwar Ground', coachName: 'Gaurav Basnet' },
-  { id: 's15', day: 'Sunday', startTime: '07:00', endTime: '09:00', sport: 'Football', ageGroup: 'Age 4–10', venue: 'Tarkeshwar Ground', coachName: 'Gaurav Basnet' },
-  { id: 's16', day: 'Sunday', startTime: '09:00', endTime: '11:00', sport: 'Football', ageGroup: 'Age 11–15', venue: 'Tarkeshwar Ground', coachName: 'Gaurav Basnet' },
+  { id: 's10', day: 'Friday', startTime: '05:00', endTime: '06:30', sport: 'Football', ageGroup: 'Age 16–18', venue: 'Tarakeshwar Ground', coachName: 'Gaurav Basnet' },
+  { id: 's11', day: 'Friday', startTime: '15:00', endTime: '17:00', sport: 'Football', ageGroup: 'Age 11–15', venue: 'Tarakeshwar Ground', coachName: 'Gaurav Basnet' },
+  { id: 's12', day: 'Saturday', startTime: '06:00', endTime: '08:30', sport: 'Football', ageGroup: 'Age 16–18', venue: 'Tarakeshwar Ground', coachName: 'Gaurav Basnet' },
+  { id: 's13', day: 'Saturday', startTime: '09:00', endTime: '11:00', sport: 'Football', ageGroup: 'Age 11–15', venue: 'Tarakeshwar Ground', coachName: 'Gaurav Basnet' },
+  { id: 's14', day: 'Saturday', startTime: '11:00', endTime: '13:00', sport: 'Football', ageGroup: 'Age 4–10', venue: 'Tarakeshwar Ground', coachName: 'Gaurav Basnet' },
+  { id: 's15', day: 'Sunday', startTime: '07:00', endTime: '09:00', sport: 'Football', ageGroup: 'Age 4–10', venue: 'Tarakeshwar Ground', coachName: 'Gaurav Basnet' },
+  { id: 's16', day: 'Sunday', startTime: '09:00', endTime: '11:00', sport: 'Football', ageGroup: 'Age 11–15', venue: 'Tarakeshwar Ground', coachName: 'Gaurav Basnet' },
 ]
 
 const SPORT_COLOR = { Football: 'bg-navy text-white', Futsal: 'bg-green text-white' }
@@ -68,11 +68,11 @@ export default function Schedule() {
           '@context': 'https://schema.org',
           '@type': 'SportsActivityLocation',
           name: 'Tiptoe Sports Academy — Training Schedule',
-          description: 'Weekly football and futsal training sessions for ages 4–18 at Tiptoe Sports Academy, Tarkeshwar, Kathmandu.',
+          description: 'Weekly football and futsal training sessions for ages 4–18 at Tiptoe Sports Academy, Tarakeshwar, Kathmandu.',
           url: 'https://tiptoesportshub.com/schedule',
           address: {
             '@type': 'PostalAddress',
-            streetAddress: 'Tarkeshwar',
+            streetAddress: 'Tarakeshwar',
             addressLocality: 'Kathmandu',
             addressCountry: 'NP',
           },
@@ -103,8 +103,27 @@ export default function Schedule() {
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <span className="badge-gold mb-5">Training Schedule</span>
             <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Training Schedule</h1>
-            <p className="text-white/60 max-w-xl mx-auto text-lg">Football and futsal sessions every day of the week. Find the right time for your child in Tarkeshwar, Kathmandu.</p>
+            <p className="text-white/60 max-w-xl mx-auto text-lg">Football and futsal sessions every day of the week. Find the right time for your child in Tarakeshwar, Kathmandu.</p>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Static intro — 250+ words, always crawlable */}
+      <section className="py-12 px-4 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="font-heading font-bold text-2xl text-navy mb-4">Football & Futsal Training Times at Tiptoe Academy</h2>
+          <p className="text-gray-500 text-base leading-relaxed mb-4">
+            Tiptoe Sports Academy in Tarakeshwar, Kathmandu runs structured football and futsal training sessions every single day of the week — including weekends. Sessions are organised by age group so each student trains alongside peers at the same developmental stage, ensuring the coaching is appropriately pitched and every child gets the attention they need.
+          </p>
+          <p className="text-gray-500 text-base leading-relaxed mb-4">
+            The schedule runs from early morning to early evening to accommodate school hours. Younger students (Ages 4–10) typically train in the afternoon after school. Older students and elite performers (Ages 16–18) join the early-morning sessions starting at 5 AM to 6:30 AM, which mirrors the training patterns of professional academies. Saturday and Sunday sessions are also available, making it easy for families with busy weekday schedules to join Tiptoe Sports Academy without disrupting schoolwork.
+          </p>
+          <p className="text-gray-500 text-base leading-relaxed mb-4">
+            All sessions are held at the Tiptoe Sports Hub facility in Tarakeshwar, Kathmandu — including the full-size outdoor football ground and the dedicated indoor futsal court. Head Coach Gaurav Basnet and his team personally oversee every session, ensuring consistent quality and safety standards across all age groups. Equipment is provided; students do not need to bring their own balls or bibs.
+          </p>
+          <p className="text-gray-500 text-base leading-relaxed">
+            Use the filters below to find sessions by sport (Football or Futsal) and by age group. To enroll your child or to enquire about a trial session, visit our <Link to="/enroll" className="text-navy font-semibold hover:text-gold transition-colors">Enroll page</Link> or call us on +977-984-1416893. Full <Link to="/programs" className="text-navy font-semibold hover:text-gold transition-colors">program details and fees</Link> are also available.
+          </p>
         </div>
       </section>
 

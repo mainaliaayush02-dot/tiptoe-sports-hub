@@ -168,7 +168,7 @@ const SEED_POSTS = [
     title: 'Meet Gaurav Basnet: The Coach Who Led Nepal to Three Futsal Championships',
     slug: 'gaurav-basnet-nepal-futsal-coach-tiptoe-sports-academy',
     category: 'Coaching',
-    excerpt: "Nepal National Futsal Team Head Coach for three consecutive terms, Gaurav Basnet brings world-class expertise to every session at Tiptoe Sports Academy in Tarkeshwar, Kathmandu.",
+    excerpt: "Nepal National Futsal Team Head Coach for three consecutive terms, Gaurav Basnet brings world-class expertise to every session at Tiptoe Sports Academy in Tarakeshwar, Kathmandu.",
     content: "<p>With over 27 years in football, Gaurav Basnet is one of Nepal's most respected football minds. As former Head Coach of the Nepal National Futsal Team for three consecutive terms and former coach of Manang Marshyangdi Club in Nepal's A Division, he has brought international-level expertise to Tiptoe Sports Academy.</p><p>Coach Gaurav co-founded Tiptoe Sports Hub in 2021 with a vision to create a world-class football development environment for Nepali youth.</p>",
     author: 'Tiptoe Sports Hub',
     status: 'published',

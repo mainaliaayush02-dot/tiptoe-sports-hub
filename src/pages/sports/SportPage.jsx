@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { query, where, limit, onSnapshot } from 'firebase/firestore'
@@ -12,7 +12,7 @@ const DEFAULT_SPORTS = {
     name: 'Football & Futsal',
     emoji: '⚽',
     tagline: "Nepal's #1 Football & Futsal Academy in Kathmandu",
-    description: "Tiptoe Sports Academy, operating under Tiptoe Sports Hub, is Nepal's #1 private football and futsal academy. We deliver world-class coaching to 370+ students daily in Tarkeshwar, Kathmandu. Our structured programs run from ages 4 to 18, combining technical skill development, tactical training, and international exposure through annual Thailand training camps and cross-border tournaments with Thai Division clubs. Whether your child is picking up a ball for the first time or aiming for national selection, Tiptoe Sports Academy provides the environment, the coaches, and the pathway to achieve it.",
+    description: "Tiptoe Sports Academy, operating under Tiptoe Sports Hub, is Nepal's #1 private football and futsal academy. We deliver world-class coaching to 370+ students daily in Tarakeshwar, Kathmandu. Our structured programs run from ages 4 to 18, combining technical skill development, tactical training, and international exposure through annual Thailand training camps and cross-border tournaments with Thai Division clubs. Whether your child is picking up a ball for the first time or aiming for national selection, Tiptoe Sports Academy provides the environment, the coaches, and the pathway to achieve it.",
     features: ['Professional national-level coaching staff', 'Age-structured programs (4–18)', 'Annual Thailand training camps', 'International tournament exposure', 'Girls-dedicated football program', 'Indoor futsal & outdoor football'],
     facilities: ['Full-size outdoor football field', 'Indoor futsal court', 'Changing rooms & showers', 'Equipment room & kit storage', 'Coaching video analysis setup'],
     pricing: [
@@ -25,7 +25,7 @@ const DEFAULT_SPORTS = {
     schedule: 'Mon–Fri: 6AM–8AM & 3PM–7PM | Sat–Sun: 7AM–12PM',
     seoTitle: 'Football & Futsal Academy in Kathmandu',
     h1: 'Football & Futsal Academy in Kathmandu',
-    seoDescription: "Nepal's #1 football and futsal academy in Tarkeshwar, Kathmandu. Programs for ages 4–18, professional coaches, and international Thailand training camps.",
+    seoDescription: "Nepal's #1 football and futsal academy in Tarakeshwar, Kathmandu. Programs for ages 4–18, professional coaches, and international Thailand training camps.",
     color: '#06145F',
     badge: 'Primary Sport',
     imageURL: '/tip.jpg',
@@ -34,7 +34,7 @@ const DEFAULT_SPORTS = {
     name: 'Cricket',
     emoji: '🏏',
     tagline: 'Cricket Ground & Training Facility in Kathmandu',
-    description: "Tiptoe Sports Hub brings world-class cricket facilities to the heart of Kathmandu. Whether you're a seasoned cricketer or just discovering the sport, our professional-grade ground, quality pitches, and experienced coaches make us the go-to cricket destination in Tarkeshwar. From casual practice sessions to competitive matches, we have everything you need.",
+    description: "Tiptoe Sports Hub brings world-class cricket facilities to the heart of Kathmandu. Whether you're a seasoned cricketer or just discovering the sport, our professional-grade ground, quality pitches, and experienced coaches make us the go-to cricket destination in Tarakeshwar. From casual practice sessions to competitive matches, we have everything you need.",
     features: [
       'Professional cricket ground & pitches',
       'Batting nets & practice facilities',
@@ -60,7 +60,7 @@ const DEFAULT_SPORTS = {
     schedule: 'Daily: 6AM–8PM | Ground bookings available all week',
     seoTitle: 'Cricket Ground & Coaching in Kathmandu',
     h1: 'Cricket Ground & Coaching in Kathmandu',
-    seoDescription: 'Cricket ground hire Kathmandu — professional pitch, batting nets and bowling machine at Tiptoe Sports Hub, Tarkeshwar. Cricket coaching Nepal for youth and adults. Book by the session or join the monthly academy.',
+    seoDescription: 'Cricket ground hire Kathmandu — professional pitch, batting nets and bowling machine at Tiptoe Sports Hub, Tarakeshwar. Cricket coaching Nepal for youth and adults. Book by the session or join the monthly academy.',
     color: '#1B5E20',
     badge: 'Cricket',
   },
@@ -80,7 +80,7 @@ const DEFAULT_SPORTS = {
     schedule: 'Daily: 6AM–10PM | Coached sessions: Tue, Thu, Sat 5PM–7PM',
     seoTitle: 'Basketball Courts & Training in Kathmandu',
     h1: 'Basketball Courts & Training in Kathmandu',
-    seoDescription: 'Basketball courts in Tarkeshwar, Kathmandu — youth sports Kathmandu hub. Court hire, monthly memberships and professional coaching for all ages at Tiptoe Sports Hub.',
+    seoDescription: 'Basketball courts in Tarakeshwar, Kathmandu — youth sports Kathmandu hub. Court hire, monthly memberships and professional coaching for all ages at Tiptoe Sports Hub.',
     color: '#B85A00',
     badge: 'Popular',
   },
@@ -100,7 +100,7 @@ const DEFAULT_SPORTS = {
     schedule: 'Daily: 6AM–10PM | Beginner sessions: Mon, Wed 6PM–8PM',
     seoTitle: 'Pickleball Courts in Kathmandu',
     h1: 'Pickleball Courts in Kathmandu',
-    seoDescription: 'Play pickleball in Nepal at Tiptoe Sports Hub, Tarkeshwar Kathmandu. Beginner-friendly pickleball courts, equipment included, coaching sessions and monthly tournaments.',
+    seoDescription: 'Play pickleball in Nepal at Tiptoe Sports Hub, Tarakeshwar Kathmandu. Beginner-friendly pickleball courts, equipment included, coaching sessions and monthly tournaments.',
     color: '#1B7F5E',
     badge: 'Trending',
   },
@@ -120,7 +120,7 @@ const DEFAULT_SPORTS = {
     schedule: 'Daily: 10AM–11PM | Open 7 days a week',
     seoTitle: 'Premium Snooker Club in Kathmandu',
     h1: 'Premium Snooker Club in Kathmandu',
-    seoDescription: 'Best snooker bar in Kathmandu — Tiptoe Sports Hub, Tarkeshwar. Professional snooker tables, table hire, monthly memberships, VIP packages and a relaxed club atmosphere.',
+    seoDescription: 'Best snooker bar in Kathmandu — Tiptoe Sports Hub, Tarakeshwar. Professional snooker tables, table hire, monthly memberships, VIP packages and a relaxed club atmosphere.',
     color: '#2D7D46',
     badge: 'Members Club',
   },
@@ -139,8 +139,8 @@ const DEFAULT_SPORTS = {
     ],
     schedule: 'Mon–Thu: 4PM–11PM | Fri–Sun: 12PM–12AM | Special event hours vary',
     seoTitle: 'Sports Lounge in Kathmandu – Live Match Screening',
-    h1: 'Sports Lounge in Tarkeshwar, Kathmandu',
-    seoDescription: "Best sports lounge in Tarkeshwar, Kathmandu. Live sports screening — football, cricket, NBA and more on big screens. Great food, relaxed atmosphere and unforgettable match-day experience at Tiptoe Sports Hub.",
+    h1: 'Sports Lounge in Tarakeshwar, Kathmandu',
+    seoDescription: "Best sports lounge in Tarakeshwar, Kathmandu. Live sports screening — football, cricket, NBA and more on big screens. Great food, relaxed atmosphere and unforgettable match-day experience at Tiptoe Sports Hub.",
     color: '#8B4A00',
     badge: 'Social Hub',
   },
@@ -210,7 +210,7 @@ export default function SportPage() {
     url: `${BASE_URL}/sports/${slug}`,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Tarkeshwar',
+      streetAddress: 'Tarakeshwar',
       addressLocality: 'Kathmandu',
       addressCountry: 'NP',
     },
@@ -247,7 +247,9 @@ export default function SportPage() {
             {/* Full-bleed photo when an image is available */}
             <img
               src={sport.imageURL}
-              alt={`${sport.name} at Tiptoe Sports Hub, Tarkeshwar Kathmandu`}
+              alt={`${sport.name} at Tiptoe Sports Hub, Tarakeshwar Kathmandu`}
+              width="2048"
+              height="1365"
               className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none"
               style={{ opacity: 0.42 }}
               loading="eager"
@@ -353,7 +355,13 @@ export default function SportPage() {
             <motion.span variants={fadeUp} className="section-label mb-2">Membership & Pricing</motion.span>
             <motion.h2 variants={fadeUp} className="section-title">Transparent Pricing</motion.h2>
             <motion.div variants={fadeUp} className="gold-divider mx-auto mt-4" />
-            <motion.p variants={fadeUp} className="text-gray-500 mt-4 text-sm">All prices in Nepali Rupees (NPR). Contact us for group or corporate packages.</motion.p>
+            <motion.p variants={fadeUp} className="text-gray-500 mt-4 text-sm">
+              All prices in Nepali Rupees (NPR). View all sports pricing on our{' '}
+              <Link to="/pricing" className="text-navy font-semibold hover:text-gold transition-colors">Pricing page</Link>
+              {' '}or{' '}
+              <Link to="/contact" className="text-navy font-semibold hover:text-gold transition-colors">contact us</Link>
+              {' '}for group and corporate packages.
+            </motion.p>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">

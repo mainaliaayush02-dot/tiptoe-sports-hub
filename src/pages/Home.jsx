@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+﻿import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useInView } from 'framer-motion'
 import { FaArrowRight, FaCalendarAlt, FaChevronDown, FaQuoteLeft, FaUsers, FaDoorOpen } from 'react-icons/fa'
@@ -28,7 +28,7 @@ const FALLBACK_BOARD = [
   { id: 'b1', name: 'Gaurav Basnet',   title: 'President & Co-Founder',         bio: 'Co-founder of Tiptoe Sports Hub. Nepal National Futsal Head Coach for three consecutive terms and one of Nepal\'s most respected football minds.',      photoURL: '' },
   { id: 'b2', name: 'Hari Khadka',     title: 'Brand Ambassador',               bio: "Nepal's all-time highest international goal scorer and former captain of the Nepal National Football Team. Technical advisor to the Hub.",                  photoURL: '' },
   { id: 'b3', name: 'Board Member',    title: 'Director – Operations',          bio: 'Oversees day-to-day operations, facilities management, and staff development across all six sports verticals at Tiptoe Sports Hub.',                       photoURL: '' },
-  { id: 'b4', name: 'Board Member',    title: 'Director – Finance',             bio: 'Responsible for financial planning, budgeting, and sustainable growth strategy for Tiptoe Sports Hub in Tarkeshwar, Kathmandu.',                           photoURL: '' },
+  { id: 'b4', name: 'Board Member',    title: 'Director – Finance',             bio: 'Responsible for financial planning, budgeting, and sustainable growth strategy for Tiptoe Sports Hub in Tarakeshwar, Kathmandu.',                           photoURL: '' },
   { id: 'b5', name: 'Board Member',    title: 'Director – Community Relations', bio: 'Drives community engagement, partnerships, and outreach programmes that connect the Hub with schools, clubs, and sports organisations across Kathmandu.',   photoURL: '' },
 ]
 
@@ -84,7 +84,7 @@ export default function Home() {
     <>
       <SEOHead
         title="Multi-Sport Hub & Facilities in Kathmandu"
-        description="Six sports in Tarkeshwar, Kathmandu. Football, Cricket, Basketball, Pickleball, Snooker & Sports Lounge. Nepal's #1 football academy. Open daily."
+        description="Six sports in Tarakeshwar, Kathmandu. Football, Cricket, Basketball, Pickleball, Snooker & Sports Lounge. Nepal's #1 football academy. Open daily."
         path="/"
       />
 
@@ -93,7 +93,9 @@ export default function Home() {
 
         <img
           src="/ground.jpg"
-          alt="Tiptoe Sports Hub multi-sport facility in Tarkeshwar, Kathmandu"
+          alt="Tiptoe Sports Hub multi-sport facility in Tarakeshwar, Kathmandu"
+          width="800"
+          height="1066"
           className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none"
           style={{ opacity: 0.45 }}
           loading="eager"
@@ -108,19 +110,19 @@ export default function Home() {
             <motion.div initial="hidden" animate="show" variants={stagger}>
               <motion.div variants={fadeUp}>
                 <span className="badge-gold mb-6">
-                  <GiSoccerBall size={12} /> Est. 2021 · Tarkeshwar, Kathmandu
+                  <GiSoccerBall size={12} /> Est. 2021 · Tarakeshwar, Kathmandu
                 </span>
               </motion.div>
 
               <motion.h1 variants={fadeUp} className="font-heading font-extrabold text-5xl sm:text-6xl md:text-7xl text-white leading-[1.05] tracking-tight mb-6">
-                <span className="sr-only">Multi-Sport Hub in Tarkeshwar, Kathmandu. </span>
+                <span className="sr-only">Multi-Sport Hub in Tarakeshwar, Kathmandu. </span>
                 One Hub.<br />
                 <span className="text-gold">All Sports.</span>{' '}
                 <span className="text-green">One Family.</span>
               </motion.h1>
 
               <motion.p variants={fadeUp} className="text-white/55 text-lg md:text-xl leading-relaxed mb-6 max-w-xl font-light">
-                Tiptoe Sports Hub brings Football, Cricket, Basketball, Pickleball, Snooker and a Sports Lounge together under one roof in Tarkeshwar, Kathmandu. Open seven days a week for players and families of all skill levels.
+                Tiptoe Sports Hub brings Football, Cricket, Basketball, Pickleball, Snooker and a Sports Lounge together under one roof in Tarakeshwar, Kathmandu. Open seven days a week for players and families of all skill levels.
               </motion.p>
               <motion.p variants={fadeUp} className="text-white/40 text-base leading-relaxed mb-10 max-w-xl font-light">
                 Whether you are booking a football ground, a cricket net, a basketball court or a pickleball session — or simply joining friends in the Sports Lounge for a live match — Tiptoe Sports Hub is Kathmandu's home for sport.
@@ -142,7 +144,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
             className="flex flex-wrap gap-8 mt-16 pt-10 border-t border-white/10"
           >
-            {[['6', 'Sports & Facilities'], ['4+', 'Years Active'], ['7 Days', 'Open Per Week'], ['Tarkeshwar', 'Kathmandu']].map(([v, l]) => (
+            {[['6', 'Sports & Facilities'], ['4+', 'Years Active'], ['7 Days', 'Open Per Week'], ['Tarakeshwar', 'Kathmandu']].map(([v, l]) => (
               <div key={l}>
                 <div className="font-heading font-extrabold text-2xl text-gold">{v}</div>
                 <div className="text-white/40 text-xs font-medium mt-0.5 uppercase tracking-wider">{l}</div>
@@ -180,7 +182,7 @@ export default function Home() {
         <div className="container-max">
           <div className="text-center mb-10">
             <span className="section-label mb-2">Our Facilities</span>
-            <h2 className="section-title">Six Sports. One Hub in Tarkeshwar.</h2>
+            <h2 className="section-title">Six Sports. One Hub in Tarakeshwar.</h2>
             <div className="gold-divider mx-auto mt-4" />
             <p className="text-gray-500 mt-4 max-w-2xl mx-auto text-sm leading-relaxed">
               Tiptoe Sports Hub is Kathmandu's most complete multi-sport destination. All six of our facilities are at a single address in Tarakeshwar, 44600 Kathmandu — so you can switch between sports, bring the whole family, or simply enjoy a day out at the hub.
@@ -191,7 +193,7 @@ export default function Home() {
               { emoji: '⚽', name: 'Football & Futsal', to: '/sports/football-futsal',
                 desc: 'A full-size outdoor football ground and an indoor futsal court, operated by Tiptoe Sports Academy — Nepal\'s #1 youth football programme. Professional national-level coaching for ages 4 to 18, with structured age-group sessions, morning and afternoon slots, and annual Thailand international training camps. Ground hire available for private matches and tournaments.' },
               { emoji: '🏏', name: 'Cricket Ground', to: '/sports/cricket',
-                desc: 'A professional-grade cricket ground with four batting net lanes, a bowling machine, and full changing room facilities. Available for ground hire by the session, net practice by the hour, or monthly coaching programmes for youth and adults. One of the best cricket facilities in Tarkeshwar, Kathmandu, open daily from 6 AM.' },
+                desc: 'A professional-grade cricket ground with four batting net lanes, a bowling machine, and full changing room facilities. Available for ground hire by the session, net practice by the hour, or monthly coaching programmes for youth and adults. One of the best cricket facilities in Tarakeshwar, Kathmandu, open daily from 6 AM.' },
               { emoji: '🏀', name: 'Basketball Courts', to: '/sports/basketball',
                 desc: 'Full-size basketball courts with a scoreboard, spectator seating, and locker rooms. Open for casual walk-in play, monthly memberships with unlimited access, and structured coached sessions three times a week. Team packages available for clubs and corporate groups looking for regular court time in Kathmandu.' },
               { emoji: '🎾', name: 'Pickleball Courts', to: '/sports/pickleball',
@@ -223,7 +225,7 @@ export default function Home() {
             <motion.h2 variants={fadeUp} className="section-title">Board of Directors</motion.h2>
             <motion.div variants={fadeUp} className="gold-divider mx-auto mt-4" />
             <motion.p variants={fadeUp} className="text-gray-500 mt-4 max-w-xl mx-auto text-sm leading-relaxed">
-              The people behind Tiptoe Sports Hub — guiding our mission to build Kathmandu's finest multi-sport destination in Tarkeshwar.
+              The people behind Tiptoe Sports Hub — guiding our mission to build Kathmandu's finest multi-sport destination in Tarakeshwar.
             </motion.p>
           </motion.div>
 
@@ -282,7 +284,7 @@ export default function Home() {
               <motion.div variants={stagger} className="space-y-5">
                 {[
                   { title: '6 Sports Under One Roof',      desc: 'Football, Cricket, Basketball, Pickleball, Snooker and a Sports Lounge — the most complete multi-sport facility in Kathmandu.' },
-                  { title: 'Conveniently in Tarkeshwar',   desc: 'Located in Tarkeshwar, Kathmandu — easily accessible from Ring Road with on-site parking for all visitors.' },
+                  { title: 'Conveniently in Tarakeshwar',   desc: 'Located in Tarakeshwar, Kathmandu — easily accessible from Ring Road with on-site parking for all visitors.' },
                   { title: 'Open Every Day',               desc: 'We are open 7 days a week so you can play on your schedule, not ours. Morning to evening across all sports.' },
                   { title: 'Premium Facilities',           desc: 'Professional-grade courts, tables, pitches and equipment maintained to the highest standard for the best experience.' },
                 ].map(({ title, desc }) => (
@@ -394,6 +396,17 @@ export default function Home() {
             <span className="section-label mb-2">Member Stories</span>
             <h2 className="section-title-white">Trusted by Kathmandu</h2>
             <div className="gold-divider mx-auto mt-4" />
+            {/* Google Maps rating badge */}
+            <a
+              href="https://maps.app.goo.gl/GXdjUV3qQX4Rm61o7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-5 bg-white/10 hover:bg-white/15 border border-white/20 text-white text-sm font-semibold px-4 py-2 rounded-full transition-all"
+            >
+              <span className="text-gold">★★★★★</span>
+              <span>4.6 on Google Maps</span>
+              <span className="text-white/50 text-xs font-normal">(20 reviews)</span>
+            </a>
           </div>
 
           <div className="max-w-3xl mx-auto">
@@ -446,7 +459,7 @@ export default function Home() {
               Ready to Join<br />Kathmandu's Best Sports Hub?
             </motion.h2>
             <motion.p variants={fadeUp} className="text-white/70 text-lg max-w-xl mx-auto mb-10">
-              Six sports, premium facilities, open every day at Tarkeshwar, Kathmandu. Walk in or book your slot today.
+              Six sports, premium facilities, open every day at Tarakeshwar, Kathmandu. Walk in or book your slot today.
             </motion.p>
             <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/contact" className="btn-primary py-4 px-10">Book Your Slot <FaArrowRight size={13} /></Link>

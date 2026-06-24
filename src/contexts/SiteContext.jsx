@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+﻿import { createContext, useContext, useState, useEffect } from 'react'
 import { onSnapshot } from 'firebase/firestore'
 import { settingsDoc } from '../firebase/collections'
 
@@ -7,11 +7,11 @@ const DEFAULTS = {
   tagline: 'A Home for Future Players',
   phone: '+977 984-1416893',
   email: 'tiptoesportshub@gmail.com',
-  address: 'Tarkeshwar, Kathmandu, Nepal',
+  address: 'Tarakeshwar, Kathmandu, Nepal',
   whatsapp: '9779800000000',
   logoURL: '/logo.jpeg',
   academyLogoURL: '/academy-logo.jpeg',
-  mapsEmbedURL: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.58!2d85.3047!3d27.7368!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb199a534fb789%3A0x9b5cd5299ace8bc!2sTarkeshwar%2C+Kathmandu!5e0!3m2!1sen!2snp!4v1',
+  mapsEmbedURL: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.58!2d85.3047!3d27.7368!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb199a534fb789%3A0x9b5cd5299ace8bc!2sTarakeshwar%2C+Kathmandu!5e0!3m2!1sen!2snp!4v1',
   mapsLink: 'https://maps.app.goo.gl/qSVDwXY53wtm5F576',
   hoursWeekdays: '6 AM – 9 PM',
   hoursSaturday: '6 AM – 8 PM',

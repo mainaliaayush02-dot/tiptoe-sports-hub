@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { FaTimes, FaChevronLeft, FaChevronRight, FaImages } from 'react-icons/fa'
@@ -12,7 +12,7 @@ const CATEGORIES = ['All', 'Training', 'Events', 'Tournaments', 'International']
 const allQ = query(galleryCol, orderBy('createdAt', 'desc'))
 
 const FALLBACK_IMAGES = [
-  { id: 'f1', url: '/1.png',  category: 'Training',      caption: 'Tiptoe Academy vs SWSC FA at Tarkeshwar, Kathmandu', alt: 'Tiptoe Sports Academy football team group photo with coaches at training ground in Tarkeshwar Kathmandu Nepal' },
+  { id: 'f1', url: '/1.jpg',  category: 'Training',      caption: 'Tiptoe Academy vs SWSC FA at Tarakeshwar, Kathmandu', alt: 'Tiptoe Sports Academy football team group photo with coaches at training ground in Tarakeshwar Kathmandu Nepal' },
   { id: 'f2', url: '/2.jpg',  category: 'Training',      caption: 'Tiptoe Academy player in match training session',    alt: 'Young footballer in Tiptoe Academy yellow jersey training at Kathmandu football academy Nepal' },
 ]
 

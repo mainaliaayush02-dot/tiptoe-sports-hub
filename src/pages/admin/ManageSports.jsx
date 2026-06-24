@@ -158,7 +158,7 @@ function Modal({ item, onClose, onSave }) {
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-1">SEO Description</label>
-                <textarea value={form.seoDescription} onChange={e => set('seoDescription', e.target.value)} rows={2} className="input-field resize-none" placeholder="Premium basketball courts and training in Tarkeshwar, Kathmandu..." />
+                <textarea value={form.seoDescription} onChange={e => set('seoDescription', e.target.value)} rows={2} className="input-field resize-none" placeholder="Premium basketball courts and training in Tarakeshwar, Kathmandu..." />
                 <p className="text-xs text-gray-400 mt-0.5">{form.seoDescription.length}/160 chars recommended</p>
               </div>
             </div>
@@ -193,7 +193,7 @@ const LOUNGE_DEFAULTS = {
   pricing: 'Walk-In - Free entry with food or beverage order\nVIP Table (4 pax) - NPR 2,000 minimum spend\nMatch Day Package - NPR 5,000 for 10 pax\nPrivate Event - Contact for quote',
   schedule: 'Mon–Thu: 4PM–11PM | Fri–Sun: 12PM–12AM',
   seoTitle: 'Sports Lounge in Kathmandu | Tiptoe Sports Hub',
-  seoDescription: 'Best sports lounge in Tarkeshwar, Kathmandu. Live sports screening on big screens, great food and a relaxed atmosphere at Tiptoe Sports Hub.',
+  seoDescription: 'Best sports lounge in Tarakeshwar, Kathmandu. Live sports screening on big screens, great food and a relaxed atmosphere at Tiptoe Sports Hub.',
   color: '#8B4A00', active: true, order: 6,
 }
 

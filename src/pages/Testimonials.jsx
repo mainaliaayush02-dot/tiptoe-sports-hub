@@ -34,10 +34,11 @@ export default function Testimonials() {
           '@context': 'https://schema.org',
           '@type': 'LocalBusiness',
           name: 'Tiptoe Sports Hub',
+          url: 'https://tiptoesportshub.com',
           aggregateRating: {
             '@type': 'AggregateRating',
-            ratingValue: '5',
-            reviewCount: '370',
+            ratingValue: '4.6',
+            reviewCount: '20',
             bestRating: '5',
             worstRating: '1',
           },
@@ -59,13 +60,30 @@ export default function Testimonials() {
 
       {/* Stats Banner */}
       <section className="py-10 px-4 bg-gold">
-        <div className="max-w-7xl mx-auto grid grid-cols-3 gap-4 text-center">
-          {[['370+', 'Happy Students'], ['⭐⭐⭐⭐⭐', '5-Star Reviews'], ['100%', 'Would Recommend']].map(([v, l]) => (
-            <div key={l}>
-              <div className="font-black text-2xl md:text-3xl text-navy">{v}</div>
-              <div className="text-navy/70 text-xs md:text-sm mt-0.5">{l}</div>
-            </div>
-          ))}
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-6 text-center">
+          <div>
+            <div className="font-black text-2xl md:text-3xl text-navy">4.6 / 5</div>
+            <div className="text-navy/70 text-xs md:text-sm mt-0.5">Average Rating</div>
+          </div>
+          <div className="hidden sm:block w-px h-10 bg-navy/20" />
+          <div>
+            <div className="font-black text-2xl md:text-3xl text-navy">★★★★★</div>
+            <div className="text-navy/70 text-xs md:text-sm mt-0.5">Google Verified</div>
+          </div>
+          <div className="hidden sm:block w-px h-10 bg-navy/20" />
+          <div>
+            <div className="font-black text-2xl md:text-3xl text-navy">20+</div>
+            <div className="text-navy/70 text-xs md:text-sm mt-0.5">Google Reviews</div>
+          </div>
+          <div className="hidden sm:block w-px h-10 bg-navy/20" />
+          <a
+            href="https://maps.app.goo.gl/GXdjUV3qQX4Rm61o7"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-navy text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:bg-dark transition-colors"
+          >
+            Read on Google Maps
+          </a>
         </div>
       </section>
 

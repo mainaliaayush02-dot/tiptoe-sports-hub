@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+﻿import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FaArrowRight, FaFilter } from 'react-icons/fa'
@@ -57,7 +57,7 @@ export default function Programs() {
             <span className="badge-gold mb-5">Programs</span>
             <h1 className="font-black text-5xl md:text-6xl text-white leading-tight mt-4 mb-4">Football & Futsal Programs</h1>
             <p className="text-white/60 max-w-xl mx-auto text-lg">
-              Structured programs for every age, from your child's first kick at age 4 to elite performance at 18, in Tarkeshwar, Kathmandu.
+              Structured programs for every age, from your child's first kick at age 4 to elite performance at 18, in Tarakeshwar, Kathmandu.
             </p>
           </motion.div>
         </div>

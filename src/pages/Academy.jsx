@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+﻿import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { FaArrowRight, FaStar, FaTrophy, FaUsers, FaGlobe, FaCheckCircle } from 'react-icons/fa'
@@ -78,7 +78,7 @@ export default function Academy() {
     <>
       <SEOHead
         title="Tiptoe Sports Academy: Football & Futsal in Kathmandu"
-        description="Nepal's #1 football & futsal academy in Tarkeshwar, Kathmandu. Programs for ages 4–18, national-level coaches, and annual Thailand training camps."
+        description="Nepal's #1 football & futsal academy in Tarakeshwar, Kathmandu. Programs for ages 4–18, national-level coaches, and annual Thailand training camps."
         path="/academy"
         breadcrumb
       />
@@ -107,7 +107,7 @@ export default function Academy() {
               </motion.p>
             )}
             <motion.p variants={fadeUp} className="text-white/60 text-lg max-w-2xl mx-auto leading-relaxed">
-              Structured youth football & futsal development for ages 4–18. National-level coaches. International exposure to Thailand. 370+ students training daily in Tarkeshwar, Kathmandu.
+              Structured youth football & futsal development for ages 4–18. National-level coaches. International exposure to Thailand. 370+ students training daily in Tarakeshwar, Kathmandu.
             </motion.p>
             <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-3 mt-8">
               <Link to="/enroll" className="btn-primary">
@@ -150,7 +150,7 @@ export default function Academy() {
             <div className="gold-divider mb-7" />
             <div className="space-y-4 text-gray-500 text-sm leading-relaxed">
               <p>
-                <strong className="text-navy">Tiptoe Sports Academy</strong> is Nepal's leading private football and futsal development academy, operating within Tiptoe Sports Hub in Tarkeshwar, Kathmandu since 2021.
+                <strong className="text-navy">Tiptoe Sports Academy</strong> is Nepal's leading private football and futsal development academy, operating within Tiptoe Sports Hub in Tarakeshwar, Kathmandu since 2021.
               </p>
               <p>
                 We provide structured, age-appropriate training programs for young athletes aged 4 to 18. Our curriculum follows international coaching methodologies, delivered by certified coaches with decades of national and international experience.
@@ -195,7 +195,7 @@ export default function Academy() {
             <h2 className="section-title">Find the Right Program</h2>
             <div className="gold-divider mx-auto mt-4" />
             <p className="text-gray-500 text-sm mt-4 max-w-xl mx-auto">
-              Every program is designed for a specific age group and skill level. All sessions are run by certified coaches at our Tarkeshwar facility.
+              Every program is designed for a specific age group and skill level. All sessions are run by certified coaches at our Tarakeshwar facility.
             </p>
           </div>
           {programsLoading ? (

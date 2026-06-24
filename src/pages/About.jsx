@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+﻿import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { FaArrowRight, FaTrophy, FaUsers, FaCalendarAlt } from 'react-icons/fa'
 import { MdSportsScore } from 'react-icons/md'
@@ -6,9 +6,9 @@ import { GiSoccerBall } from 'react-icons/gi'
 import SEOHead, { BASE_URL } from '../components/SEOHead'
 
 const MILESTONES = [
-  { year: '2021', title: 'Founded', desc: 'Tiptoe Sports Hub was established in Tarkeshwar, Kathmandu with a vision to build a world-class multi-sport destination accessible to everyone in the city.' },
+  { year: '2021', title: 'Founded', desc: 'Tiptoe Sports Hub was established in Tarakeshwar, Kathmandu with a vision to build a world-class multi-sport destination accessible to everyone in the city.' },
   { year: '2023', title: 'Full Multi-Sport Launch', desc: 'Expanded to six sports — Football, Cricket, Basketball, Pickleball, Snooker, and a Sports Lounge — becoming Kathmandu\'s most complete sports facility.' },
-  { year: '2025', title: 'Community Milestone', desc: 'Reached over 1,000 monthly visitors across all sports, cementing our position as the go-to sports and leisure destination in Tarkeshwar, Kathmandu.' },
+  { year: '2025', title: 'Community Milestone', desc: 'Reached over 1,000 monthly visitors across all sports, cementing our position as the go-to sports and leisure destination in Tarakeshwar, Kathmandu.' },
 ]
 
 const STATS = [
@@ -35,10 +35,10 @@ export default function About() {
           url: BASE_URL,
           logo: `${BASE_URL}/logo.jpeg`,
           foundingDate: '2021',
-          description: "Nepal's premier multi-sport destination in Tarkeshwar, Kathmandu. Football, Cricket, Basketball, Pickleball, Snooker and Sports Lounge. Home of Tiptoe Sports Academy.",
+          description: "Nepal's premier multi-sport destination in Tarakeshwar, Kathmandu. Football, Cricket, Basketball, Pickleball, Snooker and Sports Lounge. Home of Tiptoe Sports Academy.",
           address: {
             '@type': 'PostalAddress',
-            streetAddress: 'Tarkeshwar',
+            streetAddress: 'Tarakeshwar',
             addressLocality: 'Kathmandu',
             addressCountry: 'NP',
           },
@@ -54,7 +54,9 @@ export default function About() {
         {/* Hub photo — full bleed background */}
         <img
           src="/hub.jpg"
-          alt="Tiptoe Sports Hub multi-sport facility in Tarkeshwar, Kathmandu"
+          alt="Tiptoe Sports Hub multi-sport facility in Tarakeshwar, Kathmandu"
+          width="1290"
+          height="636"
           className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none"
           style={{ opacity: 0.4 }}
           loading="eager"
@@ -72,7 +74,7 @@ export default function About() {
               About Tiptoe<br /><span className="text-gold">Sports Hub</span>
             </motion.h1>
             <motion.p variants={fadeUp} className="text-white/60 text-lg max-w-2xl mx-auto">
-              Kathmandu's premier multi-sport destination in Tarkeshwar. Football, Cricket, Basketball, Pickleball, Snooker and a Sports Lounge — all under one roof. Open 7 days a week.
+              Kathmandu's premier multi-sport destination in Tarakeshwar. Football, Cricket, Basketball, Pickleball, Snooker and a Sports Lounge — all under one roof. Open 7 days a week.
             </motion.p>
           </motion.div>
         </div>
@@ -99,7 +101,7 @@ export default function About() {
             <h2 className="section-title mb-2">Welcome to Tiptoe Sports Hub</h2>
             <div className="gold-divider mb-7" />
             <div className="space-y-4 text-gray-500 text-sm leading-relaxed">
-              <p><strong className="text-navy">Tiptoe Sports Hub</strong> is Kathmandu's premier multi-sport destination, located in Tarkeshwar. We are a complete sports community offering Football, Cricket, Basketball, Pickleball, Snooker, and a Sports Lounge — all under one roof, open seven days a week.</p>
+              <p><strong className="text-navy">Tiptoe Sports Hub</strong> is Kathmandu's premier multi-sport destination, located in Tarakeshwar. We are a complete sports community offering Football, Cricket, Basketball, Pickleball, Snooker, and a Sports Lounge — all under one roof, open seven days a week.</p>
               <p>Our six facilities cater to every kind of visitor: the competitive athlete seeking elite coaching, the casual player booking a court for the evening, the family looking for a fun weekend out, and the sports fan catching a live match in our Sports Lounge.</p>
               <p>Tiptoe Sports Hub is also home to <strong className="text-navy">Tiptoe Sports Academy</strong> — an elite youth football and futsal development programme. <Link to="/academy" className="text-navy font-semibold hover:text-gold transition-colors">Learn more about the Academy →</Link></p>
             </div>
@@ -119,7 +121,7 @@ export default function About() {
               <div className="relative text-white text-center p-8">
                 <div className="font-black text-7xl text-gold">2021</div>
                 <div className="text-2xl font-bold mt-2">Founded</div>
-                <div className="text-white/40 text-sm mt-1 uppercase tracking-widest">Tarkeshwar, Kathmandu</div>
+                <div className="text-white/40 text-sm mt-1 uppercase tracking-widest">Tarakeshwar, Kathmandu</div>
               </div>
               <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-gold via-yellow-300 to-gold" />
             </div>
@@ -151,7 +153,7 @@ export default function About() {
               </div>
               <h3 className="font-black text-xl mb-4 text-gold">Our Vision</h3>
               <p className="text-white/70 leading-relaxed text-sm">
-                To build the finest sports community in Nepal — bringing together players, families, and sports fans of every level under one roof in Tarkeshwar, Kathmandu.
+                To build the finest sports community in Nepal — bringing together players, families, and sports fans of every level under one roof in Tarakeshwar, Kathmandu.
               </p>
             </motion.div>
           </div>

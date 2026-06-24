@@ -1,10 +1,10 @@
-import { Helmet } from 'react-helmet-async'
+﻿import { Helmet } from 'react-helmet-async'
 
 const SITE_NAME = 'Tiptoe Sports Hub'
 export const BASE_URL = import.meta.env.VITE_SITE_URL || 'https://tiptoesportshub.com'
 const DEFAULT_IMAGE = `${BASE_URL}/logo.jpeg`
 const DEFAULT_DESC =
-  "Tiptoe Sports Hub is Kathmandu's premier multi-sport destination in Tarkeshwar. Football, Cricket, Basketball, Pickleball, Snooker and Sports Lounge. Home of Tiptoe Sports Academy, Nepal's #1 football and futsal academy."
+  "Tiptoe Sports Hub is Kathmandu's premier multi-sport destination in Tarakeshwar. Football, Cricket, Basketball, Pickleball, Snooker and Sports Lounge. Home of Tiptoe Sports Academy, Nepal's #1 football and futsal academy."
 
 const BREADCRUMB_BASE = {
   '@context': 'https://schema.org',
