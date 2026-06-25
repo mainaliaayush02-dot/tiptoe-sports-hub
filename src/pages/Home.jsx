@@ -83,8 +83,8 @@ export default function Home() {
   return (
     <>
       <SEOHead
-        title="Multi-Sport Hub & Facilities in Kathmandu"
-        description="Six sports in Tarakeshwar, Kathmandu. Football, Cricket, Basketball, Pickleball, Snooker & Sports Lounge. Nepal's #1 football academy. Open daily."
+        title="Multi-Sport Hub & Football Academy in Kathmandu"
+        description="Multi-sport hub in Tarakeshwar, Kathmandu. Football, Cricket, Basketball, Pickleball, Snooker and Sports Lounge. Home to Tiptoe Sports Academy."
         path="/"
       />
 
@@ -174,6 +174,22 @@ export default function Home() {
               <div className="text-white/45 text-xs font-medium uppercase tracking-widest">{label}</div>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      {/* WHAT IS TIPTOE SPORTS HUB — always-visible explanatory paragraph for first-time visitors and crawlers */}
+      <section className="py-10 px-4 bg-white border-b border-gray-100">
+        <div className="max-w-3xl mx-auto text-center space-y-4">
+          <p className="text-gray-600 text-base leading-relaxed">
+            <strong className="text-navy">Tiptoe Sports Hub</strong> is a multi-sport facility in Tarakeshwar, Kathmandu, offering six sports and leisure facilities under one roof: Football &amp; Futsal, Cricket, Basketball, Pickleball, Snooker and a Sports Lounge. Open seven days a week, the Hub welcomes casual players, competitive athletes, families, and sports fans of all levels.
+          </p>
+          <p className="text-gray-600 text-base leading-relaxed">
+            Tiptoe is also home to{' '}
+            <strong className="text-navy">Tiptoe Sports Academy</strong> — a structured football and futsal training programme for ages 4 to 18, led by national-level coaches, with an international training partnership in Thailand.{' '}
+            <Link to="/academy" className="text-navy font-semibold hover:text-gold transition-colors">
+              Learn more about the Academy
+            </Link>
+          </p>
         </div>
       </section>
 
